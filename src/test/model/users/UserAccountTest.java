@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.models.users.Person;
 import main.models.users.UserAccount;
 
 public class UserAccountTest 
