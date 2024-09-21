@@ -1,5 +1,7 @@
 package main.models.users;
 
+import java.util.Objects;
+
 public class UserAccount 
 {
     private String username;
@@ -50,6 +52,22 @@ public class UserAccount
     {
         if (!(loginOrEmail.equals(username) || loginOrEmail.equals(email))) return false;
         return this.password.equals(password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, email, password, admin);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof UserAccount))
+            return false;
+        UserAccount other = (UserAccount) obj;
+        return Objects.equals(username, other.username) && Objects.equals(email, other.email)
+                && Objects.equals(password, other.password) && Objects.equals(admin, other.admin);
     }
 
 }
