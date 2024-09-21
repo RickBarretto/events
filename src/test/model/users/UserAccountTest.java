@@ -47,13 +47,13 @@ public class UserAccountTest
     @Test
     void isOwnerTest()
     {
-        Assertions.assertTrue(johnDoe.isOwner("john.doe", "J04nD03123"), "Correct login and password");
-        Assertions.assertTrue(johnDoe.isOwner("john.doe@example.com", "J04nD03123"), "Correct email and password");
+        Assertions.assertTrue(johnDoe.equals("john.doe", "J04nD03123"), "Correct login and password");
+        Assertions.assertTrue(johnDoe.equals("john.doe@example.com", "J04nD03123"), "Correct email and password");
 
-        Assertions.assertFalse(johnDoe.isOwner("jane.doe", "J04nD03123"), "Incorrect login");
-        Assertions.assertFalse(johnDoe.isOwner("jane.doe@example.com", "J04nD03123"), "Incorrect email");
-        Assertions.assertFalse(johnDoe.isOwner("john.doe", "J4n3D03123"), "Correct login and Incorrect password");
-        Assertions.assertFalse(johnDoe.isOwner("john.doe@example.com", "J4n3D03123"), "Correct email and Incorrect password");
+        Assertions.assertFalse(johnDoe.equals("jane.doe", "J04nD03123"), "Incorrect login");
+        Assertions.assertFalse(johnDoe.equals("jane.doe@example.com", "J04nD03123"), "Incorrect email");
+        Assertions.assertFalse(johnDoe.equals("john.doe", "J4n3D03123"), "Correct login and Incorrect password");
+        Assertions.assertFalse(johnDoe.equals("john.doe@example.com", "J4n3D03123"), "Correct email and Incorrect password");
     }
 
 }
