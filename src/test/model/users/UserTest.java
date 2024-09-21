@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test;
 
 import main.models.users.Person;
 import main.models.users.User;
-import main.models.users.UserAccount;
+import main.models.users.Account;
 
 public class UserTest {
     Person person;
-    UserAccount account;
+    Account account;
     User user;
 
     @BeforeEach
     void initializeGenericUser()
     {
         person = Person.generic();
-        account = UserAccount.generic();
+        account = Account.generic();
         user = new User(person, account);
     }
 

@@ -5,9 +5,9 @@ import java.util.Objects;
 public class User 
 {
     private Person person;
-    private UserAccount account;
+    private Account account;
 
-    public User(Person person, UserAccount account)
+    public User(Person person, Account account)
     {
         this.person = person;
         this.account = account;
@@ -16,11 +16,11 @@ public class User
     public static User generic()
     {
         Person person = Person.generic();
-        UserAccount account = UserAccount.generic();
+        Account account = Account.generic();
         return new User(person, account);
     }
 
-    public UserAccount account()
+    public Account account()
     {
         return account;
     }
@@ -28,7 +28,7 @@ public class User
     public Person person()
     {
         return person;
-    }    
+    }
     
     
     @Override

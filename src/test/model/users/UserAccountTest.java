@@ -5,16 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.models.users.UserAccount;
+import main.models.users.Account;
 
 public class UserAccountTest 
 {    
-    UserAccount johnDoe;
+    Account johnDoe;
 
     @BeforeEach
     void initializeGenericUser()
     {
-        johnDoe = new UserAccount("john.doe", "john.doe@example.com", "J04nD03123");
+        johnDoe = new Account("john.doe", "john.doe@example.com", "J04nD03123");
     }
 
 
@@ -31,7 +31,7 @@ public class UserAccountTest
     @DisplayName("Using generic factory method")
     void usingGenericFactory()
     {
-        UserAccount generic = UserAccount.generic();
+        Account generic = Account.generic();
         Assertions.assertEquals(johnDoe.username(), generic.username());
         Assertions.assertEquals(johnDoe.email(), generic.email());
         Assertions.assertFalse(johnDoe.isAdmin());

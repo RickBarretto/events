@@ -2,7 +2,7 @@ package main.models.users;
 
 import java.util.Objects;
 
-public class UserAccount 
+public class Account 
 {
     private String username;
     private String email;
@@ -14,7 +14,7 @@ public class UserAccount
      * @param email
      * @param password
      */
-    public UserAccount(String username, String email, String password) 
+    public Account(String username, String email, String password) 
     {
         this.username = username;
         this.email = email;
@@ -22,12 +22,12 @@ public class UserAccount
         this.admin = false;
     }
 
-    public static UserAccount generic()
+    public static Account generic()
     {
-        return new UserAccount("john.doe", "john.doe@example.com", "J04nD03123");
+        return new Account("john.doe", "john.doe@example.com", "J04nD03123");
     }
     
-    public UserAccount asAdmin()
+    public Account asAdmin()
     {
         this.admin = true;
         return this;
@@ -63,9 +63,9 @@ public class UserAccount
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!(obj instanceof UserAccount))
+        if (!(obj instanceof Account))
             return false;
-        UserAccount other = (UserAccount) obj;
+        Account other = (Account) obj;
         return Objects.equals(username, other.username) && Objects.equals(email, other.email)
                 && Objects.equals(password, other.password) && Objects.equals(admin, other.admin);
     }
