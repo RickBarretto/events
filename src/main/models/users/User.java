@@ -24,10 +24,20 @@ public class User
     {
         return account;
     }
-
+    
     public Person person()
     {
         return person;
+    }
+
+    public Boolean isOwner(Account account)
+    {
+        return this.account.equals(account);
+    }
+    
+    public Boolean isOwner(String emailOrLogin, String password)
+    {
+        return this.account.equals(emailOrLogin, password);
     }
     
     

@@ -48,12 +48,6 @@ public class Account
         return admin;
     }
     
-    public Boolean isOwner(String loginOrEmail, String password)
-    {
-        if (!(loginOrEmail.equals(username) || loginOrEmail.equals(email))) return false;
-        return this.password.equals(password);
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(username, email, password, admin);
@@ -69,5 +63,12 @@ public class Account
         return Objects.equals(username, other.username) && Objects.equals(email, other.email)
                 && Objects.equals(password, other.password) && Objects.equals(admin, other.admin);
     }
+
+    public Boolean equals(String loginOrEmail, String password)
+    {
+        if (!(loginOrEmail.equals(username) || loginOrEmail.equals(email))) return false;
+        return this.password.equals(password);
+    }
+
 
 }
