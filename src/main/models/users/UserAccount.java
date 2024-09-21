@@ -1,4 +1,4 @@
-package main.types;
+package main.models.users;
 
 public class UserAccount 
 {

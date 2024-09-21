@@ -1,4 +1,4 @@
-package main.types;
+package main.models.users;
 
 
 public record Person(String name, String cpf) 

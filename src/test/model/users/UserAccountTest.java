@@ -1,12 +1,12 @@
-package test.types;
+package test.model.users;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.types.Person;
-import main.types.UserAccount;
+import main.models.users.Person;
+import main.models.users.UserAccount;
 
 public class UserAccountTest 
 {    
