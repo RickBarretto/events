@@ -1,0 +1,45 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "testing.saveBeforeTest": true,
+    "testing.autoRun.delay": 1000,
+    "testing.coverageToolbarEnabled": true,
+    "testing.alwaysRevealTestOnStateChange": true,
+    "testing.openTesting": "openOnTestStart",
+    "testing.showCoverageInExplorer": true,
+    "java.autobuild.enabled": true,
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+    "java.debug.settings.hotCodeReplace": "auto",
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.import.generatesMetadataFilesAtProjectRoot": true,
+    "java.compile.nullAnalysis.nonnull": [
+        "javax.annotation.Nonnull",
+        "org.eclipse.jdt.annotation.NonNull",
+        "org.springframework.lang.NonNull"
+    ],
+    "java.compile.nullAnalysis.nullable": [
+        "javax.annotation.Nullable",
+        "org.eclipse.jdt.annotation.Nullable",
+        "org.springframework.lang.Nullable"
+    ],
+    "java.errors.incompleteClasspath.severity": "error",
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.completion.collapseCompletionItems": true,
+    "java.completion.chain.enabled": true,
+    "java.signatureHelp.description.enabled": true,
+    "java.codeGeneration.hashCodeEquals.useJava7Objects": true,
+    "java.codeGeneration.addFinalForNewDeclaration": "all",
+    "java.codeGeneration.generateComments": true,
+    "java.codeGeneration.hashCodeEquals.useInstanceof": true,
+    "java.codeGeneration.toString.codeStyle": "STRING_FORMAT",
+    "java.codeGeneration.toString.skipNullValues": true,
+    "java.codeGeneration.useBlocks": false,
+    "java.edit.smartSemicolonDetection.enabled": true,
+    "java.saveActions.organizeImports": true,
+    "java.referencesCodeLens.enabled": true,
+    "java.implementationsCodeLens.enabled": true,
+    "java.symbols.includeSourceMethodDeclarations": false,
+    "java.typeHierarchy.lazyLoad": true
+}
