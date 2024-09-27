@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.models.users.Account;
+import main.core.models.users.Account;
 
 public class UserAccountTest 
 {    

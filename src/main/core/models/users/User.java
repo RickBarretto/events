@@ -1,14 +1,17 @@
-package main.models.users;
+package main.core.models.users;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class User 
 {
+    private UUID id;
     private Person person;
     private Account account;
 
     public User(Person person, Account account)
     {
+        this.id = UUID.fromString(account.username());
         this.person = person;
         this.account = account;
     }
@@ -24,7 +27,7 @@ public class User
     {
         return account;
     }
-    
+
     public Person person()
     {
         return person;
