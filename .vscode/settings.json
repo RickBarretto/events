@@ -41,5 +41,7 @@
     "java.referencesCodeLens.enabled": true,
     "java.implementationsCodeLens.enabled": true,
     "java.symbols.includeSourceMethodDeclarations": false,
-    "java.typeHierarchy.lazyLoad": true
+    "java.typeHierarchy.lazyLoad": true,
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.explorer.showNonJavaResources": false
 }
