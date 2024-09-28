@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import junit.framework.TestCase;
 import main.utils.Pair;
 
 public class PairTest
