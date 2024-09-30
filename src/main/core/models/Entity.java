@@ -1,6 +1,6 @@
 package main.core.models;
 
-public interface Entity 
+public interface Entity<ID extends EntityId>
 {
-    <ID extends EntityId> ID id();
+    ID id();
 }
