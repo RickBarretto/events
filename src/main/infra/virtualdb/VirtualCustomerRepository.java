@@ -3,11 +3,11 @@ package main.infra.virtualdb;
 import java.util.Optional;
 import java.util.HashMap;
 
-import main.core.contexts.customers.CustomerRepository;
 import main.core.models.users.Customer;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
 import main.core.models.users.types.Username;
+import main.core.roles.CustomerRepository;
 
 public class VirtualCustomerRepository 
 implements CustomerRepository
