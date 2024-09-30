@@ -11,6 +11,15 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
     ],
+    "[cucumber]": {
+        "editor.semanticHighlighting.enabled": true
+    },
+    "cucumber.features": [
+        "src/test/**/*.feature",
+        "features/**/*.feature",
+        "tests/**/*.feature",
+        "*specs*/**/*.feature"
+    ],
     "java.debug.settings.hotCodeReplace": "auto",
     "java.dependency.packagePresentation": "hierarchical",
     "java.import.generatesMetadataFilesAtProjectRoot": true,
