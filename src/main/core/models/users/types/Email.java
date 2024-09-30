@@ -1,5 +1,7 @@
 package main.core.models.users.types;
 
+import java.util.Objects;
+
 // import java.text.MessageFormat;
 // import java.util.regex.Pattern;
 
@@ -12,6 +14,21 @@ public class Email
     public Email(String value)
     {
         this.value = value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Email))
+            return false;
+        Email other = (Email) obj;
+        return Objects.equals(value, other.value);
     }
 
     @Override

@@ -13,6 +13,16 @@ public class Account
         this.password = password;
     }
 
+    public Email email()
+    {
+        return email;
+    }
+
+    public Username username()
+    {
+        return username;
+    }
+
     public boolean hasLogin(String loginOrEmail, String rawPassword) 
     {
         var isSameLogin = this.username.toString().equals(loginOrEmail);
