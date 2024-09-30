@@ -4,5 +4,7 @@ import java.util.UUID;
 
 public interface EntityId 
 {
-    UUID value();    
+    UUID value();
+    int hashCode();
+    boolean equals(Object obj);
 }
