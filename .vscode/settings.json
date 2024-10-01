@@ -20,6 +20,10 @@
         "tests/**/*.feature",
         "*specs*/**/*.feature"
     ],
+    "cucumber.glue": [
+        "features/**/*.java",
+        "src/test/**/*.java",
+    ],
     "java.debug.settings.hotCodeReplace": "auto",
     "java.dependency.packagePresentation": "hierarchical",
     "java.import.generatesMetadataFilesAtProjectRoot": true,
