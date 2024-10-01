@@ -1,4 +1,4 @@
-package tests.infra.virtualdb;
+package test.infra.virtualdb;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
