@@ -1,11 +1,9 @@
 package main.core.models.users;
 
-import main.core.models.Entity;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 
 public class Customer
-implements Entity<CustomerID>
 {
     private CustomerID id;
     private Account account;
@@ -16,7 +14,6 @@ implements Entity<CustomerID>
         this.account = account;
     }
 
-    @Override
     public CustomerID id() 
     {
         return id;
