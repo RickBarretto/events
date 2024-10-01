@@ -1,4 +1,4 @@
-package main.core.contexts.customers;
+package main.core.contexts.users;
 
 import main.core.contexts.Context;
 import main.core.models.users.Customer;

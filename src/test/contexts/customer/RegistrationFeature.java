@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.core.contexts.customers.CustomerRegistering;
-import main.core.contexts.customers.UserAlreadyRegistered;
+import main.core.contexts.users.CustomerRegistering;
+import main.core.contexts.users.UserAlreadyRegistered;
 import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
