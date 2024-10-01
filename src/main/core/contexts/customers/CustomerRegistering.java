@@ -4,16 +4,16 @@ import main.core.contexts.Context;
 import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
-import main.core.roles.CustomerRepository;
+import main.core.roles.CustomersRepository;
 
 public class CustomerRegistering
 extends Context<Account>
 {
-    private CustomerRepository repository;
+    private CustomersRepository repository;
     private Account account;
     private boolean registered;
 
-    public CustomerRegistering(CustomerRepository repository, Account account)
+    public CustomerRegistering(CustomersRepository repository, Account account)
     {
         this.repository = repository;
         this.account = account;

@@ -7,10 +7,10 @@ import main.core.models.users.Customer;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
 import main.core.models.users.types.Username;
-import main.core.roles.CustomerRepository;
+import main.core.roles.CustomersRepository;
 
 public class VirtualCustomerRepository 
-implements CustomerRepository
+implements CustomersRepository
 {
     HashMap<CustomerID, Customer> customers;
 

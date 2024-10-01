@@ -7,7 +7,7 @@ import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
 import main.core.models.users.types.Username;
 
-public interface CustomerRepository 
+public interface CustomersRepository 
 {
     void register(Customer customer);
     boolean exists(Email email);
