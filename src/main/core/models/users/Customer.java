@@ -3,8 +3,8 @@ package main.core.models.users;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 
-public class Customer
-extends User
+public final class Customer
+implements User<CustomerID>
 {
     private CustomerID id;
     private Account account;

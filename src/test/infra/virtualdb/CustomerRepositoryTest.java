@@ -46,12 +46,12 @@ public class CustomerRepositoryTest
     @Nested
     class EmptyRepoTest
     {
-        VirtualUserRepository emptyRepo;
+        VirtualUserRepository<Customer, CustomerID> emptyRepo;
 
         @BeforeEach
         void initEmptyRepository()
         {
-            emptyRepo = new VirtualUserRepository();
+            emptyRepo = new VirtualUserRepository<>();
         }
 
         @Test
@@ -96,12 +96,12 @@ public class CustomerRepositoryTest
     @Nested
     class FilledRepoTest
     {
-        VirtualUserRepository filledRepo;
+        VirtualUserRepository<Customer, CustomerID> filledRepo;
 
         @BeforeEach
         void initEmptyRepository()
         {
-            filledRepo = new VirtualUserRepository();
+            filledRepo = new VirtualUserRepository<>();
             filledRepo.register(johnDoe);
             filledRepo.register(janeDoe);
         }

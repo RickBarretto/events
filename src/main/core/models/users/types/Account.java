@@ -1,6 +1,6 @@
 package main.core.models.users.types;
 
-public class Account 
+public final class Account 
 {
     private Username username;
     private Email email;

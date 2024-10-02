@@ -7,7 +7,7 @@ import java.util.Objects;
 
 // import main.core.models.users.exceptions.InvalidEmail;
 
-public class Email 
+public final class Email 
 {
     private String value;
 

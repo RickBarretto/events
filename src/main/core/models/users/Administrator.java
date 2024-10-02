@@ -8,8 +8,8 @@ import main.core.models.users.types.AdministratorID;
 /**
  * Administrator
  */
-public class Administrator 
-extends User
+public final class Administrator 
+implements User<AdministratorID>
 {
     private AdministratorID id;
     private Account account;

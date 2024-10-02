@@ -9,11 +9,11 @@ import main.core.roles.UserRepository;
 public class CustomerRegistering 
 {
     private AccountAvailability availabilityContext;
-    private UserRepository repository;
+    private UserRepository<Customer, CustomerID> repository;
     private Account account;
     private boolean registered;
 
-    public CustomerRegistering(UserRepository repository, Account account)
+    public CustomerRegistering(UserRepository<Customer, CustomerID> repository, Account account)
     {
         this.availabilityContext = new AccountAvailability(repository, account);
         this.repository = repository;

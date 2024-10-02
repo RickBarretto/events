@@ -22,7 +22,7 @@ import main.infra.virtualdb.VirtualUserRepository;
 public class AccountAvailabilityFeature 
 {
     private Account account;
-    private UserRepository repository;
+    private UserRepository<Customer, CustomerID> repository;
 
     @BeforeEach
     public void initAccount()
@@ -33,7 +33,7 @@ public class AccountAvailabilityFeature
             "12345678"
         );
         
-        this.repository = new VirtualUserRepository();
+        this.repository = new VirtualUserRepository<>();
         this.repository.register(new Customer(new CustomerID(), account));
     }
 
@@ -49,7 +49,7 @@ public class AccountAvailabilityFeature
     {
         // When checking availability
         var context = new AccountAvailability(
-            new VirtualUserRepository(),
+            new VirtualUserRepository<Customer, CustomerID>(),
             account
         );
 

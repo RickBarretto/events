@@ -2,12 +2,10 @@ package main.core.roles;
 
 import java.util.Optional;
 
-import main.core.models.users.User;
 import main.core.models.users.types.Email;
-import main.core.models.users.types.UserID;
 import main.core.models.users.types.Username;
 
-public interface UserRepository
+public interface UserRepository<User, UserID>
 {
     void register(User user);
     boolean exists(UserID id);

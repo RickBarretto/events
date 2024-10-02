@@ -6,7 +6,7 @@ import java.util.Objects;
 
 // import main.core.models.users.exceptions.InvalidUsername;
 
-public class Username 
+public final class Username 
 {
     private String value;
 

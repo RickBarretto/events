@@ -3,14 +3,12 @@ package main.infra.virtualdb;
 import java.util.Optional;
 import java.util.HashMap;
 
-import main.core.models.users.User;
 import main.core.models.users.types.Email;
-import main.core.models.users.types.UserID;
 import main.core.models.users.types.Username;
 import main.core.roles.UserRepository;
 
-public class VirtualUserRepository
-implements UserRepository
+public final class VirtualUserRepository<User extends main.core.models.users.User<UserID>, UserID>
+implements UserRepository<User, UserID>
 {
     HashMap<UserID, User> customers;
 

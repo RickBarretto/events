@@ -45,7 +45,7 @@ public class RegistrationFeature
             
         // When registering a new Account
         var context = new CustomerRegistering(
-            new VirtualUserRepository(),
+            new VirtualUserRepository<Customer, CustomerID>(),
             newAccount 
         );
 
@@ -65,7 +65,7 @@ public class RegistrationFeature
     void shouldThrow()
     {
         // Given an empty repository
-        var repository = new VirtualUserRepository();
+        var repository = new VirtualUserRepository<Customer, CustomerID>();
 
         // Given a registered Customer
         var account = new Account(
