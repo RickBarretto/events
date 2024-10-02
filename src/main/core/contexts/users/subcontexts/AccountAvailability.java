@@ -3,20 +3,18 @@ package main.core.contexts.users.subcontexts;
 import java.util.Optional;
 
 import main.core.contexts.Context;
-import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
-import main.core.models.users.types.CustomerID;
 import main.core.roles.UserRepository;
 
-public class AccountAvailability
+public final class AccountAvailability<User, UserID>
 extends Context<Account> 
 {
-    private UserRepository<Customer, CustomerID> repository;
+    private UserRepository<User, UserID> repository;
     private Account account;
     private boolean unavailableEmail;
     private boolean unavailableUsername;
 
-    public AccountAvailability(UserRepository<Customer, CustomerID> repository, Account account)
+    public AccountAvailability(UserRepository<User, UserID> repository, Account account)
     {
         this.repository = repository;
         this.account = account;
