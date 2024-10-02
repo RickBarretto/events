@@ -48,7 +48,7 @@ public class AccountAvailabilityFeature
     public void shouldBeAvailable()
     {
         // When checking availability
-        var context = new AccountAvailability(
+        var context = new AccountAvailability<>(
             new VirtualUserRepository<Customer, CustomerID>(),
             account
         );
@@ -67,7 +67,7 @@ public class AccountAvailabilityFeature
     public void shouldBeUnavailable()
     {
         // When registering a new Account
-        var context = new AccountAvailability(
+        var context = new AccountAvailability<>(
             repository,
             account
         );
@@ -89,7 +89,7 @@ public class AccountAvailabilityFeature
     public void shouldBeUnavailableForSameEmail()
     {
         // When registering a new Account
-        var context = new AccountAvailability(
+        var context = new AccountAvailability<>(
             repository,
             new Account(
                 new Username(""), 
@@ -114,7 +114,7 @@ public class AccountAvailabilityFeature
     @Test
     public void shouldBeUnavailableForSameUsername()
     {
-        var context = new AccountAvailability(
+        var context = new AccountAvailability<>(
             repository,
             new Account(
                 new Username("john.doe"), 
