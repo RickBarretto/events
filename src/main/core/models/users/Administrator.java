@@ -9,6 +9,7 @@ import main.core.models.users.types.AdministratorID;
  * Administrator
  */
 public class Administrator 
+extends User
 {
     private AdministratorID id;
     private Account account;

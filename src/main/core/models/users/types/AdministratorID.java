@@ -1,9 +1,7 @@
 package main.core.models.users.types;
 
-import main.core.models.EntityId;
-
 public class AdministratorID 
-extends EntityId
+extends UserID
 {
     public AdministratorID()
     {

@@ -1,17 +1,8 @@
 package main.core.models.users.types;
 
-import java.util.UUID;
-
-import main.core.models.EntityId;
-
 public class CustomerID 
-extends EntityId
+extends UserID
 {
-    @Override
-    public UUID value() {
-        return super.value();
-    }
-
     public CustomerID()
     {
         super();

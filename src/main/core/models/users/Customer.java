@@ -4,6 +4,7 @@ import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 
 public class Customer
+extends User
 {
     private CustomerID id;
     private Account account;
