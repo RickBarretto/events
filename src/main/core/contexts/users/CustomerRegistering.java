@@ -1,42 +1,33 @@
 package main.core.contexts.users;
 
-import main.core.contexts.Context;
+import main.core.contexts.users.subcontexts.AccountAvailability;
 import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
-import main.core.roles.CustomersRepository;
+import main.core.roles.UserRepository;
 
-public class CustomerRegistering
-extends Context<Account>
+public class CustomerRegistering 
 {
-    private CustomersRepository repository;
+    private AccountAvailability availabilityContext;
+    private UserRepository repository;
     private Account account;
     private boolean registered;
 
-    public CustomerRegistering(CustomersRepository repository, Account account)
+    public CustomerRegistering(UserRepository repository, Account account)
     {
+        this.availabilityContext = new AccountAvailability(repository, account);
         this.repository = repository;
         this.account = account;
         this.registered = false;
     }
 
-    public void register() 
+    public void register()
     throws UserAlreadyRegistered
     {
-        if (this.repository.exists(account.email()))
-            this.notifyExistenceFor("Email");
-        if (this.repository.exists(account.username()))
-            this.notifyExistenceFor("Username");
-
-        var customer = new Customer(new CustomerID(), this.account);
-        this.repository.register(customer);
-        this.registered = true;
-    }
-
-    private void notifyExistenceFor(String paramName)
-    throws UserAlreadyRegistered
-    {
-        throw new UserAlreadyRegistered(paramName + " is already registered");
+        if (!availabilityContext.isAvailable())
+            throw new UserAlreadyRegistered(availabilityContext.reason().get());
+        repository.register(new Customer(new CustomerID(), account));
+        registered = true;
     }
 
     public boolean hasRegistered()
