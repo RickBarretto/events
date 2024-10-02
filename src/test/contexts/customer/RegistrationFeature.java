@@ -15,7 +15,7 @@ import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
 import main.core.models.users.types.Username;
-import main.infra.virtualdb.VirtualCustomerRepository;
+import main.infra.virtualdb.VirtualUserRepository;
 
 /* Feature: Registering a new user
  *   In order to register new users
@@ -45,7 +45,7 @@ public class RegistrationFeature
             
         // When registering a new Account
         var context = new CustomerRegistering(
-            new VirtualCustomerRepository(),
+            new VirtualUserRepository(),
             newAccount 
         );
 
@@ -65,7 +65,7 @@ public class RegistrationFeature
     void shouldThrow()
     {
         // Given an empty repository
-        var repository = new VirtualCustomerRepository();
+        var repository = new VirtualUserRepository();
 
         // Given a registered Customer
         var account = new Account(

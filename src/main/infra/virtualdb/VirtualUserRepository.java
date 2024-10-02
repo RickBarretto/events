@@ -3,24 +3,24 @@ package main.infra.virtualdb;
 import java.util.Optional;
 import java.util.HashMap;
 
-import main.core.models.users.Customer;
-import main.core.models.users.types.CustomerID;
+import main.core.models.users.User;
 import main.core.models.users.types.Email;
+import main.core.models.users.types.UserID;
 import main.core.models.users.types.Username;
-import main.core.roles.CustomersRepository;
+import main.core.roles.UserRepository;
 
-public class VirtualCustomerRepository 
-implements CustomersRepository
+public class VirtualUserRepository
+implements UserRepository
 {
-    HashMap<CustomerID, Customer> customers;
+    HashMap<UserID, User> customers;
 
-    public VirtualCustomerRepository()
+    public VirtualUserRepository()
     {
         customers = new HashMap<>(); 
     }
 
     @Override
-    public void register(Customer customer) 
+    public void register(User customer) 
     {
         assert !exists(customer.id()) : 
             "Must verify the existence beforehand";
@@ -29,7 +29,7 @@ implements CustomersRepository
     }
 
     @Override
-    public Optional<Customer> by(Email email) 
+    public Optional<User> by(Email email) 
     {
         return customers.values()
             .stream()
@@ -38,7 +38,7 @@ implements CustomersRepository
     }
 
     @Override
-    public Optional<Customer> by(Username username) 
+    public Optional<User> by(Username username) 
     {
         return customers.values()
             .stream()
@@ -47,7 +47,7 @@ implements CustomersRepository
     }
 
     @Override
-    public Optional<Customer> by(CustomerID id) 
+    public Optional<User> by(UserID id) 
     {
         return Optional.ofNullable(customers.get(id));
     }
@@ -69,7 +69,7 @@ implements CustomersRepository
     }
 
     @Override
-    public boolean exists(CustomerID id) 
+    public boolean exists(UserID id) 
     {
         return customers.containsKey(id);
     }

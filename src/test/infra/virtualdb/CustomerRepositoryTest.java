@@ -16,7 +16,7 @@ import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
 import main.core.models.users.types.Username;
-import main.infra.virtualdb.VirtualCustomerRepository;
+import main.infra.virtualdb.VirtualUserRepository;
 
 public class CustomerRepositoryTest 
 {
@@ -46,12 +46,12 @@ public class CustomerRepositoryTest
     @Nested
     class EmptyRepoTest
     {
-        VirtualCustomerRepository emptyRepo;
+        VirtualUserRepository emptyRepo;
 
         @BeforeEach
         void initEmptyRepository()
         {
-            emptyRepo = new VirtualCustomerRepository();
+            emptyRepo = new VirtualUserRepository();
         }
 
         @Test
@@ -96,12 +96,12 @@ public class CustomerRepositoryTest
     @Nested
     class FilledRepoTest
     {
-        VirtualCustomerRepository filledRepo;
+        VirtualUserRepository filledRepo;
 
         @BeforeEach
         void initEmptyRepository()
         {
-            filledRepo = new VirtualCustomerRepository();
+            filledRepo = new VirtualUserRepository();
             filledRepo.register(johnDoe);
             filledRepo.register(janeDoe);
         }
