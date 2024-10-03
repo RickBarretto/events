@@ -1,4 +1,4 @@
-package main.core.models;
+package main.core.roles;
 
 import java.util.Objects;
 import java.util.UUID;

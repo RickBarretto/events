@@ -8,13 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import main.core.contexts.users.CustomerRegistering;
+import main.core.contexts.users.UserRegistering;
 import main.core.contexts.users.UserAlreadyRegistered;
 import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
-import main.core.models.users.types.Username;
 import main.infra.virtualdb.VirtualUserRepository;
 
 /* Feature: Registering a new user
@@ -38,13 +37,12 @@ public class RegistrationFeature
     {
         // Given an Account
         var newAccount = new Account(
-            new Username("john.doe"),
             new Email("john@example.com"),
             "12345678"
             );
             
         // When registering a new Account
-        var context = new CustomerRegistering(
+        var context = new UserRegistering(
             new VirtualUserRepository<Customer, CustomerID>(),
             newAccount 
         );
@@ -69,7 +67,6 @@ public class RegistrationFeature
 
         // Given a registered Customer
         var account = new Account(
-            new Username("john.doe"),
             new Email("john@example.com"),
             "12345678"
         );
@@ -77,7 +74,7 @@ public class RegistrationFeature
         repository.register(new Customer(new CustomerID(), account));
 
         // When creating a new account
-        var context = new CustomerRegistering(repository, account);
+        var context = new UserRegistering(repository, account);
         assertThrows(UserAlreadyRegistered.class, () -> context.register());
         assertFalse(context.hasRegistered());
     }

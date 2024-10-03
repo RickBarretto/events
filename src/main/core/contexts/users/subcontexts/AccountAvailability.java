@@ -4,17 +4,18 @@ import java.util.Optional;
 
 import main.core.contexts.Context;
 import main.core.models.users.types.Account;
+import main.core.roles.AccountOwner;
+import main.core.roles.EntityId;
 import main.core.roles.UserRepository;
 
-public final class AccountAvailability<User, UserID>
+public final class AccountAvailability<T extends AccountOwner<ID>, ID extends EntityId>
 extends Context<Account> 
 {
-    private UserRepository<User, UserID> repository;
+    private UserRepository<T, ID> repository;
     private Account account;
     private boolean unavailableEmail;
-    private boolean unavailableUsername;
 
-    public AccountAvailability(UserRepository<User, UserID> repository, Account account)
+    public AccountAvailability(UserRepository<T, ID> repository, Account account)
     {
         this.repository = repository;
         this.account = account;
@@ -23,29 +24,18 @@ extends Context<Account>
     private void updateAvailability()
     {
         unavailableEmail = repository.exists(account.email());
-        unavailableUsername = repository.exists(account.username());
     }
 
     public boolean isAvailable()
     {
         updateAvailability();
-        return !(unavailableEmail || unavailableUsername);
+        return !(unavailableEmail);
     }
 
     public Optional<String> reason()
     {
         updateAvailability();
-
-        String reason;
-        if (unavailableEmail && unavailableUsername)
-            reason = "Email and Username are";
-        else if (unavailableEmail)
-            reason = "Email is";
-        else if (unavailableUsername)
-            reason = "Username is";
-        else
-            return Optional.empty();
-
-        return Optional.of(reason + " already registered");
+        if (this.isAvailable()) return Optional.empty();
+        return Optional.of("Email is already registered");
     }
 }

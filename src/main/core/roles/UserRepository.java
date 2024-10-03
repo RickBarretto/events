@@ -3,15 +3,12 @@ package main.core.roles;
 import java.util.Optional;
 
 import main.core.models.users.types.Email;
-import main.core.models.users.types.Username;
 
-public interface UserRepository<User, UserID>
+public interface UserRepository<T extends AccountOwner<ID>, ID extends EntityId>
 {
-    void register(User user);
-    boolean exists(UserID id);
-    boolean exists(Email email);
-    boolean exists(Username username);   
-    Optional<User> by(UserID id);
-    Optional<User> by(Email email);
-    Optional<User> by(Username username); 
+    void register(T user);
+    boolean exists(ID id);
+    boolean exists(Email email);  
+    Optional<T> by(ID id);
+    Optional<T> by(Email email);
 }

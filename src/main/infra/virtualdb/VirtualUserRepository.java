@@ -4,13 +4,14 @@ import java.util.Optional;
 import java.util.HashMap;
 
 import main.core.models.users.types.Email;
-import main.core.models.users.types.Username;
+import main.core.roles.AccountOwner;
+import main.core.roles.EntityId;
 import main.core.roles.UserRepository;
 
-public final class VirtualUserRepository<User extends main.core.models.users.User<UserID>, UserID>
-implements UserRepository<User, UserID>
+public final class VirtualUserRepository<T extends AccountOwner<ID>, ID extends EntityId>
+implements UserRepository<T, ID>
 {
-    HashMap<UserID, User> customers;
+    HashMap<ID, T> customers;
 
     public VirtualUserRepository()
     {
@@ -18,16 +19,14 @@ implements UserRepository<User, UserID>
     }
 
     @Override
-    public void register(User customer) 
+    public void register(T customer) 
     {
-        assert !exists(customer.id()) : 
-            "Must verify the existence beforehand";
-
+        assert !exists(customer.id()) : "Must verify the existence beforehand";
         customers.put(customer.id(), customer);
     }
 
     @Override
-    public Optional<User> by(Email email) 
+    public Optional<T> by(Email email) 
     {
         return customers.values()
             .stream()
@@ -36,16 +35,7 @@ implements UserRepository<User, UserID>
     }
 
     @Override
-    public Optional<User> by(Username username) 
-    {
-        return customers.values()
-            .stream()
-            .filter((customer) -> customer.account().username().equals(username))
-            .findAny();
-    }
-
-    @Override
-    public Optional<User> by(UserID id) 
+    public Optional<T> by(ID id) 
     {
         return Optional.ofNullable(customers.get(id));
     }
@@ -59,15 +49,7 @@ implements UserRepository<User, UserID>
     }
 
     @Override
-    public boolean exists(Username username) 
-    {
-        return customers.values().stream().anyMatch(
-            (customer) -> customer.account().username().equals(username)
-        );
-    }
-
-    @Override
-    public boolean exists(UserID id) 
+    public boolean exists(ID id) 
     {
         return customers.containsKey(id);
     }

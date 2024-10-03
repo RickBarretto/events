@@ -15,7 +15,6 @@ import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
-import main.core.models.users.types.Username;
 import main.core.roles.UserRepository;
 import main.infra.virtualdb.VirtualUserRepository;
 
@@ -28,7 +27,6 @@ public class AccountAvailabilityFeature
     public void initAccount()
     {
         this.account = new Account(
-            new Username("john.doe"),
             new Email("john@example.com"),
             "12345678"
         );
@@ -64,35 +62,12 @@ public class AccountAvailabilityFeature
      *      Then Account should be available
      */
     @Test
-    public void shouldBeUnavailable()
-    {
-        // When registering a new Account
-        var context = new AccountAvailability<>(
-            repository,
-            account
-        );
-
-        assertFalse(context.isAvailable());
-        assertEquals(
-            "Email and Username are already registered", 
-            context.reason().get()
-        );
-    }
-
-    /** Scenario: Checking an Account availability 
-     *    Given some Account
-     *      And a Repository with the same Email
-     *    When checking availability
-     *      Then Account should be available
-     */
-    @Test
     public void shouldBeUnavailableForSameEmail()
     {
         // When registering a new Account
         var context = new AccountAvailability<>(
             repository,
             new Account(
-                new Username(""), 
                 new Email("john@example.com"), 
                 ""
             )
@@ -104,30 +79,4 @@ public class AccountAvailabilityFeature
             context.reason().get()
         );
     }
-
-    /** Scenario: Checking an Account availability 
-     *    Given some Account
-     *      And a Repository with the same Email
-     *    When checking availability
-     *      Then Account should be available
-     */
-    @Test
-    public void shouldBeUnavailableForSameUsername()
-    {
-        var context = new AccountAvailability<>(
-            repository,
-            new Account(
-                new Username("john.doe"), 
-                new Email(""), 
-                ""
-            )
-        );
-
-        assertFalse(context.isAvailable());
-        assertEquals(
-            "Username is already registered", 
-            context.reason().get()
-        );
-    }
-
 }

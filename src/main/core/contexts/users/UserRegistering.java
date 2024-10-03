@@ -6,14 +6,14 @@ import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 import main.core.roles.UserRepository;
 
-public class CustomerRegistering 
+public class UserRegistering 
 {
     private AccountAvailability<Customer, CustomerID> availabilityContext;
     private UserRepository<Customer, CustomerID> repository;
     private Account account;
     private boolean registered;
 
-    public CustomerRegistering(UserRepository<Customer, CustomerID> repository, Account account)
+    public UserRegistering(UserRepository<Customer, CustomerID> repository, Account account)
     {
         this.availabilityContext = new AccountAvailability<>(repository, account);
         this.repository = repository;
