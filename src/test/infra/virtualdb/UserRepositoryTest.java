@@ -15,10 +15,9 @@ import main.core.models.users.Customer;
 import main.core.models.users.types.Account;
 import main.core.models.users.types.CustomerID;
 import main.core.models.users.types.Email;
-import main.core.models.users.types.Username;
 import main.infra.virtualdb.VirtualUserRepository;
 
-public class CustomerRepositoryTest 
+public class UserRepositoryTest
 {
     Customer johnDoe;
     Customer janeDoe;
@@ -29,13 +28,11 @@ public class CustomerRepositoryTest
     void initCustomers()
     {
         this.johnDoe = new Customer(new CustomerID(), new Account(
-            new Username("john.doe123"), 
             new Email("john@example.com"), 
             "12345678"
         ));
 
         this.janeDoe = new Customer(new CustomerID(), new Account(
-            new Username("jane.doe123"), 
             new Email("jane@example.co"), 
             "12345678"
         ));
@@ -73,11 +70,9 @@ public class CustomerRepositoryTest
         {
             assertFalse(emptyRepo.exists(johnDoe.id()));
             assertFalse(emptyRepo.exists(johnDoe.account().email()));
-            assertFalse(emptyRepo.exists(johnDoe.account().username()));
             
             assertFalse(emptyRepo.exists(janeDoe.id()));
             assertFalse(emptyRepo.exists(janeDoe.account().email()));
-            assertFalse(emptyRepo.exists(janeDoe.account().username()));
         }
 
         @Test
@@ -85,11 +80,9 @@ public class CustomerRepositoryTest
         {
             assertTrue(emptyRepo.by(johnDoe.id()).isEmpty());
             assertTrue(emptyRepo.by(johnDoe.account().email()).isEmpty());
-            assertTrue(emptyRepo.by(johnDoe.account().username()).isEmpty());
             
             assertTrue(emptyRepo.by(janeDoe.id()).isEmpty());
             assertTrue(emptyRepo.by(janeDoe.account().email()).isEmpty());
-            assertTrue(emptyRepo.by(janeDoe.account().username()).isEmpty());
         }
     }
 
@@ -111,11 +104,9 @@ public class CustomerRepositoryTest
         {
             assertTrue(filledRepo.exists(johnDoe.id()));
             assertTrue(filledRepo.exists(johnDoe.account().email()));
-            assertTrue(filledRepo.exists(johnDoe.account().username()));
             
             assertTrue(filledRepo.exists(janeDoe.id()));
             assertTrue(filledRepo.exists(janeDoe.account().email()));
-            assertTrue(filledRepo.exists(janeDoe.account().username()));
         }
 
         @Test
@@ -123,11 +114,9 @@ public class CustomerRepositoryTest
         {
             assertTrue(filledRepo.by(johnDoe.id()).isPresent());
             assertTrue(filledRepo.by(johnDoe.account().email()).isPresent());
-            assertTrue(filledRepo.by(johnDoe.account().username()).isPresent());
 
             assertTrue(filledRepo.by(janeDoe.id()).isPresent());
             assertTrue(filledRepo.by(janeDoe.account().email()).isPresent());
-            assertTrue(filledRepo.by(janeDoe.account().username()).isPresent());
         }
     }
 

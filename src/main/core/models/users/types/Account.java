@@ -2,13 +2,11 @@ package main.core.models.users.types;
 
 public final class Account 
 {
-    private Username username;
     private Email email;
     private String password;
 
-    public Account(Username username, Email email, String password)
+    public Account(Email email, String password)
     {
-        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -18,18 +16,9 @@ public final class Account
         return email;
     }
 
-    public Username username()
+    public boolean hasLogin(Email email, String rawPassword) 
     {
-        return username;
-    }
-
-    public boolean hasLogin(String loginOrEmail, String rawPassword) 
-    {
-        var isSameLogin = this.username.toString().equals(loginOrEmail);
-        var isSameEmail = this.email.toString().equals(loginOrEmail);
-
-        if (!(isSameEmail || isSameLogin)) return false;
-
+        if (!(this.email.toString().equals(email.toString()))) return false;
         return this.password.equals(rawPassword);
     }
 }
