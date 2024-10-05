@@ -42,7 +42,7 @@
 		],
 		"description": "WithSetter"
 	},
-	"Field": {
+	"Id-Class": {
 		"prefix": "idclass",
 		"body": [
 			"import java.util.UUID;",
@@ -55,6 +55,7 @@
 			"    public ${TM_FILENAME_BASE}() { super(); }",
 			"}"
 		],
-		"description": "Entity ID class"
+		"description": "Custom Entity ID class"
+	},
 	}
 }
