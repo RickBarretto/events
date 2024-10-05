@@ -148,8 +148,34 @@ public class EventRegisteringFeature {
     }
 
     @Nested
+    @Scennario("Admin trying to re-register an Event")
+    @Given("Some Post, an Admin User and the Current Day")
     class UnsucessfulForAlreadyRegistered {
-        
+
+        @When("Trying to register an already registered Event")
+        void registerTwice() 
+        throws PermissionDenied, EventAlreadyRegistered, CantRegisterPastEvent
+        {
+            var poster = somePoster();
+            var user = someAdmin();
+            var currentDay = LocalDate.of(2024, 10, 1);
+
+            var context = new EventRegistering()
+                .into(repository)
+                .poster(poster)
+                .by(user)
+                .on(currentDay);
+
+            context.register();
+            context.register();
+        }
+
+        @Test
+        @Then("Should not re-register and throw EventAlreadyRegistered")
+        void shouldNotAllow() {
+            assertThrows(EventAlreadyRegistered.class, () -> registerTwice());
+            assertTrue(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
+        }
     }
     
     @Nested
