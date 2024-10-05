@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.user.registering.IdentityForms;
@@ -20,11 +19,9 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.infra.VirtualUserRepository;
 import main.roles.UserRepository;
+import test.resources.*;
 
-/*
- * Feature: Registering a new user: In order to register new users As an
- * Anonymous User I want to create a new User.
- */
+@Feature("Registering a new user")
 public class UserRegisteringFeature {
     UserRepository repository;
     Login login;
@@ -58,7 +55,9 @@ public class UserRegisteringFeature {
     }
 
     @Test
-    @DisplayName("Should register unregistered User")
+    @Given("A new User that is not registered")
+    @When("Registering the same")
+    @Then("Should be registered into UserRepository")
     void souldRegisterNewUser() {
         assumeFalse(repository.has("john.doe@example.com"));
 
@@ -81,7 +80,9 @@ public class UserRegisteringFeature {
     }
 
     @Test
-    @DisplayName("Should not re-register User")
+    @Given("An already registered User")
+    @When("Trying to register the same again")
+    @Then("Should not register, but throw an UserAlreadyRegistered Exception")
     void shouldNotRegister() {
         assumeFalse(repository.has("john.doe@example.com"));
 
