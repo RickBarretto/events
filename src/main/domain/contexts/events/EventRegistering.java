@@ -3,7 +3,6 @@ package main.domain.contexts.events;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import main.domain.contexts.user.registering.UserAlreadyRegistered;
 import main.domain.exceptions.PermissionDenied;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
@@ -46,7 +45,8 @@ public class EventRegistering {
 
         var event = new Event(poster);
 
-        if (currentDay.isAfter(poster.date()))
+        if (currentDay.isAfter(poster.date())
+                || currentDay.isEqual(poster.date()))
             throw new CantRegisterPastEvent();
 
         if (repository.has(poster.title(), poster.date()))
