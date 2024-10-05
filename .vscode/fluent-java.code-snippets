@@ -57,5 +57,15 @@
 		],
 		"description": "Custom Entity ID class"
 	},
+	"Exception": {
+		"prefix": "exceptionclass",
+		"body": [
+			"public class ${TM_FILENAME_BASE} extends Exception {",
+			"    public ${TM_FILENAME_BASE}() { super(); }",
+			"",
+			"    public ${TM_FILENAME_BASE}(String msg) { super(msg); }",
+			"}"
+		],
+		"description": "Custom Exception class"
 	}
 }
