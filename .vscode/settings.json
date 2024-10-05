@@ -1,5 +1,7 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "src"
+    ],
     "testing.saveBeforeTest": true,
     "testing.autoRun.delay": 1000,
     "testing.coverageToolbarEnabled": true,
@@ -56,5 +58,13 @@
     "java.symbols.includeSourceMethodDeclarations": false,
     "java.typeHierarchy.lazyLoad": true,
     "java.debug.settings.onBuildFailureProceed": true,
-    "java.project.explorer.showNonJavaResources": false
+    "java.project.explorer.showNonJavaResources": false,
+    "java.search.scope": "main",
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "[java]": {
+        "editor.detectIndentation": true
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
 }
