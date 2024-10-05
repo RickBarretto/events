@@ -1,4 +1,4 @@
-package main.domain.contexts.user.registering;
+package main.domain.contexts.user.forms;
 
 import java.util.Objects;
 

@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import main.domain.contexts.user.registering.IdentityForms;
-import main.domain.contexts.user.registering.LoginForms;
+import main.domain.contexts.user.forms.IdentityForms;
+import main.domain.contexts.user.forms.LoginForms;
 import main.domain.contexts.user.registering.UserAlreadyRegistered;
 import main.domain.contexts.user.registering.UserRegistering;
 import main.domain.models.users.Login;
