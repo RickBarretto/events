@@ -121,8 +121,30 @@ public class EventRegisteringFeature {
     }
 
     @Nested
+    @Scennario("Customer trying to register an Event")
+    @Given("Some Post, a Customer User and the Current Day")
     class UnsucessfulForCustomer {
         
+        @When("Trying to register a new future Event as an Customer")
+        void tryRegister() throws PermissionDenied 
+        {
+            var poster = somePoster();
+            var user = someCustomer();
+            var currentDay = LocalDate.of(2024, 10, 1);
+
+            new EventRegistering()
+                .into(repository)
+                .poster(poster)
+                .by(user)
+                .on(currentDay);
+        }
+
+        @Then("Should not register and throw PermissionDenied")
+        @Test
+        void shouldNotAllow() {
+            assertThrows(PermissionDenied.class, () -> tryRegister());
+            assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
+        }
     }
 
     @Nested
