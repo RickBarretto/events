@@ -2,7 +2,6 @@ package main.domain.models.users;
 
 import java.util.Objects;
 
-
 public class Login {
     private String email;
     private String password;
