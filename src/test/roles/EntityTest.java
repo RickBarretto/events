@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,8 +21,20 @@ class SomeId extends EntityId {
     public SomeId() { super(); }
 }
 
-class SomeEntity extends Entity<SomeId> {
-    public SomeEntity(SomeId id) { super(id); }
+class SomeEntity implements Entity<SomeId> {
+    SomeId id;
+
+    public SomeEntity(SomeId id) { this.id = id; }
+
+    public SomeId id() { return id; };
+
+    public int hashCode() { return Objects.hash(id); }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof SomeEntity entity)
+            return Objects.equals(id, entity.id);
+        return false;
+    }
 }
 
 public class EntityTest {
@@ -71,7 +84,8 @@ public class EntityTest {
         @Test
         void testHashCode() {
             assertEquals(actual.hashCode(), new SomeEntity(id).hashCode());
-            assertNotEquals(actual.hashCode(), new SomeEntity(otherId).hashCode());
+            assertNotEquals(actual.hashCode(),
+                    new SomeEntity(otherId).hashCode());
         }
     }
 
