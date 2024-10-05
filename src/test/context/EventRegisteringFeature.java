@@ -55,17 +55,18 @@ public class EventRegisteringFeature {
             .submit();
     }
 
+    Optional<Event> actualEvent(EventRepository repository) {
+        return repository.event(
+            "From Zero", 
+            LocalDate.of(2024, 10, 15)
+        );
+    }
+
 
     @Nested
     @Scennario("Sucessfully registering an Event")
     @Given("Some Post, an Admin user and the Current Day")
     class Sucessful {
-        Optional<Event> actualEvent(EventRepository repository) {
-            return repository.event(
-                "From Zero", 
-                LocalDate.of(2024, 10, 15)
-            );
-        }
         
         @When("Registering a new future Event as an Admin")
         void register()
