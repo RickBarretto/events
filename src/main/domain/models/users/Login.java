@@ -31,8 +31,8 @@ public class Login {
      * @param email New Person's email
      * @return a new Person
      */
-    public Person withEmail(String email) {
-        return new Person(email, this.password);
+    public Login withEmail(String email) {
+        return new Login(email, this.password);
     }
 
     /**
@@ -41,8 +41,8 @@ public class Login {
      * @param password New Person's Password
      * @return a new Person
      */
-    public Person withPassword(String password) {
-        return new Person(this.email, password);
+    public Login withPassword(String password) {
+        return new Login(this.email, password);
     }
 
     public boolean equals(Login other) {
