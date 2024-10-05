@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import main.roles.Entity;
 
-public class User extends Entity<UserId> {
+public class User implements Entity<UserId> {
     private UserId id;
     private Login login;
     private Person person;
@@ -12,21 +12,19 @@ public class User extends Entity<UserId> {
 
     // Constructors
     public User(Login login, Person person) {
-        this(new UserId(), login, person, false);
+        this(new UserId(), login, person);
     }
 
     public User(UserId id, Login login, Person person) {
-        this(id, login, person, false);
-    }
-
-    private User(UserId id, Login login, Person person, boolean admin) {
-        super(id);
+        this.id = id;
         this.login = login;
         this.person = person;
         this.admin = false;
     }
 
     // Getters and Setters
+    public UserId id() { return id; }
+
     public Login login() { return login; }
 
     public Person person() { return person; }
@@ -34,7 +32,11 @@ public class User extends Entity<UserId> {
     public boolean isAdmin() { return admin; }
 
     // Factory Methods
-    public User asAdmin() { return new User(id, login, person, true); }
+    public User asAdmin() {
+        var newUser = new User(id, login, person);
+        newUser.admin = true;
+        return newUser;
+    }
 
     public User with(Login login) { return new User(login, this.person); }
 
@@ -42,11 +44,13 @@ public class User extends Entity<UserId> {
 
     // Overriden from Object
     @Override
-    public int hashCode() { return Objects.hash(login, person); }
+    public int hashCode() { return Objects.hash(id, login, person, admin); }
 
     public boolean equals(User other) {
         return Objects.equals(login, other.login)
-                && Objects.equals(person, other.person);
+                && Objects.equals(person, other.person)
+                && Objects.equals(admin, other.admin)
+                && Objects.equals(id, other.id);
     }
 
     @Override
