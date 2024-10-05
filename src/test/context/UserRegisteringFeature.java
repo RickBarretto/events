@@ -1,6 +1,7 @@
 package test.context;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeFalse;
@@ -44,7 +45,7 @@ public class UserRegisteringFeature {
         // @formatter:on
     }
 
-    void registerUser() throws UserAlreadyRegistered {
+    void register() throws UserAlreadyRegistered {
         // @formatter:off
         new UserRegistering()
             .into(repository)
@@ -62,7 +63,7 @@ public class UserRegisteringFeature {
         assumeFalse(repository.has("john.doe@example.com"));
 
         // When
-        assertDoesNotThrow(() -> registerUser());
+        assertDoesNotThrow(() -> register());
 
         // Then
         var owner = repository.ownerOf("john.doe@example.com", "123456");
@@ -76,21 +77,22 @@ public class UserRegisteringFeature {
                         owner.get().login().email()),
                 () -> assertEquals("John Doe", owner.get().person().name()),
                 () -> assertEquals("000.000.000-00",
-                        owner.get().person().cpf()));
+                        owner.get().person().cpf()),
+                () -> assertFalse(owner.get().isAdmin()));
     }
 
     @Test
-    @Given("An already registered User")
+    @Given("An already registered Admin")
     @When("Trying to register the same again")
     @Then("Should not register, but throw an UserAlreadyRegistered Exception")
     void shouldNotRegister() {
         assumeFalse(repository.has("john.doe@example.com"));
 
         // When
-        assertDoesNotThrow(() -> registerUser());
+        assertDoesNotThrow(() -> register());
 
         // Then
         assumeTrue(repository.has("john.doe@example.com"));
-        assertThrows(UserAlreadyRegistered.class, () -> registerUser());
+        assertThrows(UserAlreadyRegistered.class, () -> register());
     }
 }
