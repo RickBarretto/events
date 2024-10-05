@@ -13,8 +13,7 @@ public class AdminRegistering extends UserRegistering {
     private Person person;
 
     @Override
-    public void register()
-    {
+    public void register() {
         Objects.requireNonNull(this.repository);
         Objects.requireNonNull(this.login);
         Objects.requireNonNull(this.person);
