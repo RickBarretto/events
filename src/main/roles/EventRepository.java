@@ -13,6 +13,7 @@ public interface EventRepository {
     Optional<Event> eventById(EventId id);
 
     boolean has(EventId id);
+
     boolean has(String title);
-    
+
 }
