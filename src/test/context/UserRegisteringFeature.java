@@ -16,8 +16,6 @@ import main.domain.contexts.user.registering.IdentityForms;
 import main.domain.contexts.user.registering.LoginForms;
 import main.domain.contexts.user.registering.UserAlreadyRegistered;
 import main.domain.contexts.user.registering.UserRegistering;
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
 import main.infra.VirtualUserRepository;
 import main.roles.UserRepository;
 import test.resources.*;
@@ -25,28 +23,24 @@ import test.resources.*;
 @Feature("Registering a new user")
 public class UserRegisteringFeature {
     UserRepository repository;
-    Login login;
-    Person info;
 
     @BeforeEach
     void init() {
-        // @formatter:off
         repository = new VirtualUserRepository();
-        
-        login = new LoginForms()
-            .email("john.doe@example.com")
-            .password("123456")
-            .submit();
-        
-        info = new IdentityForms()
-            .name("John Doe")
-            .cpf("000.000.000-00")
-            .submit();
-        // @formatter:on
     }
 
     void register() throws UserAlreadyRegistered {
         // @formatter:off
+        var login = new LoginForms()
+            .email("john.doe@example.com")
+            .password("123456")
+            .submit();
+        
+        var info = new IdentityForms()
+            .name("John Doe")
+            .cpf("000.000.000-00")
+            .submit();
+        
         new UserRegistering()
             .into(repository)
             .login(login)
