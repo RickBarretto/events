@@ -46,7 +46,10 @@ public class UserRegisteringFeature {
     class Successful {
 
         @When("Registering Login and Person into a Repository")
-        void register(Login login, Person person) throws UserAlreadyRegistered {
+        void register() throws UserAlreadyRegistered {
+            var login = validLogin();
+            var person = validPerson();
+
             new UserRegistering()
                 .into(repository)
                 .login(login)
@@ -61,7 +64,7 @@ public class UserRegisteringFeature {
             assumeFalse("Email must not be registered", repository.has("john.doe@example.com"));
             
             // Do
-            assertDoesNotThrow(() -> this.register(validLogin(), validPerson()));
+            assertDoesNotThrow(() -> this.register());
 
             // Assertions
             var owner = repository.ownerOf("john.doe@example.com", "123456");
@@ -73,7 +76,7 @@ public class UserRegisteringFeature {
         @And("Registered User is the same")
         void shouldBeTheSame() {
             // Do
-            assertDoesNotThrow(() -> this.register(validLogin(), validPerson()));
+            assertDoesNotThrow(() -> this.register());
 
             // Assertions
             var owner = repository.ownerOf("john.doe@example.com", "123456").get();
@@ -91,9 +94,12 @@ public class UserRegisteringFeature {
     class Unsucessful {
 
         @When("Registering Login and Person twice into a Repository")
-        void registerTwice(Login login, Person person)
+        void registerTwice()
         throws UserAlreadyRegistered 
         {
+            var login = validLogin();
+            var person = validPerson();
+
             var context = new UserRegistering()
                 .into(repository)
                 .login(login)
@@ -107,7 +113,7 @@ public class UserRegisteringFeature {
         @Then("Should throw UserAlreadyRegistered if email is not available")
         void shouldNotRegister() {
             // Do
-            assertThrows(UserAlreadyRegistered.class, () -> registerTwice(validLogin(), validPerson()));
+            assertThrows(UserAlreadyRegistered.class, () -> registerTwice());
             
             // Assertions
             assertTrue(repository.has("john.doe@example.com"));
