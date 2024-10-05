@@ -22,6 +22,6 @@ public class Poster {
 
     public String description() { return description; }
 
-    public LocalDate scheduledDate() { return schedule; }
+    public LocalDate date() { return schedule; }
 
 }
