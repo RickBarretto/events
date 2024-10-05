@@ -14,17 +14,17 @@ public class PosterForms {
         this.title = title;
         return this;
     }
-    
+
     public PosterForms description(String description) {
         this.description = description;
         return this;
     }
-    
+
     public PosterForms scheduledFor(LocalDate schedule) {
         this.schedule = schedule;
         return this;
     }
-    
+
     public Poster submit() throws NullPointerException {
         Objects.requireNonNull(title);
         Objects.requireNonNull(description);
