@@ -179,8 +179,51 @@ public class EventRegisteringFeature {
     }
     
     @Nested
+    @Scennario("An Admin trying to register a past Event")
+    @Given("Some Post, an Admin User and the Current Day")
     class UnsucessfulForPastEvent {
 
-    }
+        @When("Trying to register a past Event")
+        void tryRegister(LocalDate today) 
+        throws PermissionDenied, EventAlreadyRegistered, CantRegisterPastEvent 
+        {
+            var poster = somePoster();
+            var user = someAdmin();
 
+            new EventRegistering()
+                .into(repository)
+                .poster(poster)
+                .by(user)
+                .on(today)
+                .register();
+        }
+
+        @Then("Should not register on same day")
+        @Test
+        void shouldNotRegisterForSameDate() {
+            // Pre-Condition
+            var today = LocalDate.of(2024, 10,15);
+            assumeTrue(somePoster().date().isEqual(today));
+            
+            // Do
+            assertThrows(CantRegisterPastEvent.class, () -> tryRegister(today));
+            
+            // Post-Condition
+            assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
+        }
+   
+        @Then("Should not register for past days")
+        @Test
+        void shouldNotRegisterForPastDay() {
+            // Pre-Condition
+            var today = LocalDate.of(2024, 10,16);
+            assumeTrue(somePoster().date().isBefore(today));
+            
+            // Do
+            assertThrows(CantRegisterPastEvent.class, () -> tryRegister(today));
+            
+            // Post-Condition
+            assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
+        }
+    }
 }
