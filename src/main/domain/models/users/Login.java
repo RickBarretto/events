@@ -2,6 +2,7 @@ package main.domain.models.users;
 
 import java.util.Objects;
 
+
 public class Login {
     private String email;
     private String password;
@@ -17,13 +18,6 @@ public class Login {
      * @return Person's email
      */
     public String email() { return email; }
-
-    /**
-     * Password's getter
-     * 
-     * @return Person's Password
-     */
-    public String password() { return password; }
 
     /**
      * Creates a copy with a new email
