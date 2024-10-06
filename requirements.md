@@ -15,7 +15,7 @@
   - [x] Name  
   - [x] Description  
   - [x] Data  
-- [ ] List available `Events`  
+- [x] List available `Events`  
 - [ ] Buy `Ticket`  
 - [ ] List bought `Ticket`s
 - [ ] Cancel Purchased `Ticket` 
