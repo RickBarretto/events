@@ -16,10 +16,14 @@ public class User implements Entity<UserId> {
     }
 
     public User(UserId id, Login login, Person person) {
+        this(id, login, person, false);
+    }
+
+    private User(UserId id, Login login, Person person, boolean admin) {
         this.id = id;
         this.login = login;
         this.person = person;
-        this.admin = false;
+        this.admin = admin;
     }
 
     // Getters and Setters
@@ -32,17 +36,18 @@ public class User implements Entity<UserId> {
     public boolean isAdmin() { return admin; }
 
     // Factory Methods
-    public User asAdmin() {
-        var newUser = new User(id, login, person);
-        newUser.admin = true;
-        return newUser;
+    public User asAdmin() { return new User(id, login, person, true); }
+
+    public User with(Login login) { return new User(id, login, person, admin); }
+
+    public User with(Person person) {
+        return new User(id, login, person, admin);
     }
 
-    public User with(Login login) { return new User(login, this.person); }
-
-    public User with(Person person) { return new User(this.login, person); }
-
     // Overriden from Object
+
+    public User copy() { return new User(id, login, person, admin); }
+
     @Override
     public int hashCode() { return Objects.hash(id, login, person, admin); }
 
