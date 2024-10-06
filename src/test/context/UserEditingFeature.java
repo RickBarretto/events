@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import main.domain.contexts.user.editing.UserEditing;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
+import main.domain.exceptions.PermissionDenied;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
@@ -191,6 +194,33 @@ public class UserEditingFeature {
             
             // Post-condition
             assertFalse(repository.has("john.doe@example.com"));
+        }
+    }
+
+    @Nested
+    @Scennario("Replace password requires old password")
+    @Given("")
+    class ReplacePasswordNeedsPermission {
+        UserRepository repository;
+
+        @BeforeEach
+        void registerTargetUserAndOther() {
+            repository = new VirtualUserRepository();
+        }
+
+        @When("Editing the Login and Person of an User")
+        void editToExistingEmail() throws InexistentUser, PermissionDenied, EmailAlreadyExists {
+        }
+
+        @Test
+        @Ignore("Optional future feature")
+        @Then("Shou")
+        void shouldThrow() {
+            // Pre-condition
+            
+            // Execution
+            
+            // Post-condition
         }
     }
 
