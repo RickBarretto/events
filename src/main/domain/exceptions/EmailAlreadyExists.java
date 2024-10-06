@@ -1,4 +1,4 @@
-package main.domain.contexts.user.registering;
+package main.domain.exceptions;
 
 public class EmailAlreadyExists extends Exception {
     public EmailAlreadyExists() { super(); }
