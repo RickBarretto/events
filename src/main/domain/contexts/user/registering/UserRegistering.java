@@ -31,7 +31,7 @@ public class UserRegistering implements Context {
         return this;
     }
 
-    public void register() throws NullPointerException, UserAlreadyRegistered {
+    public void register() throws NullPointerException, EmailAlreadyExists {
         Objects.requireNonNull(this.repository);
         Objects.requireNonNull(this.login);
         Objects.requireNonNull(this.person);
@@ -39,7 +39,7 @@ public class UserRegistering implements Context {
         var user = new User(login, person);
 
         if (this.repository.has(login.email()))
-            throw new UserAlreadyRegistered();
+            throw new EmailAlreadyExists();
         this.repository.register(user);
     }
 }

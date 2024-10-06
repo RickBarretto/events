@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.user.forms.IdentityForms;
 import main.domain.contexts.user.forms.LoginForms;
-import main.domain.contexts.user.registering.UserAlreadyRegistered;
+import main.domain.contexts.user.registering.EmailAlreadyExists;
 import main.domain.contexts.user.registering.UserRegistering;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
@@ -46,7 +46,7 @@ public class UserRegisteringFeature {
     class Successful {
 
         @When("Registering Login and Person into a Repository")
-        void register() throws UserAlreadyRegistered {
+        void register() throws EmailAlreadyExists {
             var login = validLogin();
             var person = validPerson();
 
@@ -95,7 +95,7 @@ public class UserRegisteringFeature {
 
         @When("Registering Login and Person twice into a Repository")
         void registerTwice()
-        throws UserAlreadyRegistered 
+        throws EmailAlreadyExists 
         {
             var login = validLogin();
             var person = validPerson();
@@ -113,7 +113,7 @@ public class UserRegisteringFeature {
         @Then("Should throw UserAlreadyRegistered if email is not available")
         void shouldNotRegister() {
             // Do
-            assertThrows(UserAlreadyRegistered.class, () -> registerTwice());
+            assertThrows(EmailAlreadyExists.class, () -> registerTwice());
             
             // Assertions
             assertTrue(repository.has("john.doe@example.com"));
