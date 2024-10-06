@@ -1,4 +1,4 @@
-package test.context.users.registering;
+package test.context;
 
 import static org.junit.Assert.*;
 import static org.junit.Assume.*;
