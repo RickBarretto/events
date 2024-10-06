@@ -14,7 +14,7 @@ import main.domain.contexts.user.registering.UserRegistering;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
-import main.infra.VirtualUserRepository;
+import main.infra.UsersInMemory;
 import main.roles.UserRepository;
 import test.resources.*;
 
@@ -24,7 +24,7 @@ public class UserRegisteringFeature {
     UserRepository repository;
 
     @BeforeEach
-    void emptyRepository() { repository = new VirtualUserRepository(); }
+    void emptyRepository() { repository = new UsersInMemory(); }
 
     Login validLogin() {
         return new LoginForms()

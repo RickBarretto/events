@@ -7,21 +7,21 @@ import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.roles.UserRepository;
 
-public class VirtualUserRepository implements UserRepository {
+public class UsersInMemory implements UserRepository {
     private HashMap<UserId, User> users;
     private HashMap<String, UserId> emailIndex;
 
-    public VirtualUserRepository() {
+    public UsersInMemory() {
         this.users = new HashMap<>();
         this.emailIndex = new HashMap<>();
     }
 
     @Override
     public void register(User user) {
-        assert !users.containsKey(user.id()): "User must not exist";
+        assert !users.containsKey(user.id()) : "User must not exist";
         assert !emailIndex.containsKey(user.login().email())
                 : "Email must not be registered";
-        
+
         this.users.put(user.id(), user);
         this.emailIndex.put(user.login().email(), user.id());
     }

@@ -21,7 +21,7 @@ import main.domain.exceptions.PermissionDenied;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.VirtualUserRepository;
+import main.infra.UsersInMemory;
 import main.roles.UserRepository;
 import test.resources.*;
 
@@ -49,7 +49,7 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUser() {
-            repository = new VirtualUserRepository();
+            repository = new UsersInMemory();
             repository.register(targetUser);
         }
 
@@ -123,7 +123,7 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUserAndOther() {
-            repository = new VirtualUserRepository();
+            repository = new UsersInMemory();
             repository.register(targetUser);
             repository.register(new User(
                 new Login("jane.doe@example.com", "789123"),
@@ -165,7 +165,7 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUserAndOther() {
-            repository = new VirtualUserRepository();
+            repository = new UsersInMemory();
         }
 
         User inexistenUser() {
@@ -205,7 +205,7 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUserAndOther() {
-            repository = new VirtualUserRepository();
+            repository = new UsersInMemory();
         }
 
         @When("Editing the Login and Person of an User")
