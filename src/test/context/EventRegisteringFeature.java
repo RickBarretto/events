@@ -23,12 +23,12 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.EventsInMemory;
-import main.roles.EventRepository;
+import main.roles.Events;
 import test.resources.*;
 
 // @formatter:off
 public class EventRegisteringFeature {
-    private EventRepository repository;
+    private Events repository;
 
     @BeforeEach
     void emptyRepository() {
@@ -54,7 +54,7 @@ public class EventRegisteringFeature {
             .submit();
     }
 
-    Optional<Event> actualEvent(EventRepository repository) {
+    Optional<Event> actualEvent(Events repository) {
         return repository.event(
             "From Zero", 
             LocalDate.of(2024, 10, 15)

@@ -6,7 +6,7 @@ import java.util.Optional;
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
 
-public interface EventRepository {
+public interface Events {
     void register(Event event);
 
     Optional<Event> event(String title, LocalDate date);

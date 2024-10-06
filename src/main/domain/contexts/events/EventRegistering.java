@@ -10,15 +10,15 @@ import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.domain.models.users.User;
 import main.roles.Context;
-import main.roles.EventRepository;
+import main.roles.Events;
 
 public class EventRegistering implements Context {
-    private EventRepository repository;
+    private Events repository;
     private Poster poster;
     private User author;
     private LocalDate currentDay;
 
-    public EventRegistering into(EventRepository repository) {
+    public EventRegistering into(Events repository) {
         this.repository = repository;
         return this;
     }

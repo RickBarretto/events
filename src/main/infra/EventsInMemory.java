@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
-import main.roles.EventRepository;
+import main.roles.Events;
 
 class EventIndex {
     String title;
@@ -37,7 +37,7 @@ class EventIndex {
     }
 }
 
-public class EventsInMemory implements EventRepository {
+public class EventsInMemory implements Events {
     private HashMap<EventId, Event> events;
     private HashMap<EventIndex, EventId> infoIndex;
 
