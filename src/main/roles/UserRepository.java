@@ -8,6 +8,8 @@ import main.domain.models.users.UserId;
 public interface UserRepository {
     void register(User user);
 
+    void update(User target, User newUser);
+
     Optional<User> ownerOf(String email, String password);
 
     boolean has(UserId id);
