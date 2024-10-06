@@ -12,10 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import main.domain.contexts.events.CantRegisterPastEvent;
-import main.domain.contexts.events.EventAlreadyRegistered;
 import main.domain.contexts.events.EventRegistering;
 import main.domain.contexts.events.PosterForms;
+import main.domain.exceptions.CantRegisterPastEvent;
+import main.domain.exceptions.EventAlreadyRegistered;
 import main.domain.exceptions.PermissionDenied;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;

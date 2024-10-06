@@ -1,4 +1,4 @@
-package main.domain.contexts.events;
+package main.domain.exceptions;
 
 public class EventAlreadyRegistered extends Exception {
     public EventAlreadyRegistered() { super(); }

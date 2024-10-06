@@ -3,6 +3,8 @@ package main.domain.contexts.events;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import main.domain.exceptions.CantRegisterPastEvent;
+import main.domain.exceptions.EventAlreadyRegistered;
 import main.domain.exceptions.PermissionDenied;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
