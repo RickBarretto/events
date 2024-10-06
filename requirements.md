@@ -19,7 +19,7 @@
 - [ ] Buy `Ticket`  
 - [ ] List bought `Ticket`s
 - [ ] Cancel Purchased `Ticket` 
-- [ ] Edit `User`'s Profile
+- [x] Edit `User`'s Profile
 - [ ] Add `Payment` methods to `User`
 - [ ] Confirm `Payment`
 - [ ] Evaluate an `Event`
