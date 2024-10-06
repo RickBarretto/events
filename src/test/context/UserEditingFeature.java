@@ -153,4 +153,45 @@ public class UserEditingFeature {
             );
         }
     }
+
+    @Nested
+    @Scennario("Trying to edit an inexistent user")
+    @Given("Some inexistent User")
+    class UserDoesNotExist {
+        UserRepository repository;
+
+        @BeforeEach
+        void registerTargetUserAndOther() {
+            repository = new VirtualUserRepository();
+        }
+
+        User inexistenUser() {
+            return new User(
+                new Login("john.doe@example.com", "123456"),
+                new Person("John Doe", "000.000.000-00")
+            );
+        }
+
+        @When("Editing the Login and Person of an User")
+        void editInexistentUser() throws InexistentUser {
+            new UserEditing()
+                .from(repository)
+                .targets(inexistenUser())
+                .with();
+        }
+
+        @Test
+        @Then("Should throw InexistentUser, and not register it.")
+        void shouldThrow() {
+            // Pre-condition
+            assumeFalse(repository.has("john.doe@example.com"));
+
+            // Execution
+            assertThrows(InexistentUser.class, () -> this.editInexistentUser());
+            
+            // Post-condition
+            assertFalse(repository.has("john.doe@example.com"));
+        }
+    }
+
 }
