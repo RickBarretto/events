@@ -15,7 +15,7 @@ import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.infra.UsersInMemory;
-import main.roles.Users;
+import main.roles.repositories.Users;
 import test.resources.*;
 
 // @formatter:off

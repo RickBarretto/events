@@ -6,7 +6,7 @@ import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
 import main.domain.models.users.User;
 import main.roles.Context;
-import main.roles.Users;
+import main.roles.repositories.Users;
 
 public class UserEditing implements Context {
     private Users repository;

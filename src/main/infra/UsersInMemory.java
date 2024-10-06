@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
-import main.roles.Users;
+import main.roles.repositories.Users;
 
 public class UsersInMemory implements Users {
     private HashMap<UserId, User> users;
