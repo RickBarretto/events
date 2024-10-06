@@ -22,7 +22,7 @@ import main.domain.models.events.Poster;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.VirtualEventRepository;
+import main.infra.EventsInMemory;
 import main.roles.EventRepository;
 import test.resources.*;
 
@@ -32,7 +32,7 @@ public class EventRegisteringFeature {
 
     @BeforeEach
     void emptyRepository() {
-        repository = new VirtualEventRepository();
+        repository = new EventsInMemory();
     }
 
     User someCustomer() {

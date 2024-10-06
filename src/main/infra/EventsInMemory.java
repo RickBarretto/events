@@ -37,18 +37,19 @@ class EventIndex {
     }
 }
 
-public class VirtualEventRepository implements EventRepository {
+public class EventsInMemory implements EventRepository {
     private HashMap<EventId, Event> events;
     private HashMap<EventIndex, EventId> infoIndex;
 
-    public VirtualEventRepository() {
+    public EventsInMemory() {
         this.events = new HashMap<>();
         this.infoIndex = new HashMap<>();
     }
 
     @Override
     public void register(Event event) {
-        var index = new EventIndex(event.poster().title(), event.poster().date());
+        var index = new EventIndex(event.poster().title(),
+                event.poster().date());
         this.events.put(event.id(), event);
         this.infoIndex.put(index, event.id());
     }
