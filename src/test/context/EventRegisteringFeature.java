@@ -23,7 +23,7 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.EventsInMemory;
-import main.roles.Events;
+import main.roles.repositories.Events;
 import test.resources.*;
 
 // @formatter:off

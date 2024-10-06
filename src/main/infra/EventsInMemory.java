@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
-import main.roles.Events;
+import main.roles.repositories.Events;
 
 class EventIndex {
     String title;

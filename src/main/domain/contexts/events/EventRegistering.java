@@ -10,7 +10,7 @@ import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.domain.models.users.User;
 import main.roles.Context;
-import main.roles.Events;
+import main.roles.repositories.Events;
 
 public class EventRegistering implements Context {
     private Events repository;
