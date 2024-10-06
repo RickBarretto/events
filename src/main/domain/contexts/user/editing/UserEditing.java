@@ -3,6 +3,7 @@ package main.domain.contexts.user.editing;
 import java.util.Objects;
 
 import main.domain.exceptions.EmailAlreadyExists;
+import main.domain.exceptions.InexistentUser;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
@@ -23,10 +24,12 @@ public class UserEditing implements Context {
         return this;
     }
 
-    public EditingWithTarget with() {
+    public EditingWithTarget with() throws InexistentUser {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(target);
 
+        if (!repository.has(target.id()))
+            throw new InexistentUser();
         return new EditingWithTarget(repository, target);
     }
 
@@ -41,14 +44,26 @@ public class UserEditing implements Context {
             this.updated = target.copy();
         }
 
-        public EditingWithTarget person(Person person) {
-            this.updated = updated.with(person);
+        public EditingWithTarget name(String name) {
+            this.updated = updated.with(updated.person().withName(name));
+            return this;
+        }
+        
+        public EditingWithTarget cpf(String cpf) {
+            this.updated = updated.with(
+                updated.person().withCpf(cpf)
+            );
             return this;
         }
 
-        public EditingWithTarget login(Login login) throws EmailAlreadyExists {
-            shouldBeAvailable(login.email());
-            this.updated = updated.with(login);
+        public EditingWithTarget email(String email) throws EmailAlreadyExists {
+            shouldBeAvailable(email);
+            this.updated = updated.with(updated.login().withEmail(email));
+            return this;
+        }
+        
+        public EditingWithTarget password(String password) {
+            this.updated = updated.with(updated.login().withPassword(password));
             return this;
         }
 

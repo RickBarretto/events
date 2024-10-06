@@ -2,6 +2,7 @@ package test.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -40,8 +41,8 @@ public class UserEditingFeature {
     @Given("Some existing user in some Repository")
     class Sucessfully {
         UserRepository repository;
-        Login updatedLogin;
-        Person updatedPerson;
+        Login expectedLogin;
+        Person expectedPerson;
 
         @BeforeEach
         void registerTargetUser() {
@@ -51,8 +52,8 @@ public class UserEditingFeature {
 
         @BeforeEach
         void submitForms() {
-            updatedLogin = new Login("jane.doe@example.com", "789123");
-            updatedPerson = new Person("Jane Doe", "111.111.111-11");
+            expectedLogin = new Login("jane.doe@example.com", "789123");
+            expectedPerson = new Person("Jane Doe", "111.111.111-11");
         }
 
         @When("Editing the Login and Person of an User")
@@ -61,8 +62,10 @@ public class UserEditingFeature {
                 .from(repository)
                 .targets(targetUser)
                 .with()
-                    .login(updatedLogin)
-                    .person(updatedPerson)
+                    .email("jane.doe@example.com")
+                    .password("789123")
+                    .name("Jane Doe")
+                    .cpf("111.111.111-11")
                 .update();
         }
 
@@ -85,8 +88,8 @@ public class UserEditingFeature {
             );
 
             var updatedUser = repository.ownerOf(newEmail, "789123").get();
-            assertEquals("Updated Login", updatedLogin, updatedUser.login());
-            assertEquals("Updated Person", updatedPerson, updatedUser.person());
+            assertEquals("Updated Login", expectedLogin, updatedUser.login());
+            assertEquals("Updated Person", expectedPerson, updatedUser.person());
         }
 
         @Test
@@ -105,6 +108,48 @@ public class UserEditingFeature {
             assertAll("User is still registered with oldId",
                 () -> assertTrue(repository.has(oldId)),
                 () -> assertEquals(targetUser.id(), updatedUser.id())
+            );
+        }
+    }
+
+    @Nested
+    @Scennario("Trying editing some existing User to an existing email")
+    @Given("Some existing user in some Repository")
+    class NotAvailableEmail {
+        UserRepository repository;
+
+        @BeforeEach
+        void registerTargetUserAndOther() {
+            repository = new VirtualUserRepository();
+            repository.register(targetUser);
+            repository.register(new User(
+                new Login("jane.doe@example.com", "789123"),
+                new Person("Jane Doe", "111.111.111-11")
+            ));
+        }
+
+        @When("Editing the Login and Person of an User")
+        void editToExistingEmail() throws InexistentUser, EmailAlreadyExists {
+            new UserEditing()
+                .from(repository)
+                .targets(targetUser)
+                .with()
+                    .email("jane.doe@example.com");
+        }
+
+        @Test
+        @Then("Should thows EmailAlreadyExists and not update")
+        void shouldUpdateLogin() {
+            // Pre-condition
+            assumeTrue("User is registered", repository.has("john.doe@example.com"));
+            
+            // Execution
+            assertThrows(EmailAlreadyExists.class, () -> editToExistingEmail());
+            
+            // Post-condition
+            assertAll("User was not updated", 
+                () -> assertTrue(repository.has("john.doe@example.com")),
+                () -> assertTrue(repository.has("jane.doe@example.com"))
             );
         }
     }
