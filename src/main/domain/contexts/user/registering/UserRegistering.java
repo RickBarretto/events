@@ -7,17 +7,17 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.roles.Context;
-import main.roles.UserRepository;
+import main.roles.Users;
 
 /**
  * Allows registering an User into a Repository
  */
 public class UserRegistering implements Context {
-    private UserRepository repository;
+    private Users repository;
     private Login login;
     private Person person;
 
-    public UserRegistering into(UserRepository repository) {
+    public UserRegistering into(Users repository) {
         this.repository = repository;
         return this;
     }

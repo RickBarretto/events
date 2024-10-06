@@ -15,13 +15,13 @@ import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.infra.UsersInMemory;
-import main.roles.UserRepository;
+import main.roles.Users;
 import test.resources.*;
 
 // @formatter:off
 @Feature("Registering a new user")
 public class UserRegisteringFeature {
-    UserRepository repository;
+    Users repository;
 
     @BeforeEach
     void emptyRepository() { repository = new UsersInMemory(); }

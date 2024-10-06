@@ -5,9 +5,9 @@ import java.util.Optional;
 
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
-import main.roles.UserRepository;
+import main.roles.Users;
 
-public class UsersInMemory implements UserRepository {
+public class UsersInMemory implements Users {
     private HashMap<UserId, User> users;
     private HashMap<String, UserId> emailIndex;
 

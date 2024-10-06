@@ -5,7 +5,7 @@ import java.util.Optional;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 
-public interface UserRepository {
+public interface Users {
     void register(User user);
 
     void update(User target, User newUser);

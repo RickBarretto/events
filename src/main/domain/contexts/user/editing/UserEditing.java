@@ -6,10 +6,10 @@ import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
 import main.domain.models.users.User;
 import main.roles.Context;
-import main.roles.UserRepository;
+import main.roles.Users;
 
 public class UserEditing implements Context {
-    private UserRepository repository;
+    private Users repository;
     private User target;
 
     public UserEditing targets(User user) {
@@ -17,7 +17,7 @@ public class UserEditing implements Context {
         return this;
     }
 
-    public UserEditing from(UserRepository repository) {
+    public UserEditing from(Users repository) {
         this.repository = repository;
         return this;
     }
@@ -32,11 +32,11 @@ public class UserEditing implements Context {
     }
 
     public class EditingWithTarget {
-        private UserRepository repository;
+        private Users repository;
         private User target;
         private User updated;
 
-        public EditingWithTarget(UserRepository repository, User target) {
+        public EditingWithTarget(Users repository, User target) {
             this.repository = repository;
             this.target = target;
             this.updated = target.copy();
@@ -46,11 +46,9 @@ public class UserEditing implements Context {
             this.updated = updated.with(updated.person().withName(name));
             return this;
         }
-        
+
         public EditingWithTarget cpf(String cpf) {
-            this.updated = updated.with(
-                updated.person().withCpf(cpf)
-            );
+            this.updated = updated.with(updated.person().withCpf(cpf));
             return this;
         }
 
@@ -59,7 +57,7 @@ public class UserEditing implements Context {
             this.updated = updated.with(updated.login().withEmail(email));
             return this;
         }
-        
+
         public EditingWithTarget password(String password) {
             this.updated = updated.with(updated.login().withPassword(password));
             return this;

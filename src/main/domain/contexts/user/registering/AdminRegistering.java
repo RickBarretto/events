@@ -5,10 +5,10 @@ import java.util.Objects;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.roles.UserRepository;
+import main.roles.Users;
 
 public class AdminRegistering extends UserRegistering {
-    private UserRepository repository;
+    private Users repository;
     private Login login;
     private Person person;
 

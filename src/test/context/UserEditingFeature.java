@@ -22,7 +22,7 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.UsersInMemory;
-import main.roles.UserRepository;
+import main.roles.Users;
 import test.resources.*;
 
 // @formatter:off
@@ -43,7 +43,7 @@ public class UserEditingFeature {
     @Scennario("Sucessfully editing some existing User")
     @Given("Some existing user in some Repository")
     class Sucessfully {
-        UserRepository repository;
+        Users repository;
         Login expectedLogin;
         Person expectedPerson;
 
@@ -119,7 +119,7 @@ public class UserEditingFeature {
     @Scennario("Trying editing some existing User to an existing email")
     @Given("Some existing user in some Repository")
     class NotAvailableEmail {
-        UserRepository repository;
+        Users repository;
 
         @BeforeEach
         void registerTargetUserAndOther() {
@@ -161,7 +161,7 @@ public class UserEditingFeature {
     @Scennario("Trying to edit an inexistent user")
     @Given("Some inexistent User")
     class UserDoesNotExist {
-        UserRepository repository;
+        Users repository;
 
         @BeforeEach
         void registerTargetUserAndOther() {
@@ -201,7 +201,7 @@ public class UserEditingFeature {
     @Scennario("Replace password requires old password")
     @Given("")
     class ReplacePasswordNeedsPermission {
-        UserRepository repository;
+        Users repository;
 
         @BeforeEach
         void registerTargetUserAndOther() {
