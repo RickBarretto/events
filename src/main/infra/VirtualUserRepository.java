@@ -18,6 +18,10 @@ public class VirtualUserRepository implements UserRepository {
 
     @Override
     public void register(User user) {
+        assert !users.containsKey(user.id()): "User must not exist";
+        assert !emailIndex.containsKey(user.login().email())
+                : "Email must not be registered";
+        
         this.users.put(user.id(), user);
         this.emailIndex.put(user.login().email(), user.id());
     }
