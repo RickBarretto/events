@@ -2,6 +2,7 @@ package main.infra;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -52,6 +53,15 @@ public class EventsInMemory implements Events {
                 event.poster().date());
         this.events.put(event.id(), event);
         this.infoIndex.put(index, event.id());
+    }
+
+    @Override
+    public List<Event> asList() { return List.copyOf(events.values()); }
+
+    @Override
+    public List<Event> availableFor(LocalDate date) {
+        return events.values().stream()
+                .filter(event -> event.isAvailableFor(date)).toList();
     }
 
     @Override
