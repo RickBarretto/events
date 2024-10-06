@@ -9,9 +9,10 @@ import main.domain.exceptions.PermissionDenied;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.domain.models.users.User;
+import main.roles.Context;
 import main.roles.EventRepository;
 
-public class EventRegistering {
+public class EventRegistering implements Context {
     private EventRepository repository;
     private Poster poster;
     private User author;
