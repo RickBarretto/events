@@ -3,7 +3,9 @@ package main.domain.models.events;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Event {
+import main.roles.Entity;
+
+public class Event implements Entity<EventId> {
     private EventId id;
     private Poster poster;
 
