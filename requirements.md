@@ -22,7 +22,7 @@
 - [x] Edit `User`'s Profile
 - [ ] Add `Payment` methods to `User`
 - [ ] Confirm `Payment`
-- [ ] Evaluate an `Event`
+- [x] Evaluate an `Event`
 
 ## To Persist
 - [ ] `User`
