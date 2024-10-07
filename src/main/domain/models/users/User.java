@@ -5,7 +5,7 @@ import java.util.Objects;
 import main.roles.Entity;
 
 public class User implements Entity<UserId> {
-    private UserId id;
+    private final UserId id;
     private Login login;
     private Person person;
     private boolean admin;

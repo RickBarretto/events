@@ -6,7 +6,7 @@ import java.util.Objects;
 import main.roles.Entity;
 
 public class Event implements Entity<EventId> {
-    private EventId id;
+    private final EventId id;
     private Poster poster;
 
     public Event(Poster poster) {
