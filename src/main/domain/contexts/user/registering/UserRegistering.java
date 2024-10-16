@@ -32,7 +32,7 @@ public class UserRegistering implements Context {
         return this;
     }
 
-    public void register() throws NullPointerException, EmailAlreadyExists {
+    public void register() throws EmailAlreadyExists {
         Objects.requireNonNull(this.repository);
         Objects.requireNonNull(this.login);
         Objects.requireNonNull(this.person);
