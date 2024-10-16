@@ -19,7 +19,7 @@ import main.infra.json.UsersJson;
 import main.infra.virtual.UsersInMemory;
 
 // @formatter:off
-public class JsonFileTest {
+public class UsersJsonTest {
     private static final String directory = "src/test/infra/resources";
 
     @AfterAll
