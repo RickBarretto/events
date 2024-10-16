@@ -25,10 +25,10 @@
 - [x] Evaluate an `Event`
 
 ## To Persist
-- [ ] `User`
-    - [ ] Personal Data
-    - [ ] Login
-    - [ ] Password
+- [x] `User`
+    - [x] Personal Data
+    - [x] Login
+    - [x] Password
     - [ ] Bought Tickets
 - [ ] Events
     - [ ] Poster
