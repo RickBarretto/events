@@ -96,7 +96,30 @@ public class JsonFileTest {
 
     @Nested
     class DealwithEmptyRepository {
+        private final JsonFile file = new JsonFile("src/test/infra/resources", "none-users");
+        private UsersJson noneUsersJson;
+
+        @BeforeEach
+        void createJsonFile() {
+            new UsersJson(file.toString(), new UsersInMemory(List.of()));
+        }
         
+        @BeforeEach
+        void loadJsonFile() {
+            assumeTrue(file.exists());
+            this.noneUsersJson = new UsersJson(file.toString());
+        }
+
+        @Test
+        void shouldNotContain() {
+            assertTrue(0 == this.noneUsersJson.list().size());
+        }
+        
+        @Test
+        void shouldLoadEmpty() {
+            var otherReference = new UsersJson(file.toString());
+            assertTrue(otherReference.list().isEmpty());
+        }
     }
 }
 // @formatter:on
