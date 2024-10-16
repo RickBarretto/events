@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Poster {
     private String title;
     private String description;
-    private LocalDate schedule;
+    private String schedule;
 
     /**
      * @param title
@@ -15,13 +15,13 @@ public class Poster {
     public Poster(String title, String description, LocalDate schedule) {
         this.title = title;
         this.description = description;
-        this.schedule = schedule;
+        this.schedule = schedule.toString();
     }
 
     public String title() { return title; }
 
     public String description() { return description; }
 
-    public LocalDate date() { return schedule; }
+    public LocalDate date() { return LocalDate.parse(schedule); }
 
 }
