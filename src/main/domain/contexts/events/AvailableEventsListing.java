@@ -26,7 +26,7 @@ public class AvailableEventsListing implements Context {
         Objects.requireNonNull(today);
         Objects.requireNonNull(events);
 
-        return events.availableIn(today);
+        return events.availableOn(today);
     }
 
 }
