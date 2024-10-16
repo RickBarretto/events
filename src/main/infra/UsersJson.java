@@ -29,9 +29,11 @@ public class UsersJson implements Users {
     }
 
     private static List<User> load(String filepath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
-            return new Gson().fromJson(reader, new TypeToken<List<User>>(){});
-        } catch (IOException e) {
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(filepath))) {
+            return new Gson().fromJson(reader, new TypeToken<List<User>>() {});
+        }
+        catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -40,7 +42,8 @@ public class UsersJson implements Users {
     private void persist() {
         try (FileWriter writer = new FileWriter(filepath)) {
             new Gson().toJson(allUsersInMemory.list(), writer);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -61,9 +64,6 @@ public class UsersJson implements Users {
     public Optional<User> ownerOf(String email, String password) {
         return allUsersInMemory.ownerOf(email, password);
     }
-
-    @Override
-    public boolean has(UserId id) { return allUsersInMemory.has(id); }
 
     @Override
     public boolean has(String email) { return allUsersInMemory.has(email); }

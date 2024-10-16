@@ -98,20 +98,12 @@ public class UserEditingFeature {
         @Test
         @And("Should not change the ID")
         void shouldNotChangeTheID() {
-            var oldId = targetUser.id();
-
-            // Pre-condition
-            assumeTrue("User is registered with oldId", repository.has(oldId));
-
             // Execution
             assertDoesNotThrow(() -> editLogin());
 
             // Post-condition
             var updatedUser = repository.ownerOf("jane.doe@example.com", "789123").get();
-            assertAll("User is still registered with oldId",
-                () -> assertTrue(repository.has(oldId)),
-                () -> assertEquals(targetUser.id(), updatedUser.id())
-            );
+            assertEquals(targetUser.id(), updatedUser.id());
         }
     }
 

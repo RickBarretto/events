@@ -12,9 +12,7 @@ public class UsersInMemory implements Users {
     private HashMap<UserId, User> users;
     private HashMap<String, UserId> emailIndex;
 
-    public UsersInMemory() {
-        this(List.of());
-    }
+    public UsersInMemory() { this(List.of()); }
 
     public UsersInMemory(List<User> usersList) {
         this.users = new HashMap<>();
@@ -23,9 +21,7 @@ public class UsersInMemory implements Users {
         usersList.forEach((user) -> register(user));
     }
 
-    public List<User> list() {
-        return List.copyOf(users.values());
-    }
+    public List<User> list() { return List.copyOf(users.values()); }
 
     @Override
     public void register(User user) {
@@ -49,9 +45,6 @@ public class UsersInMemory implements Users {
         var id = emailIndex.get(email);
         return Optional.ofNullable(users.get(id));
     }
-
-    @Override
-    public boolean has(UserId id) { return users.containsKey(id); }
 
     @Override
     public boolean has(String email) { return emailIndex.containsKey(email); }
