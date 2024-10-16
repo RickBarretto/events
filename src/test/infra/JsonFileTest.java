@@ -1,29 +1,21 @@
 package test.infra;
 
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
-import main.domain.models.users.User;
-import main.infra.UsersInMemory;
-import main.infra.UsersJson;
-import main.infra.JsonFile;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
-import static org.junit.Assume.assumeNoException;
 import static org.junit.Assume.assumeTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import com.google.gson.reflect.TypeToken;
+import main.domain.models.users.Login;
+import main.domain.models.users.Person;
+import main.domain.models.users.User;
+import main.infra.JsonFile;
+import main.infra.UsersInMemory;
+import main.infra.UsersJson;
 
 // @formatter:off
 public class JsonFileTest {
