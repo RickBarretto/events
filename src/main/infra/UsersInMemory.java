@@ -12,8 +12,18 @@ public class UsersInMemory implements Users {
     private HashMap<String, UserId> emailIndex;
 
     public UsersInMemory() {
+        this(List.of());
+    }
+
+    public UsersInMemory(List<User> usersList) {
         this.users = new HashMap<>();
         this.emailIndex = new HashMap<>();
+
+        usersList.forEach((user) -> register(user));
+    }
+
+    public List<User> list() {
+        return List.copyOf(users.values());
     }
 
     @Override
