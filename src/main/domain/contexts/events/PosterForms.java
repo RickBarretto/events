@@ -25,7 +25,7 @@ public class PosterForms {
         return this;
     }
 
-    public Poster submit() throws NullPointerException {
+    public Poster submit() {
         Objects.requireNonNull(title);
         Objects.requireNonNull(description);
         Objects.requireNonNull(schedule);

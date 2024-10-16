@@ -40,8 +40,8 @@ public class EventRegistering implements Context {
         return this;
     }
 
-    public void register() throws NullPointerException, EventAlreadyRegistered,
-            CantRegisterPastEvent {
+    public void register()
+            throws EventAlreadyRegistered, CantRegisterPastEvent {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(poster);
         Objects.requireNonNull(author);
@@ -50,7 +50,7 @@ public class EventRegistering implements Context {
 
         shouldBeFuture();
         shouldBeUnregistered();
-        
+
         repository.register(event);
     }
 
