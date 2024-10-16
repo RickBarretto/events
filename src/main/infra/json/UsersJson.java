@@ -1,4 +1,4 @@
-package main.infra;
+package main.infra.json;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
+import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 
 public class UsersJson implements Users {

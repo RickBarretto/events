@@ -1,4 +1,4 @@
-package main.infra;
+package main.infra.json;
 
 import java.io.File;
 

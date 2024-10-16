@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.JsonFile;
-import main.infra.UsersInMemory;
-import main.infra.UsersJson;
+import main.infra.json.JsonFile;
+import main.infra.json.UsersJson;
+import main.infra.virtual.UsersInMemory;
 
 // @formatter:off
 public class JsonFileTest {

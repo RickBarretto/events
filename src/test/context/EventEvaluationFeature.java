@@ -15,7 +15,7 @@ import main.domain.models.events.Poster;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.EvaluationsInMemory;
+import main.infra.virtual.EvaluationsInMemory;
 import main.roles.repositories.Evaluations;
 import test.resources.*;
 import test.resources.bdd.And;

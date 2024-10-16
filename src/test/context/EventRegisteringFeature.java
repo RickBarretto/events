@@ -22,7 +22,7 @@ import main.domain.models.events.Poster;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.EventsInMemory;
+import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
 import test.resources.*;
 import test.resources.bdd.And;

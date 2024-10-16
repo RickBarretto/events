@@ -14,7 +14,7 @@ import main.domain.contexts.user.registering.UserRegistering;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
-import main.infra.UsersInMemory;
+import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 import test.resources.*;
 import test.resources.bdd.And;

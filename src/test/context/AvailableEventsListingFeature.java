@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import main.domain.contexts.events.AvailableEventsListing;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
-import main.infra.EventsInMemory;
+import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Given;
