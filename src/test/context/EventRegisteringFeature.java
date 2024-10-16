@@ -1,7 +1,11 @@
 package test.context;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.time.LocalDate;
@@ -24,7 +28,6 @@ import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
-import test.resources.*;
 import test.resources.bdd.And;
 import test.resources.bdd.Given;
 import test.resources.bdd.Scennario;

@@ -1,7 +1,10 @@
 package test.context;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +19,6 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
-import test.resources.*;
 import test.resources.bdd.And;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Given;

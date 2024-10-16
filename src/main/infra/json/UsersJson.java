@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import main.domain.models.users.User;
-import main.domain.models.users.UserId;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 
