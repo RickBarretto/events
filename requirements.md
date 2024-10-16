@@ -30,8 +30,8 @@
     - [x] Login
     - [x] Password
     - [ ] Bought Tickets
-- [ ] Events
-    - [ ] Poster
+- [x] Events
+    - [x] Poster
     - [ ] Evaluations
     - [ ] Sales
 - [ ] Purchases
