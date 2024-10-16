@@ -1,7 +1,6 @@
 package main.domain.models.events;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 import main.roles.Entity;
 
