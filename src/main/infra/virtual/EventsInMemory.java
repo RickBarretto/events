@@ -57,7 +57,7 @@ public class EventsInMemory implements Events {
     }
 
     @Override
-    public List<Event> asList() { return List.copyOf(events.values()); }
+    public List<Event> list() { return List.copyOf(events.values()); }
 
     @Override
     public List<Event> availableFor(LocalDate date) {

@@ -12,7 +12,7 @@ public interface Events {
 
     Optional<Event> event(String title, LocalDate date);
 
-    List<Event> asList();
+    List<Event> list();
 
     List<Event> availableFor(LocalDate date);
 

@@ -42,7 +42,7 @@ public class EventsJson implements Events {
 
     private void persist() {
         try (FileWriter writer = new FileWriter(file)) {
-            new Gson().toJson(events.asList(), writer);
+            new Gson().toJson(events.list(), writer);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -50,7 +50,7 @@ public class EventsJson implements Events {
     }
 
     @Override
-    public List<Event> asList() { return events.asList(); }
+    public List<Event> list() { return events.list(); }
 
     @Override
     public List<Event> availableFor(LocalDate date) {

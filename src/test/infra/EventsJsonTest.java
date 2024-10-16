@@ -54,7 +54,7 @@ public class EventsJsonTest {
 
         @Test
         void shouldContainEvent() {
-            assertTrue(1 == this.allEventsJson.asList().size());
+            assertTrue(1 == this.allEventsJson.list().size());
             assertTrue(this.allEventsJson.has("From Zero Tour", LocalDate.of(2024, 11, 15)));
             assertTrue(this.allEventsJson.event("From Zero Tour", LocalDate.of(2024, 11, 15)).isPresent());
         }
@@ -106,14 +106,14 @@ public class EventsJsonTest {
         @Test
         @Then("Internal list should be empty")
         void shouldBeEmpty() {
-            assertTrue(this.noEvents.asList().isEmpty());
+            assertTrue(this.noEvents.list().isEmpty());
         }
         
         @Test
         @Then("Should load an empty list from the json file")
         void shouldLoadEmptyListFromFile() {
             var otherReference = new EventsJson(file);
-            assertTrue(otherReference.asList().isEmpty());
+            assertTrue(otherReference.list().isEmpty());
         }
     }
 }
