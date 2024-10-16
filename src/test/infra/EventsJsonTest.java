@@ -16,6 +16,7 @@ import main.domain.models.events.Poster;
 import main.infra.json.EventsJson;
 import main.infra.json.JsonFile;
 import main.infra.virtual.EventsInMemory;
+import test.resources.bdd.Then;
 
 // @formatter:off
 public class EventsJsonTest {
@@ -28,7 +29,7 @@ public class EventsJsonTest {
     }
 
     @Nested
-    class DealwithSomeExistentRepository {
+    class ExistentRepository {
         private final JsonFile file = new JsonFile(directory, "all-events");
         private EventsJson allEventsJson;
 
@@ -66,7 +67,8 @@ public class EventsJsonTest {
         }
         
         @Test
-        void shouldLoad() {
+        @Then("Should load list from file")
+        void shouldLoadFromFile() {
             registerExtraShow();
             
             var otherReference = new EventsJson(file);
@@ -86,7 +88,7 @@ public class EventsJsonTest {
     }
 
     @Nested
-    class DealwithEmptyRepository {
+    class EmptyRepository {
         private final JsonFile file = new JsonFile(directory, "none-events");
         private EventsJson noEvents;
 
@@ -102,12 +104,14 @@ public class EventsJsonTest {
         }
 
         @Test
-        void shouldNotContain() {
-            assertTrue(0 == this.noEvents.asList().size());
+        @Then("Internal list should be empty")
+        void shouldBeEmpty() {
+            assertTrue(this.noEvents.asList().isEmpty());
         }
         
         @Test
-        void shouldLoadEmpty() {
+        @Then("Should load an empty list from the json file")
+        void shouldLoadEmptyListFromFile() {
             var otherReference = new EventsJson(file);
             assertTrue(otherReference.asList().isEmpty());
         }
