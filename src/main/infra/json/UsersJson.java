@@ -15,16 +15,16 @@ import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 
 public class UsersJson implements Users {
-    private final String filepath;
-    private UsersInMemory allUsersInMemory;
+    private final String file;
+    private UsersInMemory users;
 
     public UsersJson(String filepath) {
         this(filepath, new UsersInMemory(load(filepath)));
     }
 
     public UsersJson(String filepath, UsersInMemory repository) {
-        this.filepath = filepath;
-        this.allUsersInMemory = repository;
+        this.file = filepath;
+        this.users = repository;
         persist();
     }
 
@@ -40,8 +40,8 @@ public class UsersJson implements Users {
     }
 
     private void persist() {
-        try (FileWriter writer = new FileWriter(filepath)) {
-            new Gson().toJson(allUsersInMemory.list(), writer);
+        try (FileWriter writer = new FileWriter(file)) {
+            new Gson().toJson(users.list(), writer);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -50,25 +50,25 @@ public class UsersJson implements Users {
 
     @Override
     public void register(User user) {
-        allUsersInMemory.register(user);
+        users.register(user);
         persist();
     }
 
     @Override
     public void update(User target, User newUser) {
-        allUsersInMemory.update(target, newUser);
+        users.update(target, newUser);
         persist();
     }
 
     @Override
     public Optional<User> ownerOf(String email, String password) {
-        return allUsersInMemory.ownerOf(email, password);
+        return users.ownerOf(email, password);
     }
 
     @Override
-    public boolean has(String email) { return allUsersInMemory.has(email); }
+    public boolean has(String email) { return users.has(email); }
 
     @Override
-    public List<User> list() { return allUsersInMemory.list(); }
+    public List<User> list() { return users.list(); }
 
 }
