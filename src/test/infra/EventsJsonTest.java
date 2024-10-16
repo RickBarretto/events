@@ -23,7 +23,8 @@ public class EventsJsonTest {
 
     @AfterAll
     static void removeFiles() {
-        // new JsonFile(directory, "").delete();
+        new JsonFile(directory, "all-events").delete();
+        new JsonFile(directory, "none-events").delete();
     }
 
     @Nested
