@@ -23,18 +23,4 @@ public class Event implements Entity<EventId> {
 
     public Poster poster() { return poster; }
 
-    @Override
-    public int hashCode() { return Objects.hash(id, poster); }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Event))
-            return false;
-        Event other = (Event) obj;
-        return Objects.equals(id, other.id)
-                && Objects.equals(poster, other.poster);
-    }
-
 }
