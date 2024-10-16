@@ -39,12 +39,13 @@ class EventIndex {
 }
 
 public class EventsInMemory implements Events {
-    private HashMap<EventId, Event> events;
-    private HashMap<EventIndex, EventId> infoIndex;
+    private HashMap<EventId, Event> events = new HashMap<>();
+    private HashMap<EventIndex, EventId> infoIndex = new HashMap<>();
 
-    public EventsInMemory() {
-        this.events = new HashMap<>();
-        this.infoIndex = new HashMap<>();
+    public EventsInMemory() { this(List.of()); }
+
+    public EventsInMemory(List<Event> eventsList) {
+        eventsList.forEach(event -> register(event));
     }
 
     @Override
