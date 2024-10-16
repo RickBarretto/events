@@ -15,20 +15,20 @@ import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 
 public class UsersJson implements Users {
-    private final String file;
+    private final JsonFile file;
     private UsersInMemory users;
 
-    public UsersJson(String filepath) {
+    public UsersJson(JsonFile filepath) {
         this(filepath, new UsersInMemory(load(filepath)));
     }
 
-    public UsersJson(String filepath, UsersInMemory repository) {
+    public UsersJson(JsonFile filepath, UsersInMemory repository) {
         this.file = filepath;
         this.users = repository;
         persist();
     }
 
-    private static List<User> load(String filepath) {
+    private static List<User> load(JsonFile filepath) {
         try (BufferedReader reader = new BufferedReader(
                 new FileReader(filepath))) {
             return new Gson().fromJson(reader, new TypeToken<List<User>>() {});
