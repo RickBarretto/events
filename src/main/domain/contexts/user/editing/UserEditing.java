@@ -26,7 +26,7 @@ public class UserEditing implements Context {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(target);
 
-        if (!repository.has(target.id()))
+        if (!repository.has(target.login().email()))
             throw new InexistentUser();
         return new EditingWithTarget(repository, target);
     }
