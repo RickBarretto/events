@@ -6,6 +6,7 @@ import static org.junit.Assume.assumeTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,10 +20,17 @@ import main.infra.UsersJson;
 
 // @formatter:off
 public class JsonFileTest {
+    private static final String directory = "src/test/infra/resources";
+
+    @AfterAll
+    static void removeFiles() {
+        new JsonFile(directory, "all-users").delete();
+        new JsonFile(directory, "none-users").delete();
+    }
 
     @Nested
     class DealwithSomeExistentRepository {
-        private final JsonFile file = new JsonFile("src/test/infra/resources", "all-users");
+        private final JsonFile file = new JsonFile(directory, "all-users");
         private UsersJson allUsersJson;
 
         @BeforeEach
@@ -88,7 +96,7 @@ public class JsonFileTest {
 
     @Nested
     class DealwithEmptyRepository {
-        private final JsonFile file = new JsonFile("src/test/infra/resources", "none-users");
+        private final JsonFile file = new JsonFile(directory, "none-users");
         private UsersJson noneUsersJson;
 
         @BeforeEach
