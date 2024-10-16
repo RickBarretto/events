@@ -53,8 +53,8 @@ public class EventsJson implements Events {
     public List<Event> list() { return events.list(); }
 
     @Override
-    public List<Event> availableFor(LocalDate date) {
-        return events.availableFor(date);
+    public List<Event> availableIn(LocalDate date) {
+        return events.availableIn(date);
     }
 
     @Override
