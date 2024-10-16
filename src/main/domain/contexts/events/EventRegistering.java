@@ -48,13 +48,21 @@ public class EventRegistering implements Context {
 
         var event = new Event(poster);
 
+        shouldBeFuture();
+        shouldBeUnregistered();
+        
+        repository.register(event);
+    }
+
+    private void shouldBeFuture() throws CantRegisterPastEvent {
         if (currentDay.isAfter(poster.date())
                 || currentDay.isEqual(poster.date()))
             throw new CantRegisterPastEvent();
+    }
 
+    private void shouldBeUnregistered() throws EventAlreadyRegistered {
         if (repository.has(poster.title(), poster.date()))
             throw new EventAlreadyRegistered();
-        repository.register(event);
     }
 
 }
