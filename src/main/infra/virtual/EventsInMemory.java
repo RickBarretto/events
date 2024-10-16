@@ -60,7 +60,7 @@ public class EventsInMemory implements Events {
     public List<Event> list() { return List.copyOf(events.values()); }
 
     @Override
-    public List<Event> availableIn(LocalDate date) {
+    public List<Event> availableOn(LocalDate date) {
         return events.values().stream()
                 .filter(event -> event.isAvailableFor(date)).toList();
     }

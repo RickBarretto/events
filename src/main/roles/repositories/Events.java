@@ -14,7 +14,7 @@ public interface Events {
 
     List<Event> list();
 
-    List<Event> availableIn(LocalDate date);
+    List<Event> availableOn(LocalDate date);
 
     boolean has(EventId id);
 
