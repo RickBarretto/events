@@ -1,4 +1,4 @@
-package test.resources;
+package test.resources.bdd;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

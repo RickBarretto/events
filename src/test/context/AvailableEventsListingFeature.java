@@ -15,10 +15,10 @@ import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.infra.EventsInMemory;
 import main.roles.repositories.Events;
-import test.resources.Feature;
-import test.resources.Given;
-import test.resources.Then;
-import test.resources.When;
+import test.resources.bdd.Feature;
+import test.resources.bdd.Given;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 
 @Feature("Listing available events")
 @Given("A group of available and not available Events")

@@ -25,6 +25,11 @@ import main.domain.models.users.User;
 import main.infra.EventsInMemory;
 import main.roles.repositories.Events;
 import test.resources.*;
+import test.resources.bdd.And;
+import test.resources.bdd.Given;
+import test.resources.bdd.Scennario;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 
 // @formatter:off
 public class EventRegisteringFeature {

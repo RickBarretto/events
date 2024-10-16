@@ -18,6 +18,10 @@ import main.domain.models.users.User;
 import main.infra.EvaluationsInMemory;
 import main.roles.repositories.Evaluations;
 import test.resources.*;
+import test.resources.bdd.And;
+import test.resources.bdd.Feature;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 
 @Feature("Evaluate some Event by some User")
 public class EventEvaluationFeature {

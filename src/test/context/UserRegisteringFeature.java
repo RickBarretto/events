@@ -17,6 +17,12 @@ import main.domain.models.users.Person;
 import main.infra.UsersInMemory;
 import main.roles.repositories.Users;
 import test.resources.*;
+import test.resources.bdd.And;
+import test.resources.bdd.Feature;
+import test.resources.bdd.Given;
+import test.resources.bdd.Scennario;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 
 // @formatter:off
 @Feature("Registering a new user")
