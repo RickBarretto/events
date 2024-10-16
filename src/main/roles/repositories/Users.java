@@ -1,5 +1,6 @@
 package main.roles.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import main.domain.models.users.User;
@@ -15,4 +16,6 @@ public interface Users {
     boolean has(UserId id);
 
     boolean has(String email);
+
+    List<User> list();
 }

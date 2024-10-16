@@ -1,6 +1,7 @@
 package main.infra;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import main.domain.models.users.User;
