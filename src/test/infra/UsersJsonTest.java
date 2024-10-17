@@ -35,7 +35,7 @@ public class UsersJsonTest {
 
         @BeforeEach
         void createJsonFile() {
-            new UsersJson(file.toString(), new UsersInMemory(
+            new UsersJson(file, new UsersInMemory(
                 List.of(
                     new User(
                         new Login("john.doe@example.com", "123456"), 
@@ -46,7 +46,7 @@ public class UsersJsonTest {
         @BeforeEach
         void loadJsonFile() {
             assumeTrue(file.exists());
-            this.allUsersJson = new UsersJson(file.toString());
+            this.allUsersJson = new UsersJson(file);
         }
 
         @Test
@@ -68,7 +68,7 @@ public class UsersJsonTest {
             // Forces read from json file after updating it      
             registerJane();
 
-            var otherReference = new UsersJson(file.toString());
+            var otherReference = new UsersJson(file);
             assertTrue(otherReference.ownerOf("jane.doe@example.com", "789456").isPresent());
             assertTrue(otherReference.has("jane.doe@example.com"));
         }
@@ -101,13 +101,13 @@ public class UsersJsonTest {
 
         @BeforeEach
         void createJsonFile() {
-            new UsersJson(file.toString(), new UsersInMemory(List.of()));
+            new UsersJson(file, new UsersInMemory(List.of()));
         }
         
         @BeforeEach
         void loadJsonFile() {
             assumeTrue(file.exists());
-            this.noneUsersJson = new UsersJson(file.toString());
+            this.noneUsersJson = new UsersJson(file);
         }
 
         @Test
@@ -117,7 +117,7 @@ public class UsersJsonTest {
         
         @Test
         void shouldLoadEmpty() {
-            var otherReference = new UsersJson(file.toString());
+            var otherReference = new UsersJson(file);
             assertTrue(otherReference.list().isEmpty());
         }
     }

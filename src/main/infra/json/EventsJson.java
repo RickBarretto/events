@@ -58,6 +58,9 @@ public class EventsJson implements Events {
     }
 
     @Override
+    public Optional<Event> byId(EventId id) { return events.byId(id); }
+
+    @Override
     public Optional<Event> event(String title, LocalDate date) {
         return events.event(title, date);
     }
@@ -75,4 +78,11 @@ public class EventsJson implements Events {
         events.register(event);
         persist();
     }
+
+    @Override
+    public void update(Event event) {
+        events.update(event);
+        persist();
+    }
+
 }

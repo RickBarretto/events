@@ -57,6 +57,11 @@ public class EventsInMemory implements Events {
     }
 
     @Override
+    public void update(Event event) {
+        events.replace(event.id(), event);
+    }
+
+    @Override
     public List<Event> list() { return List.copyOf(events.values()); }
 
     @Override
@@ -66,10 +71,14 @@ public class EventsInMemory implements Events {
     }
 
     @Override
+    public Optional<Event> byId(EventId id) {
+        return Optional.ofNullable(events.get(id));
+    }
+
+    @Override
     public Optional<Event> event(String title, LocalDate date) {
         var index = new EventIndex(title, date);
-        var id = infoIndex.get(index);
-        return Optional.ofNullable(events.get(id));
+        return this.byId(infoIndex.get(index));
     }
 
     @Override

@@ -9,15 +9,12 @@ import main.domain.models.users.UserId;
 import main.roles.repositories.Users;
 
 public class UsersInMemory implements Users {
-    private HashMap<UserId, User> users;
-    private HashMap<String, UserId> emailIndex;
+    private HashMap<UserId, User> users = new HashMap<>();
+    private HashMap<String, UserId> emailIndex = new HashMap<>();
 
     public UsersInMemory() { this(List.of()); }
 
     public UsersInMemory(List<User> usersList) {
-        this.users = new HashMap<>();
-        this.emailIndex = new HashMap<>();
-
         usersList.forEach((user) -> register(user));
     }
 
@@ -41,9 +38,14 @@ public class UsersInMemory implements Users {
     }
 
     @Override
+    public Optional<User> byId(UserId id) {
+        return Optional.ofNullable(users.get(id)); 
+    }
+
+    @Override
     public Optional<User> ownerOf(String email, String password) {
         var id = emailIndex.get(email);
-        return Optional.ofNullable(users.get(id));
+        return this.byId(id);
     }
 
     @Override

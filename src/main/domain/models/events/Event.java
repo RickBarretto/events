@@ -1,17 +1,23 @@
 package main.domain.models.events;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
+import main.domain.models.evaluations.Evaluation;
 import main.roles.Entity;
 
 public class Event implements Entity<EventId> {
-    private final EventId id;
+    private final EventId id = new EventId();
+    private ArrayList<Evaluation> evaluations = new ArrayList<>();
     private Poster poster;
 
     public Event(Poster poster) {
-        this.id = new EventId();
         this.poster = poster;
+    }
+
+    public void receiveEvaluation(Evaluation evaluation) {
+        this.evaluations.add(evaluation);
     }
 
     public boolean isAvailableFor(LocalDate date) {
@@ -23,18 +29,6 @@ public class Event implements Entity<EventId> {
 
     public Poster poster() { return poster; }
 
-    @Override
-    public int hashCode() { return Objects.hash(id, poster); }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Event))
-            return false;
-        Event other = (Event) obj;
-        return Objects.equals(id, other.id)
-                && Objects.equals(poster, other.poster);
-    }
+    public List<Evaluation> evaluations() { return List.copyOf(evaluations); }
 
 }
