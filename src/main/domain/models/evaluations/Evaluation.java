@@ -8,7 +8,7 @@ public class Evaluation implements Entity<EvaluationId> {
     private final EvaluationId id;
     private final EventId event;
     private final UserId author;
-    private String comment;
+    private final String comment;
 
     public Evaluation(EventId event, UserId author, String comment) {
         this(new EvaluationId(), event, author, comment);
