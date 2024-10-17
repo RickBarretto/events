@@ -16,7 +16,7 @@
   - [x] Description  
   - [x] Data  
 - [x] List available `Events`  
-- [ ] Buy `Ticket`  
+- [x] Buy `Ticket`  
 - [ ] List bought `Ticket`s
 - [ ] Cancel Purchased `Ticket` 
 - [x] Edit `User`'s Profile
@@ -29,11 +29,11 @@
     - [x] Personal Data
     - [x] Login
     - [x] Password
-    - [ ] Bought Tickets
+    - [x] Bought Tickets
 - [x] Events
     - [x] Poster
     - [x] Evaluations
-    - [ ] Sales
+    - [x] Sales
 - [ ] Purchases
     - [ ] User
     - [ ] Ticket
