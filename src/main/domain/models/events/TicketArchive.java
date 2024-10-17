@@ -3,20 +3,19 @@ package main.domain.models.events;
 class SoldOut extends Exception { public SoldOut() { super(); } }
 
 public class TicketArchive {
-    private Poster poster;
-    private Integer capacity;
+    private final Poster poster;
+    private final Integer capacity;
     private Integer sold;
 
-    private TicketArchive(Poster poster) {
+    private TicketArchive(Poster poster, Integer capacity, Integer sold) {
         this.poster = poster;
-        this.capacity = 0;
-        this.sold = 0;
+        this.capacity = capacity;
+        this.sold = sold;
     }
 
     public TicketArchive ofCapacity(Integer amount) {
         assert amount >= 0;
-        this.capacity = amount;
-        return this;
+        return new TicketArchive(poster, amount, sold);
     }
 
     public Ticket ticket() { return new Ticket(poster); }

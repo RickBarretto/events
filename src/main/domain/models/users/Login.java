@@ -3,8 +3,8 @@ package main.domain.models.users;
 import java.util.Objects;
 
 public class Login {
-    private String email;
-    private String password;
+    private final String email;
+    private final String password;
 
     public Login(String email, String password) {
         this.email = email;

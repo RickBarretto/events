@@ -3,8 +3,8 @@ package main.domain.models.users;
 import java.util.Objects;
 
 public class Person {
-    private String name;
-    private String cpf;
+    private final String name;
+    private final String cpf;
 
     // Constructors
 

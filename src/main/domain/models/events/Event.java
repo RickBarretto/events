@@ -10,7 +10,7 @@ import main.roles.Entity;
 public class Event implements Entity<EventId> {
     private final EventId id = new EventId();
     private ArrayList<Evaluation> evaluations = new ArrayList<>();
-    private Poster poster;
+    private final Poster poster;
 
     public Event(Poster poster) {
         this.poster = poster;

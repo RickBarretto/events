@@ -6,9 +6,9 @@ import main.roles.Entity;
 
 public class User implements Entity<UserId> {
     private final UserId id;
-    private Login login;
-    private Person person;
-    private boolean admin;
+    private final Login login;
+    private final Person person;
+    private final boolean admin;
 
     // Constructors
     public User(Login login, Person person) {

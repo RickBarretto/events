@@ -1,18 +1,19 @@
 package main.domain.models.events;
 
 public class Ticket {
-    private Poster event;
-    private Integer availableFor;
+    private final Poster event;
+    private final Integer availableFor;
 
-    public Ticket(Poster event) {
+    public Ticket(Poster event) { this(event, 1); }
+
+    private Ticket(Poster event, Integer availableFor) {
         this.event = event;
-        this.availableFor = 1;
+        this.availableFor = availableFor;
     }
 
     public Ticket packedFor(Integer persons) {
         assert persons > 0;
-        this.availableFor = persons;
-        return this;
+        return new Ticket(event, persons);
     }
 
     public Poster event() { return event; }

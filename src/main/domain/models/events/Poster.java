@@ -3,9 +3,9 @@ package main.domain.models.events;
 import java.time.LocalDate;
 
 public class Poster {
-    private String title;
-    private String description;
-    private String schedule;
+    private final String title;
+    private final String description;
+    private final String schedule;
 
     /**
      * @param title
