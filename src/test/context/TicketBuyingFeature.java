@@ -1,13 +1,18 @@
 package test.context;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeNoException;
+import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,6 +26,9 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
+import main.infra.json.EventsJson;
+import main.infra.json.JsonFile;
+import main.infra.json.UsersJson;
 import main.infra.virtual.EventsInMemory;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Events;
@@ -240,5 +248,51 @@ public class TicketBuyingFeature {
             // When -> Should
             assertThrows(SoldOut.class, () -> buyingUnavailable());
         }
+    }
+
+    @Nested
+    class TestForJsonFiles {
+        static final String directory = "src/test/context/resources";
+        static final JsonFile eventsFile = new JsonFile(directory, "all-events");
+        static final JsonFile usersFile = new JsonFile(directory, "all-users");
+        
+        EventsJson eventsJson; 
+        UsersJson usersJson;
+
+        @BeforeEach
+        void initJsonRepo() {
+            eventsJson = new EventsJson(eventsFile, (EventsInMemory)events);
+            usersJson = new UsersJson(usersFile, (UsersInMemory)users);
+        }
+
+        @AfterAll
+        static void removeFiles() {
+            eventsFile.delete();
+            usersFile.delete();
+        }
+
+        @When("Sellign tickets for Json Repositories")
+        void sellTickets(Integer amount) throws SoldOut {
+            new TicketBuying(eventsJson, usersJson)
+                .of(targetEvent()).by(targetUser())
+                .amountOf(amount)
+                .buy();
+        }
+
+        @Test
+        void testJsonRepository() {
+            assertDoesNotThrow(() -> sellTickets(2));
+
+            final var event = new EventsJson(eventsFile).byId(targetEvent()).get();
+            assertTrue(2 == event.boxOffice().capacity());
+            assertTrue(2 == event.boxOffice().sales());
+            assertTrue(0 == event.boxOffice().available());
+            assertTrue(event.boxOffice().isSoldOut());
+
+            final var user = new UsersJson(usersFile).byId(targetUser()).get();
+            assertTrue(1 == user.tickets().size());
+            assertEquals(targetEvent(), user.tickets().get(0).event());
+        }
+        
     }
 }
