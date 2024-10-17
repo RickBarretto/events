@@ -57,6 +57,11 @@ public class EventsInMemory implements Events {
     }
 
     @Override
+    public void update(Event event) {
+        events.replace(event.id(), event);
+    }
+
+    @Override
     public List<Event> list() { return List.copyOf(events.values()); }
 
     @Override

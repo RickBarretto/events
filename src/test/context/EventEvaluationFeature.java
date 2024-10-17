@@ -3,6 +3,7 @@ package test.context;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 
@@ -15,55 +16,55 @@ import main.domain.models.events.Poster;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.virtual.EvaluationsInMemory;
-import main.roles.repositories.Evaluations;
-import test.resources.bdd.And;
+import main.infra.virtual.EventsInMemory;
+import main.roles.repositories.Events;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Then;
 import test.resources.bdd.When;
 
+// @formatter:off
 @Feature("Evaluate some Event by some User")
 public class EventEvaluationFeature {
-    Evaluations evaluations;
+    Events events;
     Event event;
     User author;
 
     @BeforeEach
     void init() {
-        this.evaluations = new EvaluationsInMemory();
-        this.event = new Event(new Poster("From Zero", "Linkin Park Show",
+        event = new Event(new Poster("From Zero", "Linkin Park Show",
                 LocalDate.of(2024, 10, 15)));
-        this.author = new User(new Login("john.doe@example.com", "123456"),
+        author = new User(new Login("john.doe@example.com", "123456"),
                 new Person("John Doe", "000.000.000-00"));
+        events = new EventsInMemory();
+        events.register(event);
     }
 
     @When("When evaluating some Event as John Doe")
     void whenEvaluating() {
-        new EventEvaluation().of(this.event).from(evaluations).by(this.author)
-                .evaluateWith("The show is simply perfect!");
+        new EventEvaluation()
+            .of(event.id())
+            .from(events)
+            .by(author.id())
+            .evaluateWith("The show is simply perfect!");
     }
 
     @Then("Evaluation should be registered")
     @Test
     void shouldBeRegistered() {
-        assumeTrue(evaluations.wroteBy(author.id()).isEmpty());
+        assumeTrue(events.byId(event.id()).get().evaluations().isEmpty());
         whenEvaluating();
 
-        var evaluation = evaluations.wroteBy(author.id());
-        assertTrue(evaluation.isPresent());
-        assertEquals(author.id(), evaluation.get().author());
-        assertEquals(event.id(), evaluation.get().event());
+        assertTrue(1 == events.byId(event.id()).get().evaluations().size());
+        assertAll("Are the same",
+        () -> assertEquals(
+            "The show is simply perfect!",
+            events.byId(event.id()).get().evaluations().get(0).comment()),
+        () -> assertEquals(
+            author.id(),
+            events.byId(event.id()).get().evaluations().get(0).author()),
+        () -> assertEquals(
+            event.id(),
+            events.byId(event.id()).get().evaluations().get(0).event())
+        );
     }
-
-    @And("Is the same")
-    @Test
-    void shouldBeTheSame() {
-        whenEvaluating();
-        var evaluation = evaluations.wroteBy(author.id()).get();
-
-        assertEquals(author.id(), evaluation.author());
-        assertEquals(event.id(), evaluation.event());
-        assertEquals("The show is simply perfect!", evaluation.comment());
-    }
-
 }

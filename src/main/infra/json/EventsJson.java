@@ -78,4 +78,11 @@ public class EventsJson implements Events {
         events.register(event);
         persist();
     }
+
+    @Override
+    public void update(Event event) {
+        events.update(event);
+        persist();
+    }
+
 }

@@ -1,7 +1,9 @@
 package test.infra;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,8 +13,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import main.domain.models.evaluations.Evaluation;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
+import main.domain.models.users.UserId;
 import main.infra.json.EventsJson;
 import main.infra.json.JsonFile;
 import main.infra.virtual.EventsInMemory;
@@ -115,5 +119,45 @@ public class EventsJsonTest {
             var otherReference = new EventsJson(file);
             assertTrue(otherReference.list().isEmpty());
         }
+    }
+
+
+    @Nested
+    class RepositoryOfEvaluatedEvents {
+        private final JsonFile file = new JsonFile(directory, "all-evaluated-events");
+        private Event event;
+        private EventsJson events;
+
+        @BeforeEach
+        void createJsonFile() {
+            event = new Event(new Poster(
+                "From Zero Tour",
+                "LP show", 
+                LocalDate.of(2024, 11, 15)
+            ));
+            new EventsJson(file, new EventsInMemory(List.of(event)));
+        }
+
+        @BeforeEach
+        void loadJsonFile() {
+            assumeTrue(file.exists());
+            this.events = new EventsJson(file);
+        }
+
+        @Test
+        void shouldUpdate() {
+            var author = new UserId();
+            event.receiveEvaluation(new Evaluation(event.id(), author, "Good show!"));
+            events.update(event);
+
+            var newEvents = new EventsJson(file);
+            var storedEvaluation = newEvents.byId(event.id()).get().evaluations().get(0);
+            assertAll("Evaluation was stored",
+                () -> assertEquals("Good show!", storedEvaluation.comment()),
+                () -> assertEquals(author, storedEvaluation.author()),
+                () -> assertEquals(event.id(), storedEvaluation.event())
+                    
+            );
+        }   
     }
 }
