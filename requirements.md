@@ -32,7 +32,7 @@
     - [ ] Bought Tickets
 - [x] Events
     - [x] Poster
-    - [ ] Evaluations
+    - [x] Evaluations
     - [ ] Sales
 - [ ] Purchases
     - [ ] User
