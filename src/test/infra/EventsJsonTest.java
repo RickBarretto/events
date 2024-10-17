@@ -29,6 +29,7 @@ public class EventsJsonTest {
     @AfterAll
     static void removeFiles() {
         new JsonFile(directory, "all-events").delete();
+        new JsonFile(directory, "all-evaluated-events").delete();
         new JsonFile(directory, "none-events").delete();
     }
 
