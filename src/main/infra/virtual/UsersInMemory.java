@@ -53,7 +53,9 @@ public class UsersInMemory implements Users {
 
     private void replaceEmail(String oldEmail, String newEmail) {
         assert emailIndex.containsKey(oldEmail);
-        assert !emailIndex.containsKey(newEmail);
+        if (!oldEmail.equals(newEmail)) {
+            assert !emailIndex.containsKey(newEmail);
+        }
 
         emailIndex.put(newEmail, emailIndex.remove(oldEmail));
     }

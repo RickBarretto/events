@@ -1,7 +1,10 @@
 package main.domain.models.users;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import main.domain.models.events.Ticket;
 import main.roles.Entity;
 
 public class User implements Entity<UserId> {
@@ -9,6 +12,7 @@ public class User implements Entity<UserId> {
     private final Login login;
     private final Person person;
     private final boolean admin;
+    private ArrayList<Ticket> boughtTickets = new ArrayList<>();
 
     // Constructors
     public User(Login login, Person person) {
@@ -26,6 +30,10 @@ public class User implements Entity<UserId> {
         this.admin = admin;
     }
 
+    public void buyTicket(Ticket ticket) {
+        this.boughtTickets.add(ticket);
+    }
+
     // Getters and Setters
     public UserId id() { return id; }
 
@@ -34,6 +42,10 @@ public class User implements Entity<UserId> {
     public Person person() { return person; }
 
     public boolean isAdmin() { return admin; }
+
+    public List<Ticket> tickets() {
+        return List.copyOf(boughtTickets);
+    }
 
     // Factory Methods
     public User asAdmin() { return new User(id, login, person, true); }
