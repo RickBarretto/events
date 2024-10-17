@@ -66,10 +66,14 @@ public class EventsInMemory implements Events {
     }
 
     @Override
+    public Optional<Event> byId(EventId id) {
+        return Optional.ofNullable(events.get(id));
+    }
+
+    @Override
     public Optional<Event> event(String title, LocalDate date) {
         var index = new EventIndex(title, date);
-        var id = infoIndex.get(index);
-        return Optional.ofNullable(events.get(id));
+        return this.byId(infoIndex.get(index));
     }
 
     @Override
