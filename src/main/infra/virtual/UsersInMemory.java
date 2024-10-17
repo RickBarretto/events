@@ -38,9 +38,14 @@ public class UsersInMemory implements Users {
     }
 
     @Override
+    public Optional<User> byId(UserId id) {
+        return Optional.ofNullable(users.get(id)); 
+    }
+
+    @Override
     public Optional<User> ownerOf(String email, String password) {
         var id = emailIndex.get(email);
-        return Optional.ofNullable(users.get(id));
+        return this.byId(id);
     }
 
     @Override
