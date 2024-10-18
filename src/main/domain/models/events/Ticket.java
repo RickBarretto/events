@@ -25,6 +25,8 @@ public class Ticket {
 
     public EventId event() { return event; }
 
+    public Double price() { return price * availableFor; }
+
     public Integer availableFor() { return availableFor; }
 
     @Override
