@@ -1,0 +1,70 @@
+package test.domain.models.payment;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+
+import main.domain.models.purchases.Email;
+import main.domain.models.purchases.Participant;
+import main.domain.models.purchases.PaymentDetails;
+import main.domain.models.purchases.Transaction;
+import main.domain.models.purchases.TransactionId;
+import main.domain.models.users.Login;
+import main.domain.models.users.Person;
+import main.domain.models.users.User;
+
+public class TransactionTest {
+    private final TransactionId randomId = new TransactionId(UUID.randomUUID());
+    private final PaymentDetails payment = new PaymentDetails("...", "...",
+            50.10);
+    private final Transaction transaction = new Transaction(randomId,
+            Participant.customer(
+                    new User(new Login("john.doe@example.com", "123456"),
+                            new Person("John Doe", "000.000.000-00"))),
+            Participant.customer(
+                    new User(new Login("jane.doe@example.com", "789123"),
+                            new Person("Jane Doe", "111.111.111-11"))),
+            payment, "Lending money to a friend");
+
+    @Test
+    void testId() {
+        TransactionId expected = this.randomId;
+        assertEquals(expected, transaction.id());
+    }
+
+    @Test
+    void testSender() {
+        final var expected = "john.doe@example.com";
+        final var actual = transaction.toEmail().metadata().sender();
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    void testRecipient() {
+        final var expected = "jane.doe@example.com";
+        final var actual = transaction.toEmail().metadata().recipient();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testEmailTitle() {
+        final var expected = "Lending money to a friend";
+        final var actual = transaction.toEmail().metadata().subject();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testHtml() {
+        final var email = transaction.toEmail(); 
+        var content = email.body().toString();
+        assertTrue(content.contains("<h1>" + email.metadata().subject() + "</h1>"));
+        assertTrue(
+                content.contains("Transaction by John Doe (000.000.000-00)"));
+        assertTrue(content.contains("to Jane Doe (111.111.111-11)"));
+        assertTrue(content.contains("of R$50.10."));
+        assertTrue(content.contains(payment.html()));
+    }
+}
