@@ -1,4 +1,4 @@
-package main.domain.contexts.user;
+package main.domain.contexts.purchases;
 
 import java.util.Objects;
 

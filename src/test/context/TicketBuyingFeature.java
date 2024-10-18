@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import main.domain.contexts.user.TicketBuying;
+import main.domain.contexts.purchases.TicketBuying;
 import main.domain.exceptions.SoldOut;
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
