@@ -1,5 +1,7 @@
 package main.domain.models.purchases;
 
+import main.domain.models.email.Html;
+
 public class PaymentDetails {
     private final String method;
     private final String details;

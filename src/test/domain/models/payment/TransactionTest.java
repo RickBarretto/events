@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
-import main.domain.models.purchases.Email;
+import main.domain.models.email.Email;
 import main.domain.models.purchases.Participant;
 import main.domain.models.purchases.PaymentDetails;
 import main.domain.models.purchases.Transaction;

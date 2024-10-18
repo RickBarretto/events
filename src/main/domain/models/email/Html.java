@@ -1,4 +1,4 @@
-package main.domain.models.purchases;
+package main.domain.models.email;
 
 public class Html {
     private final String tag;    
