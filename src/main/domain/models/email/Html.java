@@ -65,7 +65,4 @@ public class Html {
             .append(">\n")
             .toString();
     }
-    // @formatter:on
-    
-
 }
