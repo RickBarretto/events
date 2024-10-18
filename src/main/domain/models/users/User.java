@@ -34,6 +34,10 @@ public class User implements Entity<UserId> {
         this.boughtTickets.add(ticket);
     }
 
+    public void returnTicket(Ticket ticket) {
+        this.boughtTickets.remove(ticket);
+    }
+
     // Getters and Setters
     public UserId id() { return id; }
 
