@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import main.domain.models.email.Email;
 import main.domain.models.purchases.Participant;
 import main.domain.models.purchases.PaymentDetails;
+import main.domain.models.purchases.PaymentMethod;
 import main.domain.models.purchases.Transaction;
 import main.domain.models.purchases.TransactionId;
 import main.domain.models.users.Login;
@@ -18,13 +19,13 @@ import main.domain.models.users.User;
 
 public class TransactionTest {
     private final TransactionId randomId = new TransactionId(UUID.randomUUID());
-    private final PaymentDetails payment = new PaymentDetails("...", "...",
+    private final PaymentDetails payment = new PaymentDetails(new PaymentMethod("...", "..."),
             50.10);
     private final Transaction transaction = new Transaction(randomId,
-            Participant.customer(
+            new Participant(
                     new User(new Login("john.doe@example.com", "123456"),
                             new Person("John Doe", "000.000.000-00"))),
-            Participant.customer(
+            new Participant(
                     new User(new Login("jane.doe@example.com", "789123"),
                             new Person("Jane Doe", "111.111.111-11"))),
             payment, "Lending money to a friend");
