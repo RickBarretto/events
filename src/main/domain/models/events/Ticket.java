@@ -4,20 +4,23 @@ import java.util.Objects;
 
 public class Ticket {
     private final EventId event;
+    private final Double price;
     private final Integer availableFor;
 
-    public Ticket(EventId event) { this(event, 1); }
+    public Ticket(EventId event, Double price) { this(event, price, 1); }
+    public Ticket(EventId event) { this(event, 0.0, 1); }
 
-    private Ticket(EventId event, Integer availableFor) {
+    private Ticket(EventId event, Double price, Integer availableFor) {
         this.event = event;
+        this.price = price;
         this.availableFor = availableFor;
     }
 
-    public Ticket copy() { return new Ticket(event, availableFor); }
+    public Ticket copy() { return new Ticket(event, price, availableFor); }
 
     public Ticket packedFor(Integer persons) {
         assert persons > 0;
-        return new Ticket(event, persons);
+        return new Ticket(event, price, persons);
     }
 
     public EventId event() { return event; }

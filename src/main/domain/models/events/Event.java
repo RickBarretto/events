@@ -9,13 +9,16 @@ import main.roles.Entity;
 
 public class Event implements Entity<EventId> {
     private final EventId id = new EventId();
-    private ArrayList<Evaluation> evaluations = new ArrayList<>();
     private final Poster poster;
     private BoxOffice boxOffice;
+    private ArrayList<Evaluation> evaluations;
 
-    public Event(Poster poster) { 
+    public Event(Poster poster) { this(poster, 0.0); }
+
+    public Event(Poster poster, Double price) {
         this.poster = poster;
-        this.boxOffice = new BoxOffice(new Ticket(id));
+        this.boxOffice = new BoxOffice(new Ticket(id, price));
+        this.evaluations = new ArrayList<>();
     }
 
     public void receiveEvaluation(Evaluation evaluation) {
