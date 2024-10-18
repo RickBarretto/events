@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import main.domain.contexts.user.editing.UserEditing;
+import main.domain.contexts.user.UserEditing;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
 import main.domain.exceptions.PermissionDenied;

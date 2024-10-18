@@ -1,4 +1,4 @@
-package main.domain.contexts.user.editing;
+package main.domain.contexts.user;
 
 import java.util.Objects;
 

@@ -11,9 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import main.domain.contexts.user.UserRegistering;
 import main.domain.contexts.user.forms.IdentityForms;
 import main.domain.contexts.user.forms.LoginForms;
-import main.domain.contexts.user.registering.UserRegistering;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
