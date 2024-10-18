@@ -18,7 +18,7 @@
 - [x] List available `Events`  
 - [x] Buy `Ticket`  
 - [ ] List bought `Ticket`s
-- [ ] Cancel Purchased `Ticket` 
+- [x] Cancel Purchased `Ticket` 
 - [x] Edit `User`'s Profile
 - [ ] Add `Payment` methods to `User`
 - [ ] Confirm `Payment`
