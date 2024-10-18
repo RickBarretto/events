@@ -1,7 +1,5 @@
 package main.domain.models.purchases;
 
-import javax.swing.text.html.HTML;
-
 import main.domain.models.email.Email;
 import main.domain.models.email.EmailMetadata;
 import main.domain.models.email.Html;
