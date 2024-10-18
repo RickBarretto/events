@@ -24,8 +24,14 @@ public class TicketRefund {
         return this;
     }
 
+    public TicketRefund with(Ticket ticket) {
+        this.ticket = ticket;
+        return this;
+    }
+
     public void refund() {
         Objects.requireNonNull(customer);
+        Objects.requireNonNull(ticket);
         returnTicket();
         getTicketBack();
     }
