@@ -13,12 +13,12 @@ public class Participant {
         this.taxId = taxId;
     }
 
-    static Participant customer(User customer) {
+    static public Participant customer(User customer) {
         return new Participant(customer.login().email(),
                 customer.person().name(), customer.person().cpf());
     }
 
-    static Participant business() {
+    static public Participant business() {
         var business = new EventManagementBusiness();
         return new Participant(business.email(), business.name(),
                 business.cpnj());
