@@ -20,8 +20,8 @@
 - [x] List bought `Ticket`s
 - [x] Cancel Purchased `Ticket` 
 - [x] Edit `User`'s Profile
-- [ ] Add `Payment` methods to `User`
-- [ ] Confirm `Payment`
+- [x] Add `Payment` methods to `User`
+- [-] Confirm `Payment`
 - [x] Evaluate an `Event`
 
 ## To Persist
