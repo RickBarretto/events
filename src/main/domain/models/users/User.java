@@ -12,7 +12,7 @@ public class User implements Entity<UserId> {
     private final Login login;
     private final Person person;
     private final boolean admin;
-    private ArrayList<Ticket> boughtTickets = new ArrayList<>();
+    private ArrayList<Ticket> boughtTickets;
 
     // Constructors
     public User(Login login, Person person) {
@@ -20,19 +20,23 @@ public class User implements Entity<UserId> {
     }
 
     public User(UserId id, Login login, Person person) {
-        this(id, login, person, false);
+        this(id, login, person, false, new ArrayList<>());
     }
 
-    private User(UserId id, Login login, Person person, boolean admin) {
+    private User(UserId id, Login login, Person person, boolean admin,
+            ArrayList<Ticket> tickets) {
         this.id = id;
         this.login = login;
         this.person = person;
         this.admin = admin;
+        this.boughtTickets = tickets;
     }
 
-    public void buyTicket(Ticket ticket) {
-        this.boughtTickets.add(ticket);
+    public User withTickets(List<Ticket> tickets) {
+        return new User(id, login, person, admin, new ArrayList<>(tickets));
     }
+
+    public void buyTicket(Ticket ticket) { this.boughtTickets.add(ticket); }
 
     public void returnTicket(Ticket ticket) {
         this.boughtTickets.remove(ticket);
@@ -47,22 +51,26 @@ public class User implements Entity<UserId> {
 
     public boolean isAdmin() { return admin; }
 
-    public List<Ticket> tickets() {
-        return List.copyOf(boughtTickets);
-    }
+    public List<Ticket> tickets() { return List.copyOf(boughtTickets); }
 
     // Factory Methods
-    public User asAdmin() { return new User(id, login, person, true); }
+    public User asAdmin() {
+        return new User(id, login, person, true, boughtTickets);
+    }
 
-    public User with(Login login) { return new User(id, login, person, admin); }
+    public User with(Login login) {
+        return new User(id, login, person, admin, boughtTickets);
+    }
 
     public User with(Person person) {
-        return new User(id, login, person, admin);
+        return new User(id, login, person, admin, boughtTickets);
     }
 
     // Overriden from Object
 
-    public User copy() { return new User(id, login, person, admin); }
+    public User copy() {
+        return new User(id, login, person, admin, boughtTickets);
+    }
 
     @Override
     public int hashCode() { return Objects.hash(id, login, person, admin); }
