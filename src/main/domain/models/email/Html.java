@@ -23,10 +23,6 @@ public class Html {
     }
 
     public static Html node(String tag) { return new Html(tag); }
-    
-    public Html copy() {
-        return new Html(tag, content, attributes, closable);
-    }
 
     public Html content(String content) {
         assert closable;
