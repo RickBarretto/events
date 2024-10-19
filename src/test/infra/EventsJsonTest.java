@@ -5,22 +5,17 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import main.domain.models.evaluations.Evaluation;
-import main.domain.models.events.Event;
-import main.domain.models.events.Poster;
 import main.domain.models.users.UserId;
 import main.infra.json.EventsJson;
 import main.infra.json.JsonFile;
-import main.infra.virtual.EventsInMemory;
 import test.resources.bdd.Then;
+import test.resources.entities.ConcreteEvents;
 
 // @formatter:off
 public class EventsJsonTest {
@@ -40,15 +35,7 @@ public class EventsJsonTest {
 
         @BeforeEach
         void createJsonFile() {
-            new EventsJson(file, new EventsInMemory(
-                List.of(
-                    new Event(new Poster(
-                        "From Zero Tour",
-                        "LP show", 
-                        LocalDate.of(2024, 11, 15)
-                    ))
-                )
-            ));
+            new EventsJson(file, ConcreteEvents.withFromZero());
         }
 
         @BeforeEach
@@ -59,36 +46,39 @@ public class EventsJsonTest {
 
         @Test
         void shouldContainEvent() {
+            final var expectedTitle = ConcreteEvents.FromZeroTour().poster().title();
+            final var expectedDate = ConcreteEvents.FromZeroTour().poster().date();
+            
             assertTrue(1 == this.allEventsJson.list().size());
-            assertTrue(this.allEventsJson.has("From Zero Tour", LocalDate.of(2024, 11, 15)));
-            assertTrue(this.allEventsJson.event("From Zero Tour", LocalDate.of(2024, 11, 15)).isPresent());
+            assertTrue(this.allEventsJson.has(expectedTitle, expectedDate));
+            assertTrue(this.allEventsJson.event(expectedTitle, expectedDate).isPresent());
         }
         
         @Test
         void shouldRegister() {
             registerExtraShow();
-            assertTrue(this.allEventsJson.has("From Zero (Extra show)", LocalDate.of(2024, 11, 16)));
-            assertTrue(this.allEventsJson.event("From Zero (Extra show)", LocalDate.of(2024, 11, 16)).isPresent());
+
+            final var expectedTitle = ConcreteEvents.ExtraFromZeroTour().poster().title();
+            final var expectedDate = ConcreteEvents.ExtraFromZeroTour().poster().date();
+
+            assertTrue(this.allEventsJson.has(expectedTitle, expectedDate));
+            assertTrue(this.allEventsJson.event(expectedTitle, expectedDate).isPresent());
         }
         
         @Test
         @Then("Should load list from file")
         void shouldLoadFromFile() {
             registerExtraShow();
+
+            final var expectedTitle = ConcreteEvents.ExtraFromZeroTour().poster().title();
+            final var expectedDate = ConcreteEvents.ExtraFromZeroTour().poster().date();
             
             var otherReference = new EventsJson(file);
-            assertTrue(otherReference.event(
-                "From Zero (Extra show)", 
-                LocalDate.of(2024, 11, 16)
-            ).isPresent());
+            assertTrue(otherReference.event(expectedTitle, expectedDate).isPresent());
         }
 
         void registerExtraShow() {
-            this.allEventsJson.register(new Event(new Poster(
-                "From Zero (Extra show)",
-                "Extra show of LP",
-                LocalDate.of(2024, 11, 16)
-            )));
+            this.allEventsJson.register(ConcreteEvents.ExtraFromZeroTour());
         }
     }
 
@@ -99,7 +89,7 @@ public class EventsJsonTest {
 
         @BeforeEach
         void createJsonFile() {
-            new EventsJson(file, new EventsInMemory(List.of()));
+            new EventsJson(file, ConcreteEvents.empty());
         }
         
         @BeforeEach
@@ -126,17 +116,11 @@ public class EventsJsonTest {
     @Nested
     class RepositoryOfEvaluatedEvents {
         private final JsonFile file = new JsonFile(directory, "all-evaluated-events");
-        private Event event;
         private EventsJson events;
 
         @BeforeEach
         void createJsonFile() {
-            event = new Event(new Poster(
-                "From Zero Tour",
-                "LP show", 
-                LocalDate.of(2024, 11, 15)
-            ));
-            new EventsJson(file, new EventsInMemory(List.of(event)));
+            new EventsJson(file, ConcreteEvents.withFromZero());
         }
 
         @BeforeEach
@@ -147,7 +131,9 @@ public class EventsJsonTest {
 
         @Test
         void shouldUpdate() {
-            var author = new UserId();
+            final var author = new UserId();
+            final var event = ConcreteEvents.FromZeroTour();
+
             event.receiveEvaluation(new Evaluation(event.id(), author, "Good show!"));
             events.update(event);
 
@@ -156,8 +142,7 @@ public class EventsJsonTest {
             assertAll("Evaluation was stored",
                 () -> assertEquals("Good show!", storedEvaluation.comment()),
                 () -> assertEquals(author, storedEvaluation.author()),
-                () -> assertEquals(event.id(), storedEvaluation.event())
-                    
+                () -> assertEquals(event.id(), storedEvaluation.event())        
             );
         }   
     }
