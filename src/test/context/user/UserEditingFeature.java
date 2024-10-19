@@ -1,7 +1,11 @@
 package test.context.user;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -16,7 +20,6 @@ import main.domain.exceptions.PermissionDenied;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 
 // Test supporters
@@ -102,7 +105,7 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUserAndOther() {
-            repository = new UsersInMemory();
+            repository = ConcreteUsers.empty();
             repository.register(ConcreteUsers.JohnDoe());
             repository.register(new User(
                 new Login("jane.doe@example.com", "789123"),
@@ -143,14 +146,11 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUserAndOther() {
-            repository = new UsersInMemory();
+            repository = ConcreteUsers.empty();
         }
 
         User inexistenUser() {
-            return new User(
-                new Login("john.doe@example.com", "123456"),
-                new Person("John Doe", "000.000.000-00")
-            );
+            return ConcreteUsers.JohnDoe();
         }
 
         @When("Editing the Login and Person of an User")
@@ -182,7 +182,7 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUserAndOther() {
-            repository = new UsersInMemory();
+            repository = ConcreteUsers.empty();
         }
 
         @When("Editing the Login and Person of an User")
