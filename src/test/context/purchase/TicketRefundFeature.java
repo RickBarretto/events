@@ -1,4 +1,4 @@
-package test.context;
+package test.context.purchase;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNoException;

@@ -1,4 +1,4 @@
-package test.context;
+package test.context.user;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assume.assumeTrue;
