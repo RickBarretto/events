@@ -9,36 +9,45 @@ import main.domain.models.users.User;
 import main.roles.Context;
 import main.roles.repositories.Users;
 
+class AccountInformation {
+    public Login login;
+    public Person person;
+
+    public void shouldBeInitialized() {
+        Objects.requireNonNull(login);
+        Objects.requireNonNull(person);
+    }
+}
+
 /**
  * Allows registering an User into a Repository
  */
 public class UserRegistering implements Context {
+    private AccountInformation account = new AccountInformation();
     private Users repository;
-    private Login login;
-    private Person person;
 
     public UserRegistering(Users repository) {
         this.repository = repository;
     }
 
     public UserRegistering login(Login login) {
-        this.login = login;
+        account.login = login;
         return this;
     }
 
     public UserRegistering person(Person person) {
-        this.person = person;
+        account.person = person;
         return this;
     }
 
-    public void register() throws EmailAlreadyExists {
-        Objects.requireNonNull(this.login);
-        Objects.requireNonNull(this.person);
+    public void register() throws EmailAlreadyExists {;
+        account.shouldBeInitialized();
+        emailShouldBeUnregistered();
+        this.repository.register(new User(account.login, account.person));
+    }
 
-        var user = new User(login, person);
-
-        if (this.repository.has(login.email()))
+    private void emailShouldBeUnregistered() throws EmailAlreadyExists {
+        if (this.repository.has(account.login.email()))
             throw new EmailAlreadyExists();
-        this.repository.register(user);
     }
 }
