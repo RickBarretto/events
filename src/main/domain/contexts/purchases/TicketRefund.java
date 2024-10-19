@@ -13,12 +13,33 @@ import main.roles.EmailService;
 import main.roles.repositories.Events;
 import main.roles.repositories.Users;
 
+class Purchase {
+    public User buyer;
+    public Ticket ticket;
+    public Event event;
+
+    public void refund() {
+        this.shouldBeInitialized();
+        this.shouldOwnTicket();
+
+        event.boxOffice().refund(ticket);
+        buyer.returnTicket(ticket);
+    }
+
+    public void shouldBeInitialized() {
+        Objects.requireNonNull(buyer);
+        Objects.requireNonNull(ticket);
+        Objects.requireNonNull(event);
+    }
+
+    public void shouldOwnTicket() { assert buyer.tickets().contains(ticket); }
+}
+
 public class TicketRefund {
+    private Purchase purchase = new Purchase();
     private Events events;
     private Users users;
 
-    private UserId customer;
-    private Ticket ticket;
     private PaymentMethod paymentMethod;
     private EmailService service;
 
@@ -32,13 +53,14 @@ public class TicketRefund {
         this.service = service;
     }
 
-    public TicketRefund to(UserId customer) {
-        this.customer = customer;
+    public TicketRefund to(UserId customerId) {
+        purchase.buyer = users.byId(customerId).get();
         return this;
     }
 
     public TicketRefund with(Ticket ticket) {
-        this.ticket = ticket;
+        purchase.event = this.events.byId(ticket.event()).get();
+        purchase.ticket = ticket;
         return this;
     }
 
@@ -48,39 +70,24 @@ public class TicketRefund {
     }
 
     public void refund() {
-        Objects.requireNonNull(customer);
-        Objects.requireNonNull(ticket);
-        returnTicket();
-        getTicketBack();
+        purchase.shouldBeInitialized();
+        purchase.refund();
+        saveRefunding();
         sendEmail();
     }
 
     private void sendEmail() {
-        Objects.requireNonNull(ticket);
         Objects.requireNonNull(paymentMethod);
 
-        var mailing = new MailingBuyer().by(targetUser()).owns(ticket)
-                .of(targetEvent()).via(paymentMethod).purchaseMail();
+        var mailing = new MailingBuyer().by(purchase.buyer)
+                .owns(purchase.ticket).of(purchase.event).via(paymentMethod)
+                .purchaseMail();
 
         service.send(mailing);
     }
 
-    private void getTicketBack() {
-        var event = targetEvent();
-        event.boxOffice().refund(ticket);
-        this.events.update(event);
+    private void saveRefunding() {
+        events.update(purchase.event);
+        users.update(purchase.buyer, purchase.buyer);
     }
-
-    private Event targetEvent() {
-        return this.events.byId(ticket.event()).get();
-    }
-
-    private void returnTicket() {
-        var targetUser = targetUser();
-        targetUser.returnTicket(ticket);
-        this.users.update(targetUser, targetUser);
-    }
-
-    private User targetUser() { return this.users.byId(customer).get(); }
-
 }
