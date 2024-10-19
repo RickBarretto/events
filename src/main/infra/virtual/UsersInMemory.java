@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import main.domain.models.users.Login;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.roles.repositories.Users;
@@ -39,13 +40,22 @@ public class UsersInMemory implements Users {
 
     @Override
     public Optional<User> byId(UserId id) {
-        return Optional.ofNullable(users.get(id)); 
+        return Optional.ofNullable(users.get(id));
     }
 
     @Override
     public Optional<User> ownerOf(String email, String password) {
         var id = emailIndex.get(email);
-        return this.byId(id);
+        var user = this.byId(id);
+
+        if (!user.isPresent())
+            return user;
+        if (user.get().isOwnerOf(new Login(email, password))) {
+            return user;
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     @Override

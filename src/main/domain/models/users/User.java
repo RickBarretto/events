@@ -36,6 +36,10 @@ public class User implements Entity<UserId> {
         return new User(id, login, person, admin, new ArrayList<>(tickets));
     }
 
+    public boolean isOwnerOf(Login login) {
+        return this.login.equals(login);
+    }
+
     public void buyTicket(Ticket ticket) { this.boughtTickets.add(ticket); }
 
     public void returnTicket(Ticket ticket) {
