@@ -4,19 +4,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
-import main.domain.models.users.User;
 import main.infra.json.JsonFile;
 import main.infra.json.UsersJson;
-import main.infra.virtual.UsersInMemory;
+import test.resources.entities.ConcreteUsers;
 
 // @formatter:off
 public class UsersJsonTest {
@@ -35,12 +30,7 @@ public class UsersJsonTest {
 
         @BeforeEach
         void createJsonFile() {
-            new UsersJson(file, new UsersInMemory(
-                List.of(
-                    new User(
-                        new Login("john.doe@example.com", "123456"), 
-                        new Person("John Doe", "000.000.000-00")))
-            ));
+            new UsersJson(file, ConcreteUsers.withJohn());
         }
         
         @BeforeEach
@@ -87,10 +77,7 @@ public class UsersJsonTest {
         }
 
         void registerJane() {
-            this.allUsersJson.register(new User(
-                new Login("jane.doe@example.com", "789123"), 
-                new Person("Jane Doe", "111.111.111-11"))
-            );
+            this.allUsersJson.register(ConcreteUsers.JaneDoe());
         }
     }
 
@@ -101,7 +88,7 @@ public class UsersJsonTest {
 
         @BeforeEach
         void createJsonFile() {
-            new UsersJson(file, new UsersInMemory(List.of()));
+            new UsersJson(file, ConcreteUsers.empty());
         }
         
         @BeforeEach
