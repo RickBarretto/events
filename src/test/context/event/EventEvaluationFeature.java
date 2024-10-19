@@ -6,11 +6,13 @@ import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.events.EventEvaluation;
+import main.domain.models.evaluations.Evaluation;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.domain.models.users.Login;
@@ -18,7 +20,10 @@ import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
+import test.resources.bdd.And;
+import test.resources.bdd.Assume;
 import test.resources.bdd.Feature;
+import test.resources.bdd.Given;
 import test.resources.bdd.Then;
 import test.resources.bdd.When;
 
@@ -39,32 +44,39 @@ public class EventEvaluationFeature {
         events.register(event);
     }
 
-    @When("When evaluating some Event as John Doe")
-    void whenEvaluating() {
+    void evaluate() {
         new EventEvaluation()
-            .of(event.id())
-            .from(events)
-            .by(author.id())
-            .evaluateWith("The show is simply perfect!");
+        .of(event.id())
+        .from(events)
+        .by(author.id())
+        .evaluateWith("The show is simply perfect!");
     }
-
+    
+    @Given("Some Event without evaluations")
+    @And("A logged User")
+    @When("When evaluating this Event")
     @Then("Evaluation should be registered")
     @Test
     void shouldBeRegistered() {
-        assumeTrue(events.byId(event.id()).get().evaluations().isEmpty());
-        whenEvaluating();
+        // Given
+        assumeEventHasNoEvaluation();
+        
+        // When
+        evaluate();
 
-        assertTrue(1 == events.byId(event.id()).get().evaluations().size());
-        assertAll("Are the same",
-        () -> assertEquals(
-            "The show is simply perfect!",
-            events.byId(event.id()).get().evaluations().get(0).comment()),
-        () -> assertEquals(
-            author.id(),
-            events.byId(event.id()).get().evaluations().get(0).author()),
-        () -> assertEquals(
-            event.id(),
-            events.byId(event.id()).get().evaluations().get(0).event())
+        // Then
+
+        final List<Evaluation> evaluations = events.byId(event.id()).get().evaluations();
+        final Evaluation evaluation = evaluations.get(0);
+        
+        assertTrue("Event has exaclty one evaluation", 1 == evaluations.size());
+        assertAll("The evaluation is the same",
+            () -> assertEquals("The show is simply perfect!", evaluation.comment()),
+            () -> assertEquals(author.id(), evaluation.author()),
+            () -> assertEquals(event.id(), evaluation.event())
         );
     }
+
+    @Assume("Event has no evaluations")
+    private void assumeEventHasNoEvaluation() { assumeTrue(events.byId(event.id()).get().evaluations().isEmpty()); }
 }
