@@ -1,17 +1,20 @@
 package test.context.event;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.function.Supplier;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import main.domain.contexts.events.EventRegistering;
 import main.domain.contexts.events.forms.EventInformation;
 import main.domain.exceptions.CantRegisterPastEvent;
@@ -23,7 +26,6 @@ import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
 import test.resources.bdd.And;
-import test.resources.bdd.Assume;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Given;
 import test.resources.bdd.Scenario;
