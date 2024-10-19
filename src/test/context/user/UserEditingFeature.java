@@ -131,22 +131,4 @@ public class UserEditingFeature {
         assertFalse(repository.has("john.doe@example.com"));
     }
 
-    // @Scenario("Replace password requires old password")
-    // @Given("An existing user in the repository")
-    // @When("Editing the Login and Person details of the User without providing the old password")
-    // @Then("Should throw PermissionDenied")
-    // @Test
-    // void shouldThrowPermissionDenied() {
-    //     // Pre-condition
-    //     assumeTrue(repository.has("john.doe@example.com"));
-    //     // Execution
-    //     assertThrows(PermissionDenied.class, () -> {
-    //         new UserEditing(repository).of(ConcreteUsers.JohnDoe()).changing()
-    //                 .password("newpassword") // Old password not provided
-    //                 .edit();
-    //     });
-    //     // Post-condition
-    //     var user = repository.ownerOf("john.doe@example.com", "123456").get();
-    //     assertEquals("123456", user.login().password());
-    // }
 }
