@@ -59,7 +59,7 @@ public class UsersJsonTest {
         @Test
         void shouldRegister() {            
             registerJane();
-            assertTrue(this.allUsersJson.ownerOf("jane.doe@example.com", "789456").isPresent());
+            assertTrue(this.allUsersJson.ownerOf("jane.doe@example.com", "789123").isPresent());
             assertTrue(this.allUsersJson.has("jane.doe@example.com"));
         }
         
@@ -69,7 +69,7 @@ public class UsersJsonTest {
             registerJane();
 
             var otherReference = new UsersJson(file);
-            assertTrue(otherReference.ownerOf("jane.doe@example.com", "789456").isPresent());
+            assertTrue(otherReference.ownerOf("jane.doe@example.com", "789123").isPresent());
             assertTrue(otherReference.has("jane.doe@example.com"));
         }
 
