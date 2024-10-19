@@ -61,8 +61,8 @@ public class UserEditing implements Context {
         }
 
         private void shouldBeAvailable(String email) throws EmailAlreadyExists {
-            final var emailHasChanged = email.equals(target.login().email());
-            if (emailHasChanged)
+            final var emailIsTheSame = email.equals(target.login().email());
+            if (emailIsTheSame)
                 return;
             if (repository.has(email))
                 throw new EmailAlreadyExists();
