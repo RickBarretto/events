@@ -3,12 +3,10 @@ package main.domain.contexts.purchases;
 import java.util.Objects;
 
 import main.domain.contexts.purchases.internal.MailingBuyer;
+import main.domain.contexts.purchases.internal.Purchase;
 import main.domain.exceptions.SoldOut;
-import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
-import main.domain.models.events.Ticket;
 import main.domain.models.purchases.PaymentMethod;
-import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.infra.DisabledEmailService;
 import main.roles.EmailService;
@@ -16,16 +14,12 @@ import main.roles.repositories.Events;
 import main.roles.repositories.Users;
 
 public class TicketBuying {
+    private Purchase purchase = new Purchase();
+    private PaymentMethod paymentMethod;
+
+    private EmailService service;
     private Events events;
     private Users users;
-
-    private EventId event;
-    private UserId customer;
-    private Integer amount;
-    private PaymentMethod paymentMethod;
-    private EmailService service;
-
-    private Ticket ticket;
 
     public TicketBuying(Events events, Users users) {
         this(new DisabledEmailService(), events, users);
@@ -38,17 +32,13 @@ public class TicketBuying {
     }
 
     public TicketBuying of(EventId event) {
-        this.event = event;
+        purchase.event = this.events.byId(event).get();
         return this;
     }
 
     public TicketBuying by(UserId customer) {
-        this.customer = customer;
-        return this;
-    }
-
-    public TicketBuying amountOf(Integer amount) {
-        this.amount = amount;
+        purchase.buyer = this.users.byId(customer).get();
+        ;
         return this;
     }
 
@@ -57,42 +47,23 @@ public class TicketBuying {
         return this;
     }
 
-    public void buy() throws SoldOut {
-        Objects.requireNonNull(event);
-        Objects.requireNonNull(customer);
-        ticket = sellTicket();
-        buyTicket(ticket);
+    public void buy(Integer amount) throws SoldOut {
+        purchase.makeOf(amount);
+        savePurchase();
         sendEmail();
     }
 
+    private void savePurchase() {
+        events.update(purchase.event);
+        users.update(purchase.buyer, purchase.buyer);
+    }
+
     private void sendEmail() {
-        Objects.requireNonNull(ticket);
         Objects.requireNonNull(paymentMethod);
 
-        var mailing = new MailingBuyer().by(targetUser()).owns(ticket)
-                .of(targetEvent()).via(paymentMethod).purchaseMail();
+        var emailDoc = new MailingBuyer().of(purchase).via(paymentMethod)
+                .purchaseMail();
 
-        service.send(mailing);
+        service.send(emailDoc);
     }
-
-    private void buyTicket(Ticket ticket) {
-        var targetUser = targetUser();
-        targetUser.buyTicket(ticket);
-        this.users.update(targetUser, targetUser);
-    }
-
-    private Ticket sellTicket() throws SoldOut {
-        var targetEvent = targetEvent();
-        var boxOffice = targetEvent.boxOffice();
-
-        var ticket = boxOffice.ticket(amount);
-        boxOffice.sell(ticket);
-        this.events.update(targetEvent);
-
-        return ticket;
-    }
-
-    private User targetUser() { return this.users.byId(customer).get(); }
-
-    private Event targetEvent() { return this.events.byId(event).get(); }
 }

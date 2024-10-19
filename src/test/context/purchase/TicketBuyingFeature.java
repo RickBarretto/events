@@ -68,9 +68,8 @@ public class TicketBuyingFeature {
     void sellTickets(Integer amount) throws SoldOut {
         new TicketBuying(events, users)
             .of(targetEvent()).by(targetUser())
-            .amountOf(amount)
             .via(new PaymentMethod("...", "..."))
-            .buy();
+            .buy(amount);
     }
 
     @Nested
@@ -277,9 +276,8 @@ public class TicketBuyingFeature {
         void sellTickets(Integer amount) throws SoldOut {
             new TicketBuying(eventsJson, usersJson)
                 .of(targetEvent()).by(targetUser())
-                .amountOf(amount)
                 .via(new PaymentMethod("...", "..."))
-                .buy();
+                .buy(amount);
         }
 
         @Test

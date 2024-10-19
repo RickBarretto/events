@@ -47,7 +47,6 @@ public class TicketRefund {
     }
 
     public void refund() {
-        purchase.shouldBeInitialized();
         purchase.refund();
         saveRefunding();
         sendEmail();
@@ -56,11 +55,10 @@ public class TicketRefund {
     private void sendEmail() {
         Objects.requireNonNull(paymentMethod);
 
-        var mailing = new MailingBuyer().by(purchase.buyer)
-                .owns(purchase.ticket).of(purchase.event).via(paymentMethod)
-                .purchaseMail();
+        var emailDoc = new MailingBuyer().of(purchase).via(paymentMethod)
+                .refundMail();
 
-        service.send(mailing);
+        service.send(emailDoc);
     }
 
     private void saveRefunding() {
