@@ -2,7 +2,7 @@ package main.domain.contexts.purchases.internal;
 
 import java.util.Objects;
 
-import main.domain.models.email.Email;
+import main.domain.models.email.EmailDocument;
 import main.domain.models.events.Event;
 import main.domain.models.events.Ticket;
 import main.domain.models.purchases.Participant;
@@ -39,11 +39,15 @@ public class MailingBuyer {
         return this;
     }
 
-    public Email purchaseMail() { return mail(buyer, self, purchaseMessage()); }
+    public EmailDocument purchaseMail() {
+        return mail(buyer, self, purchaseMessage());
+    }
 
-    public Email refundMail() { return mail(self, buyer, refundMessage()); }
+    public EmailDocument refundMail() {
+        return mail(self, buyer, refundMessage());
+    }
 
-    private Email mail(Participant payer, Participant recipient,
+    private EmailDocument mail(Participant payer, Participant recipient,
             String description) {
         Objects.requireNonNull(this.self);
         Objects.requireNonNull(this.ticket);

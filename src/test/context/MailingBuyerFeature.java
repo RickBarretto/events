@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.purchases.internal.MailingBuyer;
-import main.domain.models.email.Email;
+import main.domain.models.email.EmailDocument;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.domain.models.events.Ticket;
@@ -33,7 +33,7 @@ public class MailingBuyerFeature {
 
     @Test
     void testPurchase() {
-        final Email email = service().purchaseMail();
+        final EmailDocument email = service().purchaseMail();
         final String content = email.body();
 
         assertTrue(content.contains("A 3-person ticket"));
@@ -43,7 +43,7 @@ public class MailingBuyerFeature {
 
     @Test
     void testRefundMessage() {
-        final Email email = service().refundMail();
+        final EmailDocument email = service().refundMail();
         final String content = email.body();
 
         assertTrue(content.contains("Refunding in R$2550.00"));

@@ -1,6 +1,6 @@
 package main.roles;
 
-import main.domain.models.email.Email;
+import main.domain.models.email.EmailDocument;
 
 /**
  * 
@@ -8,6 +8,6 @@ import main.domain.models.email.Email;
 
 public interface EmailService {
 
-    void send(Email email);
+    void send(EmailDocument email);
 
 }

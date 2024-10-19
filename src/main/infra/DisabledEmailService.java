@@ -1,14 +1,14 @@
 package main.infra;
 
-import main.domain.models.email.Email;
+import main.domain.models.email.EmailDocument;
 import main.roles.EmailService;
 
 public class DisabledEmailService implements EmailService {
-    private Email email;
+    private EmailDocument email;
 
     @Override
-    public void send(Email email) { this.email = email; }
+    public void send(EmailDocument email) { this.email = email; }
 
-    public Email email() { return email; }
+    public EmailDocument email() { return email; }
 
 }

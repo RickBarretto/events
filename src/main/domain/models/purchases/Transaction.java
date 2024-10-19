@@ -1,6 +1,6 @@
 package main.domain.models.purchases;
 
-import main.domain.models.email.Email;
+import main.domain.models.email.EmailDocument;
 import main.domain.models.email.EmailMetadata;
 import main.domain.models.email.Html;
 import main.roles.Entity;
@@ -29,8 +29,8 @@ public class Transaction implements Entity<TransactionId> {
 
     public TransactionId id() { return id; }
 
-    public Email toEmail() {
-        return new Email(
+    public EmailDocument toEmail() {
+        return new EmailDocument(
                 new EmailMetadata(payer.email(), recipient.email(), desciption),
                 this.html());
     }
