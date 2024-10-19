@@ -58,8 +58,7 @@ public class UserRegisteringFeature {
             var login = validLogin();
             var person = validPerson();
 
-            new UserRegistering()
-                .into(repository)
+            new UserRegistering(repository)
                 .login(login)
                 .person(person)
                 .register();
@@ -108,8 +107,7 @@ public class UserRegisteringFeature {
             var login = validLogin();
             var person = validPerson();
 
-            var context = new UserRegistering()
-                .into(repository)
+            var context = new UserRegistering(repository)
                 .login(login)
                 .person(person);
 

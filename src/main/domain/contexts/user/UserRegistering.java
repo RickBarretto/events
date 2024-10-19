@@ -17,9 +17,8 @@ public class UserRegistering implements Context {
     private Login login;
     private Person person;
 
-    public UserRegistering into(Users repository) {
+    public UserRegistering(Users repository) {
         this.repository = repository;
-        return this;
     }
 
     public UserRegistering login(Login login) {
@@ -33,7 +32,6 @@ public class UserRegistering implements Context {
     }
 
     public void register() throws EmailAlreadyExists {
-        Objects.requireNonNull(this.repository);
         Objects.requireNonNull(this.login);
         Objects.requireNonNull(this.person);
 
