@@ -60,8 +60,9 @@ public class EventRegisteringFeature {
         }
 
         @Test
-        @Then("Should register if User is Admin," + "And is a future Event"
-                + "And Event's title and date is Available")
+        @Then("Should register if User is Admin,")
+        @And("And is a future Event")
+        @And("And Event's title and date is Available")
         void shouldRegister() {
             Supplier<Boolean> isRegistered = () -> repository.has("From Zero",
                     LocalDate.of(2024, 10, 15));
