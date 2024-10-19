@@ -1,4 +1,4 @@
-package main.domain.contexts.events;
+package main.domain.contexts.events.forms;
 
 import java.time.LocalDate;
 import java.util.Objects;
