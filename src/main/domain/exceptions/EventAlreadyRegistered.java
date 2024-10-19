@@ -1,6 +1,13 @@
 package main.domain.exceptions;
 
+/**
+ * Exception thrown when attempting to register an event that is already
+ * registered.
+ */
 public class EventAlreadyRegistered extends Exception {
-    public EventAlreadyRegistered() { super(); }
 
+    /**
+     * Constructs a new EventAlreadyRegistered exception with no detail message.
+     */
+    public EventAlreadyRegistered() { super(); }
 }
