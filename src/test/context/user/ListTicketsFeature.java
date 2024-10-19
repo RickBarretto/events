@@ -11,12 +11,11 @@ import org.junit.jupiter.api.Test;
 import main.domain.contexts.user.ListTickets;
 import main.domain.models.events.EventId;
 import main.domain.models.events.Ticket;
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
 import main.domain.models.users.User;
-import test.resources.bdd.Assume;
-import test.resources.bdd.Then;
-import test.resources.bdd.When;
+
+// Test supporters
+import test.resources.bdd.*;
+import test.resources.entities.ConcreteUsers;
 
 // @formatter:off
 public class ListTicketsFeature {
@@ -29,10 +28,7 @@ public class ListTicketsFeature {
 
     @BeforeEach
     void initCustomer() {
-        customer = new User(
-            new Login("john.doe@example.com", "123456"),
-            new Person("John Doe", "000.000.000-00")
-        ).withTickets(tickets);
+        customer = ConcreteUsers.JohnDoe().withTickets(tickets);
     }
 
     @Assume("A customer with two Tickets")
