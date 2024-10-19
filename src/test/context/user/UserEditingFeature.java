@@ -9,7 +9,6 @@ import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -29,20 +28,11 @@ import test.resources.bdd.Given;
 import test.resources.bdd.Scennario;
 import test.resources.bdd.Then;
 import test.resources.bdd.When;
+import test.resources.entities.ConcreteUsers;
 
 // @formatter:off
 @Feature("Editing some existing User")
 public class UserEditingFeature {
-    private User targetUser;
-
-    @BeforeEach
-    void initTargetUser() {
-        targetUser = new User(
-            new Login("john.doe@example.com", "123456"),
-            new Person("John Doe", "000.000.000-00")
-        );
-    }
-
 
     @Nested
     @Scennario("Sucessfully editing some existing User")
@@ -54,8 +44,8 @@ public class UserEditingFeature {
 
         @BeforeEach
         void registerTargetUser() {
-            repository = new UsersInMemory();
-            repository.register(targetUser);
+            repository = ConcreteUsers.empty();
+            repository.register(ConcreteUsers.JohnDoe());
         }
 
         @BeforeEach
@@ -67,7 +57,7 @@ public class UserEditingFeature {
         @When("Editing the Login and Person of an User")
         void editLogin() throws InexistentUser, EmailAlreadyExists {
             new UserEditing(repository)
-                .of(targetUser)
+                .of(ConcreteUsers.JohnDoe())
                 .changing()
                     .email("jane.doe@example.com")
                     .password("789123")
@@ -107,7 +97,7 @@ public class UserEditingFeature {
 
             // Post-condition
             var updatedUser = repository.ownerOf("jane.doe@example.com", "789123").get();
-            assertEquals(targetUser.id(), updatedUser.id());
+            assertEquals(ConcreteUsers.JohnDoe().id(), updatedUser.id());
         }
     }
 
@@ -120,7 +110,7 @@ public class UserEditingFeature {
         @BeforeEach
         void registerTargetUserAndOther() {
             repository = new UsersInMemory();
-            repository.register(targetUser);
+            repository.register(ConcreteUsers.JohnDoe());
             repository.register(new User(
                 new Login("jane.doe@example.com", "789123"),
                 new Person("Jane Doe", "111.111.111-11")
@@ -130,7 +120,7 @@ public class UserEditingFeature {
         @When("Editing the Login and Person of an User")
         void editToExistingEmail() throws InexistentUser, EmailAlreadyExists {
             new UserEditing(repository)
-                .of(targetUser)
+                .of(ConcreteUsers.JohnDoe())
                 .changing()
                     .email("jane.doe@example.com");
         }
@@ -204,17 +194,6 @@ public class UserEditingFeature {
 
         @When("Editing the Login and Person of an User")
         void editToExistingEmail() throws InexistentUser, PermissionDenied, EmailAlreadyExists {
-        }
-
-        @Test
-        @Ignore("Optional future feature")
-        @Then("Shou")
-        void shouldThrow() {
-            // Pre-condition
-            
-            // Execution
-            
-            // Post-condition
         }
     }
 
