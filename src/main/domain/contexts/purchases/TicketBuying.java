@@ -2,7 +2,7 @@ package main.domain.contexts.purchases;
 
 import java.util.Objects;
 
-import main.domain.contexts.purchases.internal.MailingBuyer;
+import main.domain.contexts.purchases.internal.PurchaseMail;
 import main.domain.contexts.purchases.internal.Purchase;
 import main.domain.exceptions.SoldOut;
 import main.domain.models.events.EventId;
@@ -61,7 +61,7 @@ public class TicketBuying {
     private void sendEmail() {
         Objects.requireNonNull(paymentMethod);
 
-        var emailDoc = new MailingBuyer().of(purchase).via(paymentMethod)
+        var emailDoc = new PurchaseMail().of(purchase).via(paymentMethod)
                 .purchaseMail();
 
         service.send(emailDoc);

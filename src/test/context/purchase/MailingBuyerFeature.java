@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import main.domain.contexts.purchases.internal.MailingBuyer;
+import main.domain.contexts.purchases.internal.PurchaseMail;
 import main.domain.contexts.purchases.internal.Purchase;
 import main.domain.models.email.EmailDocument;
 import main.domain.models.events.Event;
@@ -28,13 +28,13 @@ public class MailingBuyerFeature {
             850.00);
     final Ticket ticket = new Ticket(event.id(), 850.00).packedFor(3);
 
-    MailingBuyer service() {
+    PurchaseMail service() {
         var purchase = new Purchase();
         purchase.buyer = buyer;
         purchase.ticket = ticket;
         purchase.event = event;
 
-        return new MailingBuyer().of(purchase).via(method);
+        return new PurchaseMail().of(purchase).via(method);
     }
 
     @Test

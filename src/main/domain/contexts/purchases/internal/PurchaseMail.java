@@ -6,18 +6,18 @@ import main.domain.models.purchases.PaymentDetails;
 import main.domain.models.purchases.PaymentMethod;
 import main.domain.models.purchases.Transaction;
 
-public class MailingBuyer {
+public class PurchaseMail {
     private final Participant self = Participant.self();
 
     private Purchase purchase;
     private PaymentMethod paymentMethod;
 
-    public MailingBuyer of(Purchase purchase) {
+    public PurchaseMail of(Purchase purchase) {
         this.purchase = purchase;
         return this;
     }
 
-    public MailingBuyer via(PaymentMethod paymentMethod) {
+    public PurchaseMail via(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
         return this;
     }
