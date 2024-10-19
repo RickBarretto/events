@@ -12,6 +12,10 @@ public class UserEditing implements Context {
     private Users repository;
     private User target;
 
+    public UserEditing(Users repository) {
+        this.repository = repository;
+    }
+
     public UserEditing targets(User user) {
         this.target = user;
         return this;
