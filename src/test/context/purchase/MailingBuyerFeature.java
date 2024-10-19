@@ -14,15 +14,11 @@ import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
 import main.domain.models.events.Ticket;
 import main.domain.models.purchases.PaymentMethod;
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
-import main.domain.models.users.User;
+import test.resources.entities.ConcreteUsers;
 
 public class MailingBuyerFeature {
     final PaymentMethod method = new PaymentMethod("PIX",
             "Chave aleatória: d4f8e20b-48fa-4c91-9363-e067c074fa75");
-    final User buyer = new User(new Login("john.doe@example.com", "123456"),
-            new Person("John Doe", "000.000.000-00"));
     final Event event = new Event(
             new Poster("From Zero", "A LP show", LocalDate.of(2024, 11, 15)),
             850.00);
@@ -30,7 +26,7 @@ public class MailingBuyerFeature {
 
     PurchaseMail service() {
         var purchase = new Purchase();
-        purchase.buyer = buyer;
+        purchase.buyer = ConcreteUsers.JohnDoe();
         purchase.ticket = ticket;
         purchase.event = event;
 
