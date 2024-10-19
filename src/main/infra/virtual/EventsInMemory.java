@@ -5,22 +5,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
 import main.roles.repositories.Events;
 
+/**
+ * Represents an index for Events, enhancing lookup performance in the in-memory
+ * database. This index allows efficient searching of events by their title and
+ * date.
+ */
 class EventIndex {
     String title;
     LocalDate date;
 
+    /**
+     * Constructs a new EventIndex with the specified title and date.
+     *
+     * @param left  the title of the event
+     * @param right the date of the event
+     */
     public EventIndex(String left, LocalDate right) {
         this.title = left;
         this.date = right;
     }
 
+    /**
+     * Returns the title of the event.
+     *
+     * @return the event title
+     */
     public String left() { return title; }
 
+    /**
+     * Returns the date of the event.
+     *
+     * @return the event date
+     */
     public LocalDate right() { return date; }
 
     @Override
@@ -38,12 +58,23 @@ class EventIndex {
     }
 }
 
+/**
+ * In-memory implementation of the Events repository.
+ */
 public class EventsInMemory implements Events {
     private HashMap<EventId, Event> events = new HashMap<>();
     private HashMap<EventIndex, EventId> infoIndex = new HashMap<>();
 
+    /**
+     * Constructs a new EventsInMemory with an empty list of events.
+     */
     public EventsInMemory() { this(List.of()); }
 
+    /**
+     * Constructs a new EventsInMemory with a list of events.
+     *
+     * @param eventsList the list of events
+     */
     public EventsInMemory(List<Event> eventsList) {
         eventsList.forEach(event -> register(event));
     }
@@ -57,9 +88,7 @@ public class EventsInMemory implements Events {
     }
 
     @Override
-    public void update(Event event) {
-        events.replace(event.id(), event);
-    }
+    public void update(Event event) { events.replace(event.id(), event); }
 
     @Override
     public List<Event> list() { return List.copyOf(events.values()); }
