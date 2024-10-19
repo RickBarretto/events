@@ -10,13 +10,13 @@ The requirements are:
 
 ## Features
 
-**Event Creation:** Administrators can create new events. 
-**User Management:** The system manages administrators and regular users.
-**Ticket Sales:** Includes a ticketing system where users can buy tickets for events.
-**Event Listings:** Users can browse through a list of available events.
-**Event Evaluation:** After attending events, users can evaluate them.
-**Refund Management:** The project also supports ticket refunds.
-**Database Integration:** All the event and user data is stored in a Json database.
+- **Event Creation:** Administrators can create new events. 
+- **User Management:** The system manages administrators and regular users.
+- **Ticket Sales:** Includes a ticketing system where users can buy tickets for events.
+- **Event Listings:** Users can browse through a list of available events.
+- **Event Evaluation:** After attending events, users can evaluate them.
+- **Refund Management:** The project also supports ticket refunds.
+- **Database Integration:** All the event and user data is stored in a Json database.
 
 ## Project's Structure
 
