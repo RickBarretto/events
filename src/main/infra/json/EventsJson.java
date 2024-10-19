@@ -7,32 +7,52 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
 
+/**
+ * Implementation of the Events repository using JSON for persistence.
+ */
 public class EventsJson implements Events {
     private final JsonFile file;
     private EventsInMemory events;
 
+    /**
+     * Constructor initializing the repository with a file path.
+     *
+     * @param filepath the path to the JSON file
+     */
     public EventsJson(JsonFile filepath) {
         this(filepath, new EventsInMemory(load(filepath)));
     }
 
+    /**
+     * Constructor initializing the repository with a file and in-memory
+     * repository.
+     *
+     * @param file       the JSON file
+     * @param repository the in-memory events repository
+     */
     public EventsJson(JsonFile file, EventsInMemory repository) {
         this.file = file;
         this.events = repository;
         persist();
     }
 
+    /**
+     * Loads events from a JSON file.
+     *
+     * @param file the JSON file
+     * @return a list of events
+     */
     private static List<Event> load(JsonFile file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            return new Gson().fromJson(reader, new TypeToken<List<Event>>() {});
+            return new Gson().fromJson(reader,
+                    new TypeToken<List<Event>>() {}.getType());
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -40,6 +60,9 @@ public class EventsJson implements Events {
         }
     }
 
+    /**
+     * Persists the current state of the in-memory repository to a JSON file.
+     */
     private void persist() {
         try (FileWriter writer = new FileWriter(file)) {
             new Gson().toJson(events.list(), writer);
@@ -84,5 +107,4 @@ public class EventsJson implements Events {
         events.update(event);
         persist();
     }
-
 }
