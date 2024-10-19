@@ -21,11 +21,6 @@ public class UserEditing implements Context {
         return this;
     }
 
-    public UserEditing from(Users repository) {
-        this.repository = repository;
-        return this;
-    }
-
     public EditingWithTarget with() throws InexistentUser {
         Objects.requireNonNull(repository);
         Objects.requireNonNull(target);
