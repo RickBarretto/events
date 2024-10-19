@@ -1,8 +1,8 @@
 package test.context.event;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,12 +19,11 @@ import test.resources.bdd.*;
 import test.resources.entities.ConcreteUsers;
 
 @Feature("Evaluate some Event by some User")
-@Given("Some Event without evaluations")
 public class EventEvaluationFeature {
 
-    Events events;
-    Event event;
-    User author;
+    private Events events;
+    private Event event;
+    private User author;
 
     @BeforeEach
     void init() {
@@ -40,8 +39,10 @@ public class EventEvaluationFeature {
                 .evaluateWith("The show is simply perfect!");
     }
 
+    @Scenario("Registering an evaluation for an event")
+    @Given("Some Event without evaluations")
     @And("A logged User")
-    @When("When evaluating this Event")
+    @When("Evaluating this Event")
     @Then("Evaluation should be registered")
     @Test
     void shouldBeRegistered() {
@@ -53,8 +54,7 @@ public class EventEvaluationFeature {
         final List<Evaluation> evaluations = events.byId(event.id()).get()
                 .evaluations();
         final Evaluation evaluation = evaluations.get(0);
-
-        assertTrue("Event has exactly one evaluation", 1 == evaluations.size());
+        assertTrue(evaluations.size() == 1, "Event has exactly one evaluation");
         assertAll("The evaluation is the same",
                 () -> assertEquals("The show is simply perfect!",
                         evaluation.comment()),
