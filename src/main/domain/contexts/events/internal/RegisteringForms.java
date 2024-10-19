@@ -1,26 +1,26 @@
-package main.domain.contexts.events.forms;
+package main.domain.contexts.events.internal;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 import main.domain.models.events.Poster;
 
-public class PosterForms {
+public class RegisteringForms {
     private String title;
     private String description;
     private LocalDate schedule;
 
-    public PosterForms title(String title) {
+    public RegisteringForms title(String title) {
         this.title = title;
         return this;
     }
 
-    public PosterForms description(String description) {
+    public RegisteringForms description(String description) {
         this.description = description;
         return this;
     }
 
-    public PosterForms scheduledFor(LocalDate schedule) {
+    public RegisteringForms scheduledFor(LocalDate schedule) {
         this.schedule = schedule;
         return this;
     }
