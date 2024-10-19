@@ -8,31 +8,20 @@ import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.user.UserLogin;
 import main.domain.exceptions.PermissionDenied;
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
-import main.domain.models.users.User;
 import main.infra.Session;
-import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 import test.resources.bdd.Assume;
 import test.resources.bdd.Then;
 import test.resources.bdd.When;
+import test.resources.entities.ConcreteUsers;
 
 public class UserLoginFeature {
-    private final User john = new User(
-            new Login("john.doe@example.com", "123456"),
-            new Person("John Doe", "000.000.000-00"));
-    private final User jane = new User(
-            new Login("jane.doe@example.com", "789123"),
-            new Person("Jane Doe", "111.111.111-11"));
-    private final Users users = new UsersInMemory(List.of(john, jane));
+    private final Users users = ConcreteUsers.withJohnAndJane();
 
     @Assume("Session is inactive")
     void shouldBeInactive(Session session) { assumeFalse(session.isActive()); }
@@ -58,7 +47,7 @@ public class UserLoginFeature {
                     .logAs("john.doe@example.com", "123456"));
 
             // Then
-            assertEquals(john, session.loggedUser().get());
+            assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
             assertTrue(session.isActive());
         }
 
@@ -68,16 +57,17 @@ public class UserLoginFeature {
         @Then("Should change the current user to the new one")
         void shouldLogInAsAnotherUser() {
             // Given
-            var session = Session.loggedAs(john);
+            var session = Session.loggedAs(ConcreteUsers.JohnDoe());
             shouldBeActive(session);
-            assumeTrue(session.loggedUser().get().equals(john));
+            assumeTrue(
+                    session.loggedUser().get().equals(ConcreteUsers.JohnDoe()));
 
             // When
             assertDoesNotThrow(() -> new UserLogin(users).withSession(session)
                     .logAs("jane.doe@example.com", "789123"));
 
             // Then
-            assertEquals(jane, session.loggedUser().get());
+            assertEquals(ConcreteUsers.JaneDoe(), session.loggedUser().get());
             assertTrue(session.isActive());
         }
 
@@ -86,9 +76,10 @@ public class UserLoginFeature {
         @Then("Should throw, and keep the same Session state")
         void shouldThrow() {
             // Given
-            var session = Session.loggedAs(john);
+            var session = Session.loggedAs(ConcreteUsers.JohnDoe());
             shouldBeActive(session);
-            assumeTrue(session.loggedUser().get().equals(john));
+            assumeTrue(
+                    session.loggedUser().get().equals(ConcreteUsers.JohnDoe()));
 
             // When
             assertThrowsExactly(PermissionDenied.class,
@@ -99,7 +90,7 @@ public class UserLoginFeature {
                             .logAs("jane.doe@example.com", "123456"));
 
             // Then
-            assertEquals(john, session.loggedUser().get());
+            assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
             assertTrue(session.isActive());
         }
     }
@@ -131,9 +122,10 @@ public class UserLoginFeature {
         @Then("Should disable the session")
         void shouldLogInAsAnotherUser() {
             // Given
-            var session = Session.loggedAs(john);
+            var session = Session.loggedAs(ConcreteUsers.JohnDoe());
             shouldBeActive(session);
-            assumeTrue(session.loggedUser().get().equals(john));
+            assumeTrue(
+                    session.loggedUser().get().equals(ConcreteUsers.JohnDoe()));
 
             // When
             new UserLogin(users).withSession(session).logOut();
