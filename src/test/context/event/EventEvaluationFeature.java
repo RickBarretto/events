@@ -15,17 +15,13 @@ import main.domain.contexts.events.EventEvaluation;
 import main.domain.models.evaluations.Evaluation;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
-import test.resources.bdd.And;
-import test.resources.bdd.Assume;
-import test.resources.bdd.Feature;
-import test.resources.bdd.Given;
-import test.resources.bdd.Then;
-import test.resources.bdd.When;
+
+// Test supporters
+import test.resources.bdd.*;
+import test.resources.entities.ConcreteUsers;
 
 // @formatter:off
 @Feature("Evaluate some Event by some User")
@@ -39,8 +35,7 @@ public class EventEvaluationFeature {
     void init() {
         event = new Event(new Poster("From Zero", "Linkin Park Show",
                 LocalDate.of(2024, 10, 15)));
-        author = new User(new Login("john.doe@example.com", "123456"),
-                new Person("John Doe", "000.000.000-00"));
+        author = ConcreteUsers.JohnDoe();
         events = new EventsInMemory();
         events.register(event);
     }

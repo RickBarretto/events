@@ -23,8 +23,6 @@ import main.domain.exceptions.EventAlreadyRegistered;
 import main.domain.exceptions.PermissionDenied;
 import main.domain.models.events.Event;
 import main.domain.models.events.Poster;
-import main.domain.models.users.Login;
-import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
@@ -33,6 +31,7 @@ import test.resources.bdd.Given;
 import test.resources.bdd.Scennario;
 import test.resources.bdd.Then;
 import test.resources.bdd.When;
+import test.resources.entities.ConcreteUsers;
 
 // @formatter:off
 public class EventRegisteringFeature {
@@ -44,10 +43,7 @@ public class EventRegisteringFeature {
     }
 
     User someCustomer() {
-        return new User(
-            new Login("john.doe@example.com", "123456"),
-            new Person("John Doe", "000.000.000-00")
-        );
+        return ConcreteUsers.JohnDoe();
     }
 
     User someAdmin() {
