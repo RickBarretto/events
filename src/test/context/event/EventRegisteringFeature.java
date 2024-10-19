@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.events.EventRegistering;
-import main.domain.contexts.events.internal.RegisteringForms;
+import main.domain.contexts.events.forms.EventInformation;
 import main.domain.exceptions.CantRegisterPastEvent;
 import main.domain.exceptions.EventAlreadyRegistered;
 import main.domain.exceptions.PermissionDenied;
@@ -55,7 +55,7 @@ public class EventRegisteringFeature {
     }
 
     Poster somePoster() {
-        return new RegisteringForms()
+        return new EventInformation()
             .title("From Zero")
             .description("Linkin Park's show")
             .scheduledFor(LocalDate.of(2024, 10, 15))
