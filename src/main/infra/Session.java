@@ -7,6 +7,12 @@ import main.domain.models.users.User;
 public class Session {
     private Optional<User> loggedUser = Optional.empty();
 
+    public Session() { this(Optional.empty()); }
+
+    private Session(Optional<User> user) { this.loggedUser = user; }
+
+    public static Session loggedAs(User user) { return new Session(Optional.of(user)); }
+
     public void logInAs(User user) { this.loggedUser = Optional.of(user); }
 
     public void logOut() { this.loggedUser = Optional.empty(); }
