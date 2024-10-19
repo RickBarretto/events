@@ -86,7 +86,7 @@ public class TicketRefundFeature {
         new TicketRefund(events, users)
             .to(targetUser())
             .via(new PaymentMethod("...", "..."))
-            .with(users.byId(targetUser()).get().tickets().get(0))
+            .owning(users.byId(targetUser()).get().tickets().get(0))
             .refund();
     }
 

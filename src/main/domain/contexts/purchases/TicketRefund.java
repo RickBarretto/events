@@ -14,11 +14,11 @@ import main.roles.repositories.Users;
 
 public class TicketRefund {
     private Purchase purchase = new Purchase();
+    private PaymentMethod paymentMethod;
+
+    private EmailService service;
     private Events events;
     private Users users;
-
-    private PaymentMethod paymentMethod;
-    private EmailService service;
 
     public TicketRefund(Events events, Users users) {
         this(new DisabledEmailService(), events, users);
@@ -35,7 +35,7 @@ public class TicketRefund {
         return this;
     }
 
-    public TicketRefund with(Ticket ticket) {
+    public TicketRefund owning(Ticket ticket) {
         purchase.event = this.events.byId(ticket.event()).get();
         purchase.ticket = ticket;
         return this;
