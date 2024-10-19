@@ -29,6 +29,7 @@ import test.resources.bdd.When;
 
 // @formatter:off
 @Feature("Evaluate some Event by some User")
+@Given("Some Event without evaluations")
 public class EventEvaluationFeature {
     Events events;
     Event event;
@@ -52,7 +53,6 @@ public class EventEvaluationFeature {
         .evaluateWith("The show is simply perfect!");
     }
     
-    @Given("Some Event without evaluations")
     @And("A logged User")
     @When("When evaluating this Event")
     @Then("Evaluation should be registered")
@@ -60,7 +60,7 @@ public class EventEvaluationFeature {
     void shouldBeRegistered() {
         // Given
         assumeEventHasNoEvaluation();
-        
+
         // When
         evaluate();
 
