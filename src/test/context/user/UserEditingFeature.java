@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import main.domain.contexts.user.UserEditing;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
-import main.domain.exceptions.PermissionDenied;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
