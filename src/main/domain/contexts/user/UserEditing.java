@@ -9,25 +9,23 @@ import main.roles.Context;
 import main.roles.repositories.Users;
 
 public class UserEditing implements Context {
-    private Users repository;
-    private User target;
+    private Users users;
+    private User user;
 
-    public UserEditing(Users repository) {
-        this.repository = repository;
-    }
+    public UserEditing(Users repository) { this.users = repository; }
 
-    public UserEditing targets(User user) {
-        this.target = user;
+    public UserEditing of(User user) {
+        this.user = user;
         return this;
     }
 
-    public EditingWithTarget with() throws InexistentUser {
-        Objects.requireNonNull(repository);
-        Objects.requireNonNull(target);
+    public EditingWithTarget changing() throws InexistentUser {
+        Objects.requireNonNull(users);
+        Objects.requireNonNull(user);
 
-        if (!repository.has(target.login().email()))
+        if (!users.has(user.login().email()))
             throw new InexistentUser();
-        return new EditingWithTarget(repository, target);
+        return new EditingWithTarget(users, user);
     }
 
     public class EditingWithTarget {

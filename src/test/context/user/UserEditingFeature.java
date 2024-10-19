@@ -67,8 +67,8 @@ public class UserEditingFeature {
         @When("Editing the Login and Person of an User")
         void editLogin() throws InexistentUser, EmailAlreadyExists {
             new UserEditing(repository)
-                .targets(targetUser)
-                .with()
+                .of(targetUser)
+                .changing()
                     .email("jane.doe@example.com")
                     .password("789123")
                     .name("Jane Doe")
@@ -130,8 +130,8 @@ public class UserEditingFeature {
         @When("Editing the Login and Person of an User")
         void editToExistingEmail() throws InexistentUser, EmailAlreadyExists {
             new UserEditing(repository)
-                .targets(targetUser)
-                .with()
+                .of(targetUser)
+                .changing()
                     .email("jane.doe@example.com");
         }
 
@@ -173,8 +173,8 @@ public class UserEditingFeature {
         @When("Editing the Login and Person of an User")
         void editInexistentUser() throws InexistentUser {
             new UserEditing(repository)
-                .targets(inexistenUser())
-                .with();
+                .of(inexistenUser())
+                .changing();
         }
 
         @Test
