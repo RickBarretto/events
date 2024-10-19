@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.user.UserRegistering;
-import main.domain.contexts.user.forms.IdentityForms;
-import main.domain.contexts.user.forms.LoginForms;
+import main.domain.contexts.user.forms.PersonalInformation;
+import main.domain.contexts.user.forms.LoginInformation;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
@@ -35,14 +35,14 @@ public class UserRegisteringFeature {
     void emptyRepository() { repository = new UsersInMemory(); }
 
     Login validLogin() {
-        return new LoginForms()
+        return new LoginInformation()
             .email("john.doe@example.com")
             .password("123456")
             .submit();
     }
 
     Person validPerson() {
-        return new IdentityForms()
+        return new PersonalInformation()
             .name("John Doe")
             .cpf("000.000.000-00")
             .submit();

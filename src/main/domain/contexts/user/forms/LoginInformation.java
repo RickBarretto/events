@@ -4,16 +4,16 @@ import java.util.Objects;
 
 import main.domain.models.users.Login;
 
-public class LoginForms {
+public class LoginInformation {
     private String email;
     private String password;
 
-    public LoginForms email(String email) {
+    public LoginInformation email(String email) {
         this.email = email;
         return this;
     }
 
-    public LoginForms password(String password) {
+    public LoginInformation password(String password) {
         this.password = password;
         return this;
     }

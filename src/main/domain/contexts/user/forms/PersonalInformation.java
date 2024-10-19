@@ -4,16 +4,16 @@ import java.util.Objects;
 
 import main.domain.models.users.Person;
 
-public class IdentityForms {
+public class PersonalInformation {
     private String name;
     private String cpf;
 
-    public IdentityForms name(String name) {
+    public PersonalInformation name(String name) {
         this.name = name;
         return this;
     }
 
-    public IdentityForms cpf(String cpf) {
+    public PersonalInformation cpf(String cpf) {
         this.cpf = cpf;
         return this;
     }
