@@ -3,37 +3,14 @@ package main.domain.contexts.purchases;
 import java.util.Objects;
 
 import main.domain.contexts.purchases.internal.MailingBuyer;
-import main.domain.models.events.Event;
+import main.domain.contexts.purchases.internal.Purchase;
 import main.domain.models.events.Ticket;
 import main.domain.models.purchases.PaymentMethod;
-import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.infra.DisabledEmailService;
 import main.roles.EmailService;
 import main.roles.repositories.Events;
 import main.roles.repositories.Users;
-
-class Purchase {
-    public User buyer;
-    public Ticket ticket;
-    public Event event;
-
-    public void refund() {
-        this.shouldBeInitialized();
-        this.shouldOwnTicket();
-
-        event.boxOffice().refund(ticket);
-        buyer.returnTicket(ticket);
-    }
-
-    public void shouldBeInitialized() {
-        Objects.requireNonNull(buyer);
-        Objects.requireNonNull(ticket);
-        Objects.requireNonNull(event);
-    }
-
-    public void shouldOwnTicket() { assert buyer.tickets().contains(ticket); }
-}
 
 public class TicketRefund {
     private Purchase purchase = new Purchase();
