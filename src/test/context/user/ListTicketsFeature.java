@@ -19,14 +19,14 @@ public class ListTicketsFeature {
     private User customer;
 
     @BeforeEach
-    void initCustomer() {
+    void setUp() {
         tickets = List.of(new Ticket(new EventId()), new Ticket(new EventId()));
         customer = ConcreteUsers.JohnDoe().withTickets(tickets);
     }
 
     @Given("A customer with two tickets")
-    @Assume("The customer has two tickets")
-    @When("Listing their tickets")
+    @Assume("The customer should have two tickets")
+    @When("Listing the customer's tickets")
     @Then("Should return the same tickets")
     @Test
     void shouldReturnTheSameTickets() {
