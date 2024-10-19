@@ -10,7 +10,7 @@
   - [x] Personal Data
   - [x] Login
   - [x] Password
-- [ ] Login as `User`
+- [x] Login as `User`
 - [x] Register `Event`
   - [x] Name  
   - [x] Description  
@@ -34,8 +34,3 @@
     - [x] Poster
     - [x] Evaluations
     - [x] Sales
-- [ ] Purchases
-    - [ ] User
-    - [ ] Ticket
-    - [ ] Amount
-    - [ ] Data
