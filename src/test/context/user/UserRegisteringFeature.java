@@ -6,11 +6,8 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
 import main.domain.contexts.user.UserRegistering;
 import main.domain.contexts.user.forms.PersonalInformation;
 import main.domain.contexts.user.forms.LoginInformation;
@@ -19,110 +16,87 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
-import test.resources.bdd.And;
-import test.resources.bdd.Feature;
-import test.resources.bdd.Given;
-import test.resources.bdd.Scennario;
-import test.resources.bdd.Then;
-import test.resources.bdd.When;
+import test.resources.bdd.*;
 
-// @formatter:off
 @Feature("Registering a new user")
 public class UserRegisteringFeature {
+
     Users repository;
 
     @BeforeEach
     void emptyRepository() { repository = new UsersInMemory(); }
 
     Login validLogin() {
-        return new LoginInformation()
-            .email("john.doe@example.com")
-            .password("123456")
-            .submit();
+        return new LoginInformation().email("john.doe@example.com")
+                .password("123456").submit();
     }
 
     Person validPerson() {
-        return new PersonalInformation()
-            .name("John Doe")
-            .cpf("000.000.000-00")
-            .submit();
+        return new PersonalInformation().name("John Doe").cpf("000.000.000-00")
+                .submit();
     }
 
-    @Nested
-    @Scennario("Sucessfully registering some User")
+    @Scennario("Successfully registering a user")
     @Given("Some Login and Some Person")
-    class Successful {
-
-        @When("Registering Login and Person into a Repository")
-        void register() throws EmailAlreadyExists {
+    @When("Registering Login and Person into a Repository")
+    @Then("Should register if Email is available")
+    @Test
+    void shouldRegister() {
+        // Precondition
+        assumeFalse("Email must not be registered",
+                repository.has("john.doe@example.com"));
+        // Do
+        assertDoesNotThrow(() -> {
             var login = validLogin();
             var person = validPerson();
-
-            new UserRegistering(repository)
-                .login(login)
-                .person(person)
-                .register();
-        }
-
-        @Test
-        @Then("Should register if Email is available")
-        void shouldRegister() {
-            // Precondition
-            assumeFalse("Email must not be registered", repository.has("john.doe@example.com"));
-            
-            // Do
-            assertDoesNotThrow(() -> this.register());
-
-            // Assertions
-            var owner = repository.ownerOf("john.doe@example.com", "123456");
-            assertTrue("Email is now registered", repository.has("john.doe@example.com"));
-            assertTrue("Owner is present", owner.isPresent());
-        }
-
-        @Test
-        @And("Registered User is the same")
-        void shouldBeTheSame() {
-            // Do
-            assertDoesNotThrow(() -> this.register());
-
-            // Assertions
-            var owner = repository.ownerOf("john.doe@example.com", "123456").get();
-
-            assertEquals("john.doe@example.com", owner.login().email());
-            assertEquals("John Doe", owner.person().name());
-            assertEquals("000.000.000-00", owner.person().cpf());
-            assertFalse(owner.isAdmin());
-        }
+            new UserRegistering(repository).login(login).person(person)
+                    .register();
+        });
+        // Assertions
+        var owner = repository.ownerOf("john.doe@example.com", "123456");
+        assertTrue("Email is now registered",
+                repository.has("john.doe@example.com"));
+        assertTrue("Owner is present", owner.isPresent());
     }
 
-    @Nested
-    @Scennario("Can't registering some User")
+    @Scennario("Successfully registering a user")
     @Given("Some Login and Some Person")
-    class Unsucessful {
-
-        @When("Registering Login and Person twice into a Repository")
-        void registerTwice()
-        throws EmailAlreadyExists 
-        {
+    @When("Registering Login and Person into a Repository")
+    @Then("Registered User is the same")
+    @And("Should register if Email is available")
+    @Test
+    void shouldBeTheSame() {
+        // Do
+        assertDoesNotThrow(() -> {
             var login = validLogin();
             var person = validPerson();
+            new UserRegistering(repository).login(login).person(person)
+                    .register();
+        });
+        // Assertions
+        var owner = repository.ownerOf("john.doe@example.com", "123456").get();
+        assertEquals("john.doe@example.com", owner.login().email());
+        assertEquals("John Doe", owner.person().name());
+        assertEquals("000.000.000-00", owner.person().cpf());
+        assertFalse(owner.isAdmin());
+    }
 
-            var context = new UserRegistering(repository)
-                .login(login)
-                .person(person);
-
+    @Scennario("Cannot register a user with an existing email")
+    @Given("Some Login and Some Person")
+    @When("Registering Login and Person twice into a Repository")
+    @Then("Should throw EmailAlreadyExists if email is not available")
+    @Test
+    void shouldNotRegister() {
+        // Do
+        assertThrows(EmailAlreadyExists.class, () -> {
+            var login = validLogin();
+            var person = validPerson();
+            var context = new UserRegistering(repository).login(login)
+                    .person(person);
             context.register();
             context.register();
-        }
-
-        @Test
-        @Then("Should throw UserAlreadyRegistered if email is not available")
-        void shouldNotRegister() {
-            // Do
-            assertThrows(EmailAlreadyExists.class, () -> registerTwice());
-            
-            // Assertions
-            assertTrue(repository.has("john.doe@example.com"));
-        }
+        });
+        // Assertions
+        assertTrue(repository.has("john.doe@example.com"));
     }
 }
