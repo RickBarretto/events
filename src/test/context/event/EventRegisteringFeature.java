@@ -45,7 +45,7 @@ public class EventRegisteringFeature {
     }
 
     @Nested
-    @Scennario("Successfully registering an Event")
+    @Scenario("Successfully registering an Event")
     @Given("Some Post, an Admin user and the Current Day")
     class Successful {
 
@@ -94,7 +94,7 @@ public class EventRegisteringFeature {
     }
 
     @Nested
-    @Scennario("Customer trying to register an Event")
+    @Scenario("Customer trying to register an Event")
     @Given("Some Post, a Customer User and the Current Day")
     class UnsuccessfulForCustomer {
 
@@ -117,7 +117,7 @@ public class EventRegisteringFeature {
     }
 
     @Nested
-    @Scennario("Admin trying to re-register an Event")
+    @Scenario("Admin trying to re-register an Event")
     @Given("Some Post, an Admin User and the Current Day")
     class UnsuccessfulForAlreadyRegistered {
 
@@ -142,7 +142,7 @@ public class EventRegisteringFeature {
     }
 
     @Nested
-    @Scennario("An Admin trying to register a past Event")
+    @Scenario("An Admin trying to register a past Event")
     @Given("Some Post, an Admin User and the Current Day")
     class UnsuccessfulForPastEvent {
 

@@ -13,7 +13,7 @@ import test.resources.bdd.*;
 @Feature("Purchase Validation")
 public class PurchaseTest {
 
-    @Scennario("Valid Purchase")
+    @Scenario("Valid Purchase")
     @Given("A user has a ticket for an event")
     @When("The user checks ticket ownership")
     @Then("The check should pass if the ticket is owned by the user")
@@ -28,7 +28,7 @@ public class PurchaseTest {
         assertDoesNotThrow(() -> purchase.shouldOwnTicket());
     }
 
-    @Scennario("Invalid Purchase")
+    @Scenario("Invalid Purchase")
     @Given("A user has a different ticket for a different event")
     @When("The user checks ticket ownership")
     @Then("The check should fail if the ticket is not owned by the user")

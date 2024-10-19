@@ -36,7 +36,7 @@ public class UserRegisteringFeature {
                 .submit();
     }
 
-    @Scennario("Successfully registering a user")
+    @Scenario("Successfully registering a user")
     @Given("Some Login and Some Person")
     @When("Registering Login and Person into a Repository")
     @Then("Should register if Email is available")
@@ -59,7 +59,7 @@ public class UserRegisteringFeature {
         assertTrue("Owner is present", owner.isPresent());
     }
 
-    @Scennario("Successfully registering a user")
+    @Scenario("Successfully registering a user")
     @Given("Some Login and Some Person")
     @When("Registering Login and Person into a Repository")
     @Then("Registered User is the same")
@@ -81,7 +81,7 @@ public class UserRegisteringFeature {
         assertFalse(owner.isAdmin());
     }
 
-    @Scennario("Cannot register a user with an existing email")
+    @Scenario("Cannot register a user with an existing email")
     @Given("Some Login and Some Person")
     @When("Registering Login and Person twice into a Repository")
     @Then("Should throw EmailAlreadyExists if email is not available")

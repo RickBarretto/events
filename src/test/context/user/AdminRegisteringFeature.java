@@ -22,7 +22,7 @@ public class AdminRegisteringFeature {
         admin = ConcreteUsers.JohnDoe().asAdmin();
     }
 
-    @Scennario("Registering a new admin user")
+    @Scenario("Registering a new admin user")
     @Given("An empty user repository and a user with admin rights")
     @When("The user is registered as an admin")
     @Then("The user should be registered and recognized as an admin")
