@@ -4,8 +4,9 @@ import java.util.List;
 
 import main.domain.models.events.Ticket;
 import main.domain.models.users.User;
+import main.roles.Context;
 
-public class ListTickets {
+public class ListTickets implements Context {
     private User customer;
 
     private ListTickets(User customer) {

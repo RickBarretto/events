@@ -5,9 +5,10 @@ import java.util.Objects;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
+import main.roles.Context;
 import main.roles.repositories.Users;
 
-public class AdminRegistering extends UserRegistering {
+public class AdminRegistering extends UserRegistering implements Context {
     private Users repository;
     private Login login;
     private Person person;

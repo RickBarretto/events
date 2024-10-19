@@ -2,9 +2,10 @@ package main.domain.contexts.user;
 
 import main.domain.exceptions.PermissionDenied;
 import main.infra.Session;
+import main.roles.Context;
 import main.roles.repositories.Users;
 
-public class UserLogin {
+public class UserLogin implements Context {
     private Session session;
     private Users users;
 

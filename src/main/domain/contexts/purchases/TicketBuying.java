@@ -9,11 +9,12 @@ import main.domain.models.events.EventId;
 import main.domain.models.purchases.PaymentMethod;
 import main.domain.models.users.UserId;
 import main.infra.DisabledEmailService;
+import main.roles.Context;
 import main.roles.EmailService;
 import main.roles.repositories.Events;
 import main.roles.repositories.Users;
 
-public class TicketBuying {
+public class TicketBuying implements Context {
     private Purchase purchase = new Purchase();
     private PaymentMethod paymentMethod;
 

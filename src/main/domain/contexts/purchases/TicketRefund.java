@@ -8,11 +8,12 @@ import main.domain.models.events.Ticket;
 import main.domain.models.purchases.PaymentMethod;
 import main.domain.models.users.UserId;
 import main.infra.DisabledEmailService;
+import main.roles.Context;
 import main.roles.EmailService;
 import main.roles.repositories.Events;
 import main.roles.repositories.Users;
 
-public class TicketRefund {
+public class TicketRefund implements Context {
     private Purchase purchase = new Purchase();
     private PaymentMethod paymentMethod;
 
