@@ -22,6 +22,7 @@ import main.domain.exceptions.SoldOut;
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
 import main.domain.models.events.Poster;
+import main.domain.models.purchases.PaymentMethod;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
@@ -68,6 +69,7 @@ public class TicketBuyingFeature {
         new TicketBuying(events, users)
             .of(targetEvent()).by(targetUser())
             .amountOf(amount)
+            .via(new PaymentMethod("...", "..."))
             .buy();
     }
 
@@ -276,6 +278,7 @@ public class TicketBuyingFeature {
             new TicketBuying(eventsJson, usersJson)
                 .of(targetEvent()).by(targetUser())
                 .amountOf(amount)
+                .via(new PaymentMethod("...", "..."))
                 .buy();
         }
 

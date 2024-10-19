@@ -15,6 +15,7 @@ import main.domain.exceptions.SoldOut;
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
 import main.domain.models.events.Poster;
+import main.domain.models.purchases.PaymentMethod;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
@@ -36,6 +37,7 @@ public class TicketRefundFeature {
         new TicketBuying(events, users)
             .of(targetEvent()).by(targetUser())
             .amountOf(amount)
+            .via(new PaymentMethod("...", "..."))
             .buy();
     }
 
@@ -84,6 +86,7 @@ public class TicketRefundFeature {
     void refundFirstTicket() {
         new TicketRefund(events, users)
             .to(targetUser())
+            .via(new PaymentMethod("...", "..."))
             .with(users.byId(targetUser()).get().tickets().get(0))
             .refund();
     }
