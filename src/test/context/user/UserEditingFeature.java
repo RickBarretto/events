@@ -1,11 +1,7 @@
 package test.context.user;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assume.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -22,12 +18,9 @@ import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
-import test.resources.bdd.And;
-import test.resources.bdd.Feature;
-import test.resources.bdd.Given;
-import test.resources.bdd.Scennario;
-import test.resources.bdd.Then;
-import test.resources.bdd.When;
+
+// Test supporters
+import test.resources.bdd.*;
 import test.resources.entities.ConcreteUsers;
 
 // @formatter:off
