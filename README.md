@@ -1,22 +1,42 @@
-## Getting Started
+# Events Management
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This project is a PBL (Project-Based Learning) initiative for my university's Programming and Algorithms II course. 
+It focuses on applying OOP principles in Java through practical, real-world scenarios.
 
-## Folder Structure
+The requirements are:
+- Must be written in Java
+- Must follow some project requirements
+- Must not use database, but store data into Json files
 
-The workspace contains two folders by default, where:
+## Features
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+**Event Creation:** Administrators can create new events. 
+**User Management:** The system manages administrators and regular users.
+**Ticket Sales:** Includes a ticketing system where users can buy tickets for events.
+**Event Listings:** Users can browse through a list of available events.
+**Event Evaluation:** After attending events, users can evaluate them.
+**Refund Management:** The project also supports ticket refunds.
+**Database Integration:** All the event and user data is stored in a Json database.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Project's Structure
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+This project uses Clean Architecture and Domain-Driven Design (DDD) for learning purposes. 
+The choosen Architecture ensures modularity and testability by separating the code into layers. 
+With this in mind, the project's structure aligns perfectly with this approach. 
+Here's a look at the src/main structure:
 
-## Dependency Management
+- `domain`: The business logic
+    - `context`: Provides all context needed for the user's stories
+    - `exceptions`: Contains all domain-specific exceptions
+    - `models`: Includes all models (entities and value objects)
+- `infra`: The infrastructure code
+    Handles database interactions and external services
+- `roles`: All interfaces that define the logic
+    Ensures flexibility between the infra and domain layers
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## Workspace's Structure
 
-## To Write about
-
-* Immutability: https://belief-driven-design.com/functional-programming-with-java-immutability-ae3372311b9/
+The workspace contains three main folders:
+- `src/main`: the source code
+- `src/test`: the test files
+- `lib`: the necessary `.jar` dependencies
