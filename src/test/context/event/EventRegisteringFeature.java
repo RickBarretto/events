@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.events.EventRegistering;
-import main.domain.contexts.events.PosterForms;
+import main.domain.contexts.events.forms.PosterForms;
 import main.domain.exceptions.CantRegisterPastEvent;
 import main.domain.exceptions.EventAlreadyRegistered;
 import main.domain.exceptions.PermissionDenied;
