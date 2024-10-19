@@ -29,18 +29,6 @@ public class Ticket {
 
     public Integer availableFor() { return availableFor; }
 
-    @Override
-    public int hashCode() { return Objects.hash(event, availableFor); }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Ticket))
-            return false;
-        return sameEvent((Ticket) obj);
-    }
-
     public boolean sameEvent(Ticket other) {
         return Objects.equals(event, other.event);
     }
