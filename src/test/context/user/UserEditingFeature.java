@@ -73,7 +73,7 @@ public class UserEditingFeature {
                     .password("789123")
                     .name("Jane Doe")
                     .cpf("111.111.111-11")
-                .update();
+                .edit();
         }
 
         @Test

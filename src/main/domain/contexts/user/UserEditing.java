@@ -68,7 +68,7 @@ public class UserEditing implements Context {
                 throw new EmailAlreadyExists();
         }
 
-        public void update() {
+        public void edit() {
             Objects.requireNonNull(this.repository);
             Objects.requireNonNull(this.target);
             Objects.requireNonNull(this.updated);
