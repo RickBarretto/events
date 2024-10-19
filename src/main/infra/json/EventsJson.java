@@ -15,7 +15,9 @@ import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
 
 /**
- * Implementation of the Events repository using JSON for persistence.
+ * Implementation of the Events repository using JSON for persistence. It
+ * integrates with an in-memory repository (EventsInMemory) and handles JSON
+ * serialization/deserialization for persistence.
  */
 public class EventsJson implements Events {
     private final JsonFile file;
