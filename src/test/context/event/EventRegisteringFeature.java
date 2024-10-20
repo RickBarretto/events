@@ -25,6 +25,7 @@ import main.domain.models.events.Poster;
 import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
+import test.resources.bdd.AndContext;
 import test.resources.bdd.And;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Given;
