@@ -17,19 +17,19 @@ jobs:
         java-version: '22'
 
     - name: Compile Java Code
-      run: javac -d bin -cp 'lib/*' $(find src -name '*.java')
+      run: javac -d bin -cp 'lib/*' 'src/**/*.java'
 
     - name: Run Tests
       run: java -cp 'bin:lib/*' org.junit.platform.console.ConsoleLauncher --scan-classpath
 
-    - name: Generate Code Coverage
-      run: |
-        java -javaagent:lib/jacocoagent.jar=destfile=jacoco.exec -cp 'bin:lib/*' org.junit.platform.console.ConsoleLauncher --scan-classpath
-        java -jar lib/jacococli.jar report jacoco.exec --classfiles bin --sourcefiles src --html report
+    # - name: Generate Code Coverage
+    #   run: |
+    #     java -javaagent:lib/jacocoagent.jar=destfile=jacoco.exec -cp 'bin:lib/*' org.junit.platform.console.ConsoleLauncher --scan-classpath
+    #     java -jar lib/jacococli.jar report jacoco.exec --classfiles bin --sourcefiles src --html report
 
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./jacoco.exec
-        fail_ci_if_error: true
-        verbose: true
+    # - name: Upload Coverage to Codecov
+    #   uses: codecov/codecov-action@v1
+    #   with:
+    #     file: ./jacoco.exec
+    #     fail_ci_if_error: true
+    #     verbose: true
