@@ -89,4 +89,20 @@ public class Ticket {
     public boolean sameEvent(Ticket other) {
         return Objects.equals(event, other.event);
     }
+
+    @Override
+    public int hashCode() { return Objects.hash(event, price, availableFor); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Ticket))
+            return false;
+        Ticket other = (Ticket) obj;
+        return Objects.equals(event, other.event)
+                && Objects.equals(price, other.price)
+                && Objects.equals(availableFor, other.availableFor);
+    }
+
 }
