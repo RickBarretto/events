@@ -20,11 +20,11 @@ jobs:
       run: javac -d bin -cp 'lib/*' $(find src -name '*.java')
 
     - name: Run Tests
-      run: java -cp 'bin:lib/*' org.junit.runner.JUnitCore $(find src/test -name '*Test.java' | sed 's|^src/test/||' | sed 's|.java$||' | sed 's|/|.|g')
+      run: java -cp 'bin:lib/*' org.junit.platform.console.ConsoleLauncher --scan-classpath
 
     - name: Generate Code Coverage
       run: |
-        java -javaagent:lib/jacocoagent.jar=destfile=jacoco.exec -cp 'bin:lib/*' org.junit.runner.JUnitCore $(find src/test -name '*Test.java' | sed 's|^src/test/||' | sed 's|.java$||' | sed 's|/|.|g')
+        java -javaagent:lib/jacocoagent.jar=destfile=jacoco.exec -cp 'bin:lib/*' org.junit.platform.console.ConsoleLauncher --scan-classpath
         java -jar lib/jacococli.jar report jacoco.exec --classfiles bin --sourcefiles src --html report
 
     - name: Upload Coverage to Codecov
