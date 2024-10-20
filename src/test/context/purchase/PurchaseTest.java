@@ -41,6 +41,7 @@ public class PurchaseTest {
                 List.of(new Ticket(ConcreteEvents.ExtraFromZeroTour().id())));
 
         assertThrowsExactly(AssertionError.class,
-                () -> purchase.shouldOwnTicket());
+                () -> purchase.shouldOwnTicket(),
+                () -> purchase.buyer.tickets().toString());
     }
 }
