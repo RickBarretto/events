@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+    id 'org.gradle.testing.junit-jupiter'
+    id 'org.gradle.reporting.test'
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
+}
+
+test {
+    useJUnitPlatform()
+    reports {
+        html.enabled = true
+        xml.enabled = true
+    }
+}
