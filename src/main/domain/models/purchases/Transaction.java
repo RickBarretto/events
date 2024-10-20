@@ -75,7 +75,7 @@ public class Transaction implements Entity<TransactionId> {
      *
      * @return the HTML content as a string
      */
-    public Html html() {
+    private Html html() {
         // @formatter:off
         var content = new StringBuilder("")
                 .append(Html.node("h1").content(description))
