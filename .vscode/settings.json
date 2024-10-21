@@ -62,7 +62,8 @@
     "java.search.scope": "main",
     "java.format.settings.url": ".vscode/java-formatter.xml",
     "[java]": {
-        "editor.detectIndentation": true
+        "editor.detectIndentation": false,
+        "editor.tabSize": 4
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
