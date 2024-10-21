@@ -104,8 +104,12 @@ public class TicketBuying implements Context {
      */
     private void sendEmail() {
         Objects.requireNonNull(paymentMethod);
-        var emailDoc = new PurchaseMail().of(purchase).via(paymentMethod)
-                .purchaseMail();
+
+        var emailDoc = new PurchaseMail()
+            .of(purchase)
+            .via(paymentMethod)
+            .purchaseMail();
+
         service.send(emailDoc);
     }
 }

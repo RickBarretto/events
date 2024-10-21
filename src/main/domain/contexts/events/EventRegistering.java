@@ -79,6 +79,7 @@ public class EventRegistering implements Context {
         Objects.requireNonNull(repository, "Repository cannot be null");
         Objects.requireNonNull(poster, "Poster cannot be null");
         Objects.requireNonNull(author, "Author cannot be null");
+
         var event = new Event(poster);
         shouldBeFuture();
         shouldBeUnregistered();

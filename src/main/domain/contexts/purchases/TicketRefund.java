@@ -93,8 +93,12 @@ public class TicketRefund implements Context {
      */
     private void sendEmail() {
         Objects.requireNonNull(paymentMethod);
-        var emailDoc = new PurchaseMail().of(purchase).via(paymentMethod)
-                .refundMail();
+        
+        var emailDoc = new PurchaseMail()
+            .of(purchase)
+            .via(paymentMethod)
+            .refundMail();
+            
         service.send(emailDoc);
     }
 

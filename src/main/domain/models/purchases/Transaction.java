@@ -62,12 +62,11 @@ public class Transaction implements Entity<TransactionId> {
      * @return the email document representing the transaction
      */
     public EmailDocument toEmail() {
-        // @formatter:off
         return new EmailDocument(
-            new EmailMetadata(payer.email(),recipient.email(), description), 
-            this.html()
-        );
-        // @formatter:on
+                new EmailMetadata(payer.email(), recipient.email(),
+                        description),
+                this.html());
+
     }
 
     /**
@@ -76,14 +75,13 @@ public class Transaction implements Entity<TransactionId> {
      * @return the HTML content as a string
      */
     private Html html() {
-        // @formatter:off
         var content = new StringBuilder("")
                 .append(Html.node("h1").content(description))
                 .append(transactionSect())
                 .append(Html.br())
                 .append(payment.html())
                 .toString();
-        // @formatter:on
+
         return Html.node("body").content(content);
     }
 
@@ -93,15 +91,13 @@ public class Transaction implements Entity<TransactionId> {
      * @return the transaction section as a string
      */
     private String transactionSect() {
-        // @formatter:off
         return new StringBuilder("Transaction by ")
-            .append(payer)
-            .append(" to ")
-            .append(recipient)
-            .append(" of ")
-            .append(payment.amount())
-            .append(".")
-            .toString();
-        // @formatter:on
+                .append(payer)
+                .append(" to ")
+                .append(recipient)
+                .append(" of ")
+                .append(payment.amount())
+                .append(".")
+                .toString();
     }
 }

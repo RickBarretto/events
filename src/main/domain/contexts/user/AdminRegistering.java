@@ -55,6 +55,7 @@ public class AdminRegistering extends UserRegistering implements Context {
     public void register() throws EmailAlreadyExists {
         account.shouldBeInitialized();
         this.emailShouldBeUnregistered();
+        
         var user = new User(account.login, account.person).asAdmin();
         this.repository.register(user);
     }

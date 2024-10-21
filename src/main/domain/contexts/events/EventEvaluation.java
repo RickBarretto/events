@@ -59,6 +59,7 @@ public class EventEvaluation implements Context {
         Objects.requireNonNull(events, "Events repository cannot be null");
         Objects.requireNonNull(eventId, "Event ID cannot be null");
         Objects.requireNonNull(authorId, "Author ID cannot be null");
+
         var event = events.byId(eventId).get();
         event.receiveEvaluation(new Evaluation(eventId, authorId, comment));
         events.update(event);

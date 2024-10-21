@@ -27,7 +27,9 @@ public class PaymentMethod {
      * @return the HTML string representing the payment method
      */
     public String html() {
-        return new StringBuilder(header()).append(details()).toString();
+        return new StringBuilder(header())
+                .append(details())
+                .toString();
     }
 
     /**
@@ -36,7 +38,10 @@ public class PaymentMethod {
      * @return the HTML header as a string
      */
     private String header() {
-        var header = Html.node("h2").content("Payment Method").toString();
+        var header = Html.node("h2")
+                .content("Payment Method")
+                .toString();
+
         return header;
     }
 
@@ -48,7 +53,10 @@ public class PaymentMethod {
     private String details() {
         final var methodHtml = listItem("Method", method);
         final var detailsHtml = listItem("Details", details);
-        return Html.node("ul").content(methodHtml + detailsHtml).toString();
+
+        return Html.node("ul")
+                .content(methodHtml + detailsHtml)
+                .toString();
     }
 
     /**
@@ -59,6 +67,8 @@ public class PaymentMethod {
      * @return the HTML list item as a string
      */
     private String listItem(String title, String description) {
-        return Html.node("li").content(title + ": " + description).toString();
+        return Html.node("li")
+                .content(title + ": " + description)
+                .toString();
     }
 }

@@ -98,13 +98,16 @@ public class UserEditingFeature {
         // Given
         assumeTrue(
                 repository.has("john.doe@example.com"), "User is registered");
-        
+
         // When
         assertThrows(EmailAlreadyExists.class, () -> {
-            new UserEditing(repository).of(ConcreteUsers.JohnDoe()).changing()
-                    .email("jane.doe@example.com").edit();
+            new UserEditing(repository)
+                    .of(ConcreteUsers.JohnDoe())
+                    .changing()
+                    .email("jane.doe@example.com")
+                    .edit();
         });
-        
+
         // Then
         assertAll("User was not updated",
                 () -> assertTrue(repository.has("john.doe@example.com")),
@@ -120,13 +123,13 @@ public class UserEditingFeature {
         // Given
         repository = ConcreteUsers.empty();
         assumeFalse(repository.has("john.doe@example.com"));
-        
+
         // When
         assertThrows(InexistentUser.class, () -> {
             new UserEditing(repository).of(ConcreteUsers.JohnDoe()).changing()
                     .edit();
         });
-        
+
         // Then
         assertFalse(repository.has("john.doe@example.com"));
     }

@@ -81,7 +81,9 @@ public class Html {
 
     @Override
     public String toString() {
-        return new StringBuilder(open()).append(content).append(close())
+        return new StringBuilder(open())
+                .append(content)
+                .append(close())
                 .toString();
     }
 
@@ -91,9 +93,12 @@ public class Html {
      * @return the opening tag as a string
      */
     private String open() {
-        return new StringBuilder("<").append(tag)
-                .append((attributes.isEmpty()) ? "" : " ").append(attributes)
-                .append((closable) ? ">" : "/>\n").toString();
+        return new StringBuilder("<")
+                .append(tag)
+                .append((attributes.isEmpty()) ? "" : " ")
+                .append(attributes)
+                .append((closable) ? ">" : "/>\n")
+                .toString();
     }
 
     /**
@@ -102,6 +107,9 @@ public class Html {
      * @return the closing tag as a string
      */
     private String close() {
-        return new StringBuilder("</").append(tag).append(">\n").toString();
+        return new StringBuilder("</")
+                .append(tag)
+                .append(">\n")
+                .toString();
     }
 }

@@ -58,6 +58,7 @@ public class EventInformation {
         Objects.requireNonNull(title, "Title cannot be null");
         Objects.requireNonNull(description, "Description cannot be null");
         Objects.requireNonNull(schedule, "Schedule cannot be null");
+        
         return new Poster(title, description, schedule);
     }
 }
