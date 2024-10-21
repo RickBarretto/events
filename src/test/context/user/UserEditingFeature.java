@@ -118,6 +118,7 @@ public class UserEditingFeature {
     @Test
     void shouldThrowInexistentUser() {
         // Given
+        repository = ConcreteUsers.empty();
         assumeFalse(repository.has("john.doe@example.com"));
         
         // When
