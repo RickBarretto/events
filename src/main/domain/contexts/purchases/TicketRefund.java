@@ -1,7 +1,9 @@
 package main.domain.contexts.purchases;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import main.domain.contexts.purchases.internal.PurchaseMail;
+import main.domain.exceptions.InvalidRefundDueToInactiveEvent;
 import main.domain.contexts.purchases.internal.Purchase;
 import main.domain.models.events.Ticket;
 import main.domain.models.purchases.PaymentMethod;
@@ -16,9 +18,11 @@ import main.roles.repositories.Users;
  * Context for processing ticket refunds.
  */
 public class TicketRefund implements Context {
+    private final LocalDate currentDay;
+    private final EmailService service;
+
     private Purchase purchase = new Purchase();
     private PaymentMethod paymentMethod;
-    private EmailService service;
     private Events events;
     private Users users;
 
@@ -28,8 +32,8 @@ public class TicketRefund implements Context {
      * @param events the events repository
      * @param users  the users repository
      */
-    public TicketRefund(Events events, Users users) {
-        this(new DisabledEmailService(), events, users);
+    public TicketRefund(Events events, Users users, LocalDate currentDay) {
+        this(new DisabledEmailService(), events, users, currentDay);
     }
 
     /**
@@ -39,10 +43,11 @@ public class TicketRefund implements Context {
      * @param events  the events repository
      * @param users   the users repository
      */
-    public TicketRefund(EmailService service, Events events, Users users) {
+    public TicketRefund(EmailService service, Events events, Users users, LocalDate currentDay) {
         this.events = events;
         this.users = users;
         this.service = service;
+        this.currentDay = currentDay;
     }
 
     /**
@@ -62,8 +67,12 @@ public class TicketRefund implements Context {
      * @param ticket the ticket to be refunded
      * @return the updated TicketRefund object
      */
-    public TicketRefund owning(Ticket ticket) {
+    public TicketRefund owning(Ticket ticket) throws InvalidRefundDueToInactiveEvent {
         purchase.event = this.events.byId(ticket.event()).get();
+        
+        if (!purchase.event.isAvailableFor(currentDay))
+            throw new InvalidRefundDueToInactiveEvent();
+
         purchase.ticket = ticket;
         return this;
     }

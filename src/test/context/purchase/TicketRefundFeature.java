@@ -1,6 +1,8 @@
 package test.context.purchase;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assume.assumeNoException;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import main.domain.contexts.purchases.TicketBuying;
 import main.domain.contexts.purchases.TicketRefund;
+import main.domain.exceptions.InvalidRefundDueToInactiveEvent;
 import main.domain.exceptions.SoldOut;
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
@@ -21,6 +24,7 @@ import main.infra.virtual.EventsInMemory;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Events;
 import main.roles.repositories.Users;
+import test.resources.bdd.And;
 import test.resources.bdd.Assume;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Given;
@@ -30,7 +34,8 @@ import test.resources.bdd.When;
 
 @Feature("Ticket Refund")
 public class TicketRefundFeature {
-
+    private final LocalDate activeDate = LocalDate.of(2024, 10, 15);
+    private final LocalDate inactiveDate = LocalDate.of(2024, 10, 16);
     private Events events;
     private Users users;
 
@@ -57,16 +62,19 @@ public class TicketRefundFeature {
                 .buy(amount);
     }
 
-    void refundFirstTicket() {
-        new TicketRefund(events, users)
-                .to(targetUser())
-                .via(new PaymentMethod("...", "..."))
-                .owning(users.byId(targetUser()).get().tickets().get(0))
-                .refund();
+    void refundFirstTicket(LocalDate currentDay)
+            throws InvalidRefundDueToInactiveEvent {
+        new TicketRefund(events, users,
+                currentDay)
+                        .to(targetUser())
+                        .via(new PaymentMethod("...", "..."))
+                        .owning(users.byId(targetUser()).get().tickets().get(0))
+                        .refund();
     }
 
     @Scenario("Refunding Tickets")
     @Given("One couple tickets sold")
+    @And("The Event still active")
     @Assume("Two tickets have been sold")
     @When("Refunding one ticket for couples")
     @Then("Event should have 2 available tickets and user 0 tickets")
@@ -80,7 +88,7 @@ public class TicketRefundFeature {
         }
 
         // When
-        refundFirstTicket();
+        assertDoesNotThrow(() -> refundFirstTicket(activeDate));
 
         // Then
         assertTrue(
@@ -90,6 +98,7 @@ public class TicketRefundFeature {
 
     @Scenario("Refunding Individual Tickets")
     @Given("Two individual tickets have been sold")
+    @And("The Event still active")
     @Assume("Two tickets have been sold")
     @When("Refunding one ticket of two individual ones")
     @Then("Event should have 1 available ticket and user 1 ticket")
@@ -104,11 +113,37 @@ public class TicketRefundFeature {
         }
 
         // When
-        refundFirstTicket();
+        assertDoesNotThrow(() -> refundFirstTicket(activeDate));
 
         // Then
         assertTrue(
                 events.byId(targetEvent()).get().boxOffice().available() == 1);
         assertTrue(users.byId(targetUser()).get().tickets().size() == 1);
+    }
+
+    @Scenario("Denied to refunding Tickets")
+    @Given("Tickets sold")
+    @And("The Event is inactive")
+    @Assume("Two tickets have been sold")
+    @When("Refunding one ticket for couples")
+    @Then("Should throw InvalidRefundDueToInactiveEvent")
+    @And("Event should have the same amount of tickets")
+    @Test
+    void shouldNotRefund() {
+        try {
+            sellTickets(2);
+        }
+        catch (Exception e) {
+            assumeNoException(e);
+        }
+
+        // When
+        assertThrows(InvalidRefundDueToInactiveEvent.class,
+                () -> refundFirstTicket(inactiveDate));
+
+        // Then
+        assertTrue(
+                events.byId(targetEvent()).get().boxOffice().available() == 0);
+        assertTrue(!users.byId(targetUser()).get().tickets().isEmpty());
     }
 }
