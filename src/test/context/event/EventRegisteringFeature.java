@@ -77,12 +77,12 @@ public class EventRegisteringFeature {
             var user = someAdmin();
             var currentDay = LocalDate.of(2024, 10, 1);
 
-            new EventRegistering()
-                    .into(repository)
-                    .poster(poster)
-                    .by(user)
-                    .on(currentDay)
-                    .register();
+            new EventRegistering(
+                    repository)
+                            .poster(poster)
+                            .by(user)
+                            .on(currentDay)
+                            .register();
 
         });
 
@@ -105,11 +105,11 @@ public class EventRegisteringFeature {
             var user = someAdmin();
             var currentDay = LocalDate.of(2024, 10, 1);
 
-            new EventRegistering()
-                    .into(repository)
-                    .poster(poster).by(user)
-                    .on(currentDay)
-                    .register();
+            new EventRegistering(
+                    repository)
+                            .poster(poster).by(user)
+                            .on(currentDay)
+                            .register();
         });
 
         // Assertions
@@ -130,12 +130,12 @@ public class EventRegisteringFeature {
             var user = someCustomer();
             var currentDay = LocalDate.of(2024, 10, 1);
 
-            new EventRegistering()
-                    .into(repository)
-                    .poster(poster)
-                    .by(user)
-                    .on(currentDay)
-                    .register();
+            new EventRegistering(
+                    repository)
+                            .poster(poster)
+                            .by(user)
+                            .on(currentDay)
+                            .register();
 
         });
         assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
@@ -151,11 +151,11 @@ public class EventRegisteringFeature {
             var poster = somePoster();
             var user = someAdmin();
             var currentDay = LocalDate.of(2024, 10, 1);
-            var context = new EventRegistering()
-                    .into(repository)
-                    .poster(poster)
-                    .by(user)
-                    .on(currentDay);
+            var context = new EventRegistering(
+                    repository)
+                            .poster(poster)
+                            .by(user)
+                            .on(currentDay);
 
             context.register();
             context.register();
@@ -177,12 +177,12 @@ public class EventRegisteringFeature {
             var poster = somePoster();
             var user = someAdmin();
 
-            new EventRegistering()
-                    .into(repository)
-                    .poster(poster)
-                    .by(user)
-                    .on(today)
-                    .register();
+            new EventRegistering(
+                    repository)
+                            .poster(poster)
+                            .by(user)
+                            .on(today)
+                            .register();
         });
 
         // Post-Condition
@@ -203,14 +203,14 @@ public class EventRegisteringFeature {
             var poster = somePoster();
             var user = someAdmin();
 
-            new EventRegistering()
-                    .into(repository)
-                    .poster(poster)
-                    .by(user)
-                    .on(today)
-                    .register();
+            new EventRegistering(
+                    repository)
+                            .poster(poster)
+                            .by(user)
+                            .on(today)
+                            .register();
         });
-        
+
         // Post-Condition
         assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
     }

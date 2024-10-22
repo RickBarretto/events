@@ -21,14 +21,12 @@ public class EventRegistering implements Context {
     private LocalDate currentDay;
 
     /**
-     * Sets the events repository for the context.
+     * Constructor with the specified events repository.
      *
-     * @param repository the events repository
-     * @return the updated EventRegistering object
+     * @param events the repository of events used for registering
      */
-    public EventRegistering into(Events repository) {
+    public EventRegistering(Events repository) {
         this.repository = repository;
-        return this;
     }
 
     /**
