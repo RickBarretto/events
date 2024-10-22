@@ -52,9 +52,14 @@ public class UserEditingFeature {
 
         // When
         assertDoesNotThrow(() -> {
-            new UserEditing(repository).of(ConcreteUsers.JohnDoe()).changing()
-                    .email("jane.doe@example.com").password("789123")
-                    .name("Jane Doe").cpf("111.111.111-11").edit();
+            new UserEditing(repository)
+                    .of(ConcreteUsers.JohnDoe())
+                    .changing()
+                    .email("jane.doe@example.com")
+                    .password("789123")
+                    .name("Jane Doe")
+                    .cpf("111.111.111-11")
+                    .edit();
         });
 
         // Then
@@ -75,9 +80,14 @@ public class UserEditingFeature {
     void shouldNotChangeTheID() {
         // When
         assertDoesNotThrow(() -> {
-            new UserEditing(repository).of(ConcreteUsers.JohnDoe()).changing()
-                    .email("jane.doe@example.com").password("789123")
-                    .name("Jane Doe").cpf("111.111.111-11").edit();
+            new UserEditing(repository)
+                    .of(ConcreteUsers.JohnDoe())
+                    .changing()
+                    .email("jane.doe@example.com")
+                    .password("789123")
+                    .name("Jane Doe")
+                    .cpf("111.111.111-11")
+                    .edit();
         });
 
         // Then
@@ -126,7 +136,9 @@ public class UserEditingFeature {
 
         // When
         assertThrows(InexistentUser.class, () -> {
-            new UserEditing(repository).of(ConcreteUsers.JohnDoe()).changing()
+            new UserEditing(repository)
+                    .of(ConcreteUsers.JohnDoe())
+                    .changing()
                     .edit();
         });
 

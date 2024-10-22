@@ -35,7 +35,10 @@ public class EventEvaluationFeature {
     }
 
     void evaluate() {
-        new EventEvaluation().of(event.id()).from(events).by(author.id())
+        new EventEvaluation()
+                .of(event.id())
+                .from(events)
+                .by(author.id())
                 .evaluateWith("The show is simply perfect!");
     }
 
@@ -53,6 +56,7 @@ public class EventEvaluationFeature {
         // Then
         final List<Evaluation> evaluations = events.byId(event.id()).get()
                 .evaluations();
+
         final Evaluation evaluation = evaluations.get(0);
         assertTrue(evaluations.size() == 1, "Event has exactly one evaluation");
         assertAll("The evaluation is the same",

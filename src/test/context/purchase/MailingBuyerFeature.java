@@ -37,7 +37,10 @@ public class MailingBuyerFeature {
         purchase.buyer = ConcreteUsers.JohnDoe();
         purchase.ticket = ticket;
         purchase.event = event;
-        service = new PurchaseMail().of(purchase).via(method);
+
+        service = new PurchaseMail()
+                .of(purchase)
+                .via(method);
     }
 
     @Given("A buyer has purchased tickets")

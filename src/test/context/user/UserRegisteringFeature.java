@@ -27,12 +27,16 @@ public class UserRegisteringFeature {
     void emptyRepository() { repository = new UsersInMemory(); }
 
     Login validLogin() {
-        return new LoginInformation().email("john.doe@example.com")
-                .password("123456").submit();
+        return new LoginInformation()
+                .email("john.doe@example.com")
+                .password("123456")
+                .submit();
     }
 
     Person validPerson() {
-        return new PersonalInformation().name("John Doe").cpf("000.000.000-00")
+        return new PersonalInformation()
+                .name("John Doe")
+                .cpf("000.000.000-00")
                 .submit();
     }
 
@@ -49,7 +53,10 @@ public class UserRegisteringFeature {
         assertDoesNotThrow(() -> {
             var login = validLogin();
             var person = validPerson();
-            new UserRegistering(repository).login(login).person(person)
+
+            new UserRegistering(repository)
+                    .login(login)
+                    .person(person)
                     .register();
         });
         // Assertions
@@ -70,7 +77,10 @@ public class UserRegisteringFeature {
         assertDoesNotThrow(() -> {
             var login = validLogin();
             var person = validPerson();
-            new UserRegistering(repository).login(login).person(person)
+
+            new UserRegistering(repository)
+                    .login(login)
+                    .person(person)
                     .register();
         });
         // Assertions
@@ -91,8 +101,11 @@ public class UserRegisteringFeature {
         assertThrows(EmailAlreadyExists.class, () -> {
             var login = validLogin();
             var person = validPerson();
-            var context = new UserRegistering(repository).login(login)
+
+            var context = new UserRegistering(repository)
+                    .login(login)
                     .person(person);
+
             context.register();
             context.register();
         });

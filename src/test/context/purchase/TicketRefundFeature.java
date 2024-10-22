@@ -50,12 +50,16 @@ public class TicketRefundFeature {
     UserId targetUser() { return users.list().get(0).id(); }
 
     void sellTickets(Integer amount) throws SoldOut {
-        new TicketBuying(events, users).of(targetEvent()).by(targetUser())
-                .via(new PaymentMethod("...", "...")).buy(amount);
+        new TicketBuying(events, users)
+                .of(targetEvent())
+                .by(targetUser())
+                .via(new PaymentMethod("...", "..."))
+                .buy(amount);
     }
 
     void refundFirstTicket() {
-        new TicketRefund(events, users).to(targetUser())
+        new TicketRefund(events, users)
+                .to(targetUser())
                 .via(new PaymentMethod("...", "..."))
                 .owning(users.byId(targetUser()).get().tickets().get(0))
                 .refund();

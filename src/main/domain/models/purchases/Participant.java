@@ -56,11 +56,10 @@ public class Participant {
 
     @Override
     public String toString() {
-        // @formatter:off
         return new StringBuilder(name)
-            .append(" (")
-            .append(taxId)
-            .append(")")
-            .toString();
+                .append(" (")
+                .append(taxId)
+                .append(")")
+                .toString();
     }
 }

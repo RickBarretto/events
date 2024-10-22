@@ -62,8 +62,11 @@ public class TicketBuyingFeature {
     UserId targetUser() { return users.list().get(0).id(); }
 
     void sellTickets(Integer amount) throws SoldOut {
-        new TicketBuying(events, users).of(targetEvent()).by(targetUser())
-                .via(new PaymentMethod("...", "...")).buy(amount);
+        new TicketBuying(events, users)
+                .of(targetEvent())
+                .by(targetUser())
+                .via(new PaymentMethod("...", "..."))
+                .buy(amount);
     }
 
     @Scenario("Buying Available Tickets")
@@ -183,8 +186,10 @@ public class TicketBuyingFeature {
                     (EventsInMemory) events);
             var usersJson = new UsersJson(usersFile, (UsersInMemory) users);
 
-            new TicketBuying(eventsJson, usersJson).of(targetEvent())
-                    .by(targetUser()).via(new PaymentMethod("...", "..."))
+            new TicketBuying(eventsJson, usersJson)
+                    .of(targetEvent())
+                    .by(targetUser())
+                    .via(new PaymentMethod("...", "..."))
                     .buy(amount);
 
         }

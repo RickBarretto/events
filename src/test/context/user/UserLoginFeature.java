@@ -26,8 +26,11 @@ public class UserLoginFeature {
     void shouldLogInAsUser() {
         var session = new Session();
         assumeFalse(session.isActive());
-        assertDoesNotThrow(() -> new UserLogin(users).withSession(session)
+
+        assertDoesNotThrow(() -> new UserLogin(users)
+                .withSession(session)
                 .logAs("john.doe@example.com", "123456"));
+
         assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
     }
@@ -42,8 +45,11 @@ public class UserLoginFeature {
         var session = Session.loggedAs(ConcreteUsers.JohnDoe());
         assumeTrue(session.isActive());
         assumeTrue(session.loggedUser().get().equals(ConcreteUsers.JohnDoe()));
-        assertDoesNotThrow(() -> new UserLogin(users).withSession(session)
+
+        assertDoesNotThrow(() -> new UserLogin(users)
+                .withSession(session)
                 .logAs("jane.doe@example.com", "789123"));
+
         assertEquals(ConcreteUsers.JaneDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
     }
@@ -58,11 +64,16 @@ public class UserLoginFeature {
         var session = Session.loggedAs(ConcreteUsers.JohnDoe());
         assumeTrue(session.isActive());
         assumeTrue(session.loggedUser().get().equals(ConcreteUsers.JohnDoe()));
+
         assertThrowsExactly(PermissionDenied.class,
-                () -> new UserLogin(users).withSession(session)
+                () -> new UserLogin(users)
+                        .withSession(session)
                         .logAs("johane.doe@example.com", "789123"));
+
         assertThrowsExactly(PermissionDenied.class, () -> new UserLogin(users)
-                .withSession(session).logAs("jane.doe@example.com", "123456"));
+                .withSession(session)
+                .logAs("jane.doe@example.com", "123456"));
+
         assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
     }
@@ -76,7 +87,11 @@ public class UserLoginFeature {
     void shouldRemainAnonymousWhenLoggingOut() {
         var session = new Session();
         assumeFalse(session.isActive());
-        new UserLogin(users).withSession(session).logOut();
+
+        new UserLogin(users)
+                .withSession(session)
+                .logOut();
+
         assertTrue(session.loggedUser().isEmpty());
         assertFalse(session.isActive());
     }
@@ -91,7 +106,11 @@ public class UserLoginFeature {
         var session = Session.loggedAs(ConcreteUsers.JohnDoe());
         assumeTrue(session.isActive());
         assumeTrue(session.loggedUser().get().equals(ConcreteUsers.JohnDoe()));
-        new UserLogin(users).withSession(session).logOut();
+
+        new UserLogin(users)
+                .withSession(session)
+                .logOut();
+
         assertTrue(session.loggedUser().isEmpty());
         assertFalse(session.isActive());
     }

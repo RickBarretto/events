@@ -25,7 +25,6 @@ import main.domain.models.events.Poster;
 import main.domain.models.users.User;
 import main.infra.virtual.EventsInMemory;
 import main.roles.repositories.Events;
-import test.resources.bdd.AndContext;
 import test.resources.bdd.And;
 import test.resources.bdd.Feature;
 import test.resources.bdd.Given;
@@ -47,9 +46,11 @@ public class EventRegisteringFeature {
     User someAdmin() { return someCustomer().asAdmin(); }
 
     Poster somePoster() {
-        return new EventInformation().title("From Zero")
+        return new EventInformation()
+                .title("From Zero")
                 .description("Linkin Park's show")
-                .scheduledFor(LocalDate.of(2024, 10, 15)).submit();
+                .scheduledFor(LocalDate.of(2024, 10, 15))
+                .submit();
     }
 
     Optional<Event> actualEvent(Events repository) {
@@ -66,16 +67,25 @@ public class EventRegisteringFeature {
     void shouldRegister() {
         Supplier<Boolean> isRegistered = () -> repository.has("From Zero",
                 LocalDate.of(2024, 10, 15));
+
         // Precondition
         assumeFalse(isRegistered.get());
+
         // Do
         assertDoesNotThrow(() -> {
             var poster = somePoster();
             var user = someAdmin();
             var currentDay = LocalDate.of(2024, 10, 1);
-            new EventRegistering().into(repository).poster(poster).by(user)
-                    .on(currentDay).register();
+
+            new EventRegistering()
+                    .into(repository)
+                    .poster(poster)
+                    .by(user)
+                    .on(currentDay)
+                    .register();
+
         });
+
         // Assertions
         var event = actualEvent(repository);
         assertTrue(isRegistered.get());
@@ -88,14 +98,20 @@ public class EventRegisteringFeature {
     @Then("Registered event is the same")
     @Test
     void shouldBeTheSame() {
+
         // Do
         assertDoesNotThrow(() -> {
             var poster = somePoster();
             var user = someAdmin();
             var currentDay = LocalDate.of(2024, 10, 1);
-            new EventRegistering().into(repository).poster(poster).by(user)
-                    .on(currentDay).register();
+
+            new EventRegistering()
+                    .into(repository)
+                    .poster(poster).by(user)
+                    .on(currentDay)
+                    .register();
         });
+
         // Assertions
         var event = actualEvent(repository).get();
         assertEquals("From Zero", event.poster().title());
@@ -113,8 +129,14 @@ public class EventRegisteringFeature {
             var poster = somePoster();
             var user = someCustomer();
             var currentDay = LocalDate.of(2024, 10, 1);
-            new EventRegistering().into(repository).poster(poster).by(user)
-                    .on(currentDay).register();
+
+            new EventRegistering()
+                    .into(repository)
+                    .poster(poster)
+                    .by(user)
+                    .on(currentDay)
+                    .register();
+
         });
         assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
     }
@@ -129,8 +151,12 @@ public class EventRegisteringFeature {
             var poster = somePoster();
             var user = someAdmin();
             var currentDay = LocalDate.of(2024, 10, 1);
-            var context = new EventRegistering().into(repository).poster(poster)
-                    .by(user).on(currentDay);
+            var context = new EventRegistering()
+                    .into(repository)
+                    .poster(poster)
+                    .by(user)
+                    .on(currentDay);
+
             context.register();
             context.register();
         });
@@ -150,9 +176,15 @@ public class EventRegisteringFeature {
         assertThrows(CantRegisterPastEvent.class, () -> {
             var poster = somePoster();
             var user = someAdmin();
-            new EventRegistering().into(repository).poster(poster).by(user)
-                    .on(today).register();
+
+            new EventRegistering()
+                    .into(repository)
+                    .poster(poster)
+                    .by(user)
+                    .on(today)
+                    .register();
         });
+
         // Post-Condition
         assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
     }
@@ -170,9 +202,15 @@ public class EventRegisteringFeature {
         assertThrows(CantRegisterPastEvent.class, () -> {
             var poster = somePoster();
             var user = someAdmin();
-            new EventRegistering().into(repository).poster(poster).by(user)
-                    .on(today).register();
+
+            new EventRegistering()
+                    .into(repository)
+                    .poster(poster)
+                    .by(user)
+                    .on(today)
+                    .register();
         });
+        
         // Post-Condition
         assertFalse(repository.has("From Zero", LocalDate.of(2024, 10, 15)));
     }

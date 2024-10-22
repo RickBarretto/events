@@ -13,7 +13,6 @@ import main.infra.json.JsonFile;
 import main.infra.json.UsersJson;
 import test.resources.entities.ConcreteUsers;
 
-// @formatter:off
 public class UsersJsonTest {
     private static final String directory = "src/test/infra/resources";
 
@@ -29,10 +28,8 @@ public class UsersJsonTest {
         private UsersJson allUsersJson;
 
         @BeforeEach
-        void createJsonFile() {
-            new UsersJson(file, ConcreteUsers.withJohn());
-        }
-        
+        void createJsonFile() { new UsersJson(file, ConcreteUsers.withJohn()); }
+
         @BeforeEach
         void loadJsonFile() {
             assumeTrue(file.exists());
@@ -43,23 +40,26 @@ public class UsersJsonTest {
         void shouldContains() {
             assertTrue(1 == this.allUsersJson.list().size());
             assertTrue(this.allUsersJson.has("john.doe@example.com"));
-            assertTrue(this.allUsersJson.ownerOf("john.doe@example.com", "123456").isPresent());
+            assertTrue(this.allUsersJson
+                    .ownerOf("john.doe@example.com", "123456").isPresent());
         }
-        
+
         @Test
-        void shouldRegister() {            
+        void shouldRegister() {
             registerJane();
-            assertTrue(this.allUsersJson.ownerOf("jane.doe@example.com", "789123").isPresent());
+            assertTrue(this.allUsersJson
+                    .ownerOf("jane.doe@example.com", "789123").isPresent());
             assertTrue(this.allUsersJson.has("jane.doe@example.com"));
         }
-        
+
         @Test
         void shouldLoad() {
-            // Forces read from json file after updating it      
+            // Forces read from json file after updating it
             registerJane();
 
             var otherReference = new UsersJson(file);
-            assertTrue(otherReference.ownerOf("jane.doe@example.com", "789123").isPresent());
+            assertTrue(otherReference.ownerOf("jane.doe@example.com", "789123")
+                    .isPresent());
             assertTrue(otherReference.has("jane.doe@example.com"));
         }
 
@@ -67,10 +67,11 @@ public class UsersJsonTest {
         void shouldUpdate() {
             // Prepare
             var user = this.allUsersJson.list().get(0);
-            
+
             // Do
-            this.allUsersJson.update(user, user.with(user.login().withEmail("john.new@example.com")));
-            
+            this.allUsersJson.update(user,
+                    user.with(user.login().withEmail("john.new@example.com")));
+
             // Assert
             assertFalse(this.allUsersJson.has("john.doe@example.com"));
             assertTrue(this.allUsersJson.has("john.new@example.com"));
@@ -87,10 +88,8 @@ public class UsersJsonTest {
         private UsersJson noneUsersJson;
 
         @BeforeEach
-        void createJsonFile() {
-            new UsersJson(file, ConcreteUsers.empty());
-        }
-        
+        void createJsonFile() { new UsersJson(file, ConcreteUsers.empty()); }
+
         @BeforeEach
         void loadJsonFile() {
             assumeTrue(file.exists());
@@ -101,7 +100,7 @@ public class UsersJsonTest {
         void shouldNotContain() {
             assertTrue(0 == this.noneUsersJson.list().size());
         }
-        
+
         @Test
         void shouldLoadEmpty() {
             var otherReference = new UsersJson(file);
@@ -109,4 +108,3 @@ public class UsersJsonTest {
         }
     }
 }
-// @formatter:on
