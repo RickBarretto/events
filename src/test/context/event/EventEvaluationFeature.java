@@ -20,7 +20,6 @@ import test.resources.entities.ConcreteUsers;
 
 @Feature("Evaluate some Event by some User")
 public class EventEvaluationFeature {
-
     private Events events;
     private Event event;
     private User author;
@@ -35,9 +34,8 @@ public class EventEvaluationFeature {
     }
 
     void evaluate() {
-        new EventEvaluation()
+        new EventEvaluation(events)
                 .of(event.id())
-                .from(events)
                 .by(author.id())
                 .evaluateWith("The show is simply perfect!");
     }

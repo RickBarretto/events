@@ -16,14 +16,12 @@ public class EventEvaluation implements Context {
     private UserId authorId;
 
     /**
-     * Sets the events repository for the context.
+     * Constructor with the specified events repository.
      *
-     * @param events the events repository
-     * @return the updated EventEvaluation object
+     * @param events the repository of events used for evaluation
      */
-    public EventEvaluation from(Events events) {
+    public EventEvaluation(Events events) {
         this.events = events;
-        return this;
     }
 
     /**
