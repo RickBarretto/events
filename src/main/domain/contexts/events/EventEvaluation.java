@@ -1,6 +1,10 @@
 package main.domain.contexts.events;
 
+import java.time.LocalDate;
 import java.util.Objects;
+
+import main.domain.exceptions.PermissionDenied;
+import main.domain.exceptions.TryingToEvaluateActiveEvent;
 import main.domain.models.evaluations.Evaluation;
 import main.domain.models.events.EventId;
 import main.domain.models.users.UserId;
@@ -11,6 +15,7 @@ import main.roles.repositories.Events;
  * Context for evaluating an event.
  */
 public class EventEvaluation implements Context {
+    private final LocalDate currentDay;
     private Events events;
     private EventId eventId;
     private UserId authorId;
@@ -20,8 +25,9 @@ public class EventEvaluation implements Context {
      *
      * @param events the repository of events used for evaluation
      */
-    public EventEvaluation(Events events) {
+    public EventEvaluation(Events events, LocalDate currentDay) {
         this.events = events;
+        this.currentDay = currentDay;
     }
 
     /**
@@ -53,12 +59,17 @@ public class EventEvaluation implements Context {
      * @throws NullPointerException if any of the required fields (events,
      *                                  eventId, authorId) are null
      */
-    public void evaluateWith(String comment) {
+    public void evaluateWith(String comment)
+            throws TryingToEvaluateActiveEvent {
         Objects.requireNonNull(events, "Events repository cannot be null");
         Objects.requireNonNull(eventId, "Event ID cannot be null");
         Objects.requireNonNull(authorId, "Author ID cannot be null");
 
         var event = events.byId(eventId).get();
+
+        if (event.isAvailableFor(currentDay))
+            throw new TryingToEvaluateActiveEvent();
+
         event.receiveEvaluation(new Evaluation(eventId, authorId, comment));
         events.update(event);
     }
