@@ -15,6 +15,15 @@ public class AvailableEventsListing implements Context {
     private Events events;
 
     /**
+     * Constructor with the specified events repository.
+     *
+     * @param events the repository of events used for listing
+     */
+    public AvailableEventsListing(Events events) {
+        this.events = events;
+    }
+
+    /**
      * Sets the current date for the context.
      *
      * @param today the current date
@@ -22,17 +31,6 @@ public class AvailableEventsListing implements Context {
      */
     public AvailableEventsListing beingToday(LocalDate today) {
         this.today = today;
-        return this;
-    }
-
-    /**
-     * Sets the events repository for the context.
-     *
-     * @param events the events repository
-     * @return the updated AvailableEventsListing object
-     */
-    public AvailableEventsListing from(Events events) {
-        this.events = events;
         return this;
     }
 

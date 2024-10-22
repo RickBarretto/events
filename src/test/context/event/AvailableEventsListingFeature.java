@@ -61,10 +61,10 @@ public class AvailableEventsListingFeature {
     @Then("Listed Events should include all available ones")
     @Test
     void shouldIncludeAvailables() {
-        listedEvents = new AvailableEventsListing()
-                .from(allEvents)
-                .beingToday(today)
-                .availables();
+        listedEvents = new AvailableEventsListing(
+                allEvents)
+                        .beingToday(today)
+                        .availables();
 
         assertTrue(listedEvents.stream()
                 .allMatch(available::contains));
@@ -76,10 +76,10 @@ public class AvailableEventsListingFeature {
     @Then("Listed Events should ignore all unavailable ones")
     @Test
     void shouldIgnorePastEvents() {
-        listedEvents = new AvailableEventsListing()
-                .from(allEvents)
-                .beingToday(today)
-                .availables();
+        listedEvents = new AvailableEventsListing(
+                allEvents)
+                        .beingToday(today)
+                        .availables();
 
         assertFalse(listedEvents.stream()
                 .anyMatch(unavailable::contains));
