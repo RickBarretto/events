@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import main.domain.contexts.purchases.TicketBuying;
 import main.domain.contexts.purchases.TicketRefund;
 import main.domain.exceptions.InvalidRefundDueToInactiveEvent;
+import main.domain.exceptions.PurchaseForInactiveEvent;
 import main.domain.exceptions.SoldOut;
 import main.domain.models.events.Event;
 import main.domain.models.events.EventId;
@@ -54,8 +55,9 @@ public class TicketRefundFeature {
 
     UserId targetUser() { return users.list().get(0).id(); }
 
-    void sellTickets(Integer amount) throws SoldOut {
-        new TicketBuying(events, users)
+    void sellTickets(Integer amount, LocalDate currentDay) throws SoldOut, PurchaseForInactiveEvent {
+        new TicketBuying(events, users, 
+                currentDay)
                 .of(targetEvent())
                 .by(targetUser())
                 .via(new PaymentMethod("...", "..."))
@@ -81,7 +83,7 @@ public class TicketRefundFeature {
     @Test
     void shouldBeEmptyForCouple() {
         try {
-            sellTickets(2);
+            sellTickets(2, activeDate);
         }
         catch (Exception e) {
             assumeNoException(e);
@@ -105,8 +107,8 @@ public class TicketRefundFeature {
     @Test
     void shouldBeEmptyForIndividual() {
         try {
-            sellTickets(1);
-            sellTickets(1);
+            sellTickets(1, activeDate);
+            sellTickets(1, activeDate);
         }
         catch (Exception e) {
             assumeNoException(e);
@@ -131,7 +133,7 @@ public class TicketRefundFeature {
     @Test
     void shouldNotRefund() {
         try {
-            sellTickets(2);
+            sellTickets(2, activeDate);
         }
         catch (Exception e) {
             assumeNoException(e);

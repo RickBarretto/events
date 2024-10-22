@@ -1,8 +1,10 @@
 package main.domain.contexts.purchases;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import main.domain.contexts.purchases.internal.PurchaseMail;
 import main.domain.contexts.purchases.internal.Purchase;
+import main.domain.exceptions.PurchaseForInactiveEvent;
 import main.domain.exceptions.SoldOut;
 import main.domain.models.events.EventId;
 import main.domain.models.purchases.PaymentMethod;
@@ -17,9 +19,11 @@ import main.roles.repositories.Users;
  * Context for buying tickets for an event.
  */
 public class TicketBuying implements Context {
+    private final LocalDate currentDate;
+    private final EmailService service;
+
     private Purchase purchase = new Purchase();
     private PaymentMethod paymentMethod;
-    private EmailService service;
     private Events events;
     private Users users;
 
@@ -29,21 +33,23 @@ public class TicketBuying implements Context {
      * @param events the events repository
      * @param users  the users repository
      */
-    public TicketBuying(Events events, Users users) {
-        this(new DisabledEmailService(), events, users);
+    public TicketBuying(Events events, Users users, LocalDate currentDate) {
+        this(new DisabledEmailService(), events, users, currentDate);
     }
 
     /**
      * Constructor with specified email service.
      *
-     * @param service the email service
-     * @param events  the events repository
-     * @param users   the users repository
+     * @param service     the email service
+     * @param events      the events repository
+     * @param users       the users repository
+     * @param currentDate the current date of the context
      */
-    public TicketBuying(EmailService service, Events events, Users users) {
+    public TicketBuying(EmailService service, Events events, Users users, LocalDate currentDate) {
         this.events = events;
         this.users = users;
         this.service = service;
+        this.currentDate = currentDate;
     }
 
     /**
@@ -52,8 +58,12 @@ public class TicketBuying implements Context {
      * @param event the event ID
      * @return the updated TicketBuying object
      */
-    public TicketBuying of(EventId event) {
+    public TicketBuying of(EventId event) throws PurchaseForInactiveEvent {
         purchase.event = this.events.byId(event).get();
+
+        if (!purchase.event.isAvailableFor(currentDate))
+            throw new PurchaseForInactiveEvent();
+
         return this;
     }
 
