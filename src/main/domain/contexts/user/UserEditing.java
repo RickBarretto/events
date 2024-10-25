@@ -101,7 +101,7 @@ public class UserEditing implements Context {
          */
         public EditingWithTarget email(String rawEmail) throws EmailAlreadyExists {
             shouldBeAvailable(rawEmail);
-            this.updated = updated.with(updated.login().withEmail(new EmailAddress(rawEmail)));
+            this.updated = updated.with(updated.login().with(new EmailAddress(rawEmail)));
             return this;
         }
 
