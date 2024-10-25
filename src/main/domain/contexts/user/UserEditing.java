@@ -4,6 +4,7 @@ import java.util.Objects;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
 import main.domain.models.users.User;
+import main.domain.models.users.values.EmailAddress;
 import main.roles.Context;
 import main.roles.repositories.Users;
 
@@ -97,9 +98,9 @@ public class UserEditing implements Context {
          * @throws EmailAlreadyExists if the email already exists in the
          *                                repository
          */
-        public EditingWithTarget email(String email) throws EmailAlreadyExists {
-            shouldBeAvailable(email);
-            this.updated = updated.with(updated.login().withEmail(email));
+        public EditingWithTarget email(String rawEmail) throws EmailAlreadyExists {
+            shouldBeAvailable(rawEmail);
+            this.updated = updated.with(updated.login().withEmail(new EmailAddress(rawEmail)));
             return this;
         }
 
@@ -122,10 +123,9 @@ public class UserEditing implements Context {
          *                                repository
          */
         private void shouldBeAvailable(String email) throws EmailAlreadyExists {
-            final var emailIsTheSame = email.equals(target.login().email());
-            if (emailIsTheSame)
+            if (target.login().email().equals(email))
                 return;
-            if (repository.has(email))
+            if (repository.has(new EmailAddress(email)))
                 throw new EmailAlreadyExists();
         }
 
