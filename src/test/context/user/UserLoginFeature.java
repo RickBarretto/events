@@ -1,17 +1,26 @@
 package test.context.user;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+
 import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.user.UserLogin;
 import main.domain.exceptions.PermissionDenied;
-import main.domain.models.users.values.EmailAddress;
-import main.domain.models.users.values.Password;
+import main.domain.models.users.Login;
 import main.infra.Session;
 import main.roles.repositories.Users;
-
-import test.resources.bdd.*;
+import test.resources.bdd.Assume;
+import test.resources.bdd.Feature;
+import test.resources.bdd.Given;
+import test.resources.bdd.Scenario;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 import test.resources.entities.ConcreteUsers;
 
 @Feature("User Login")
@@ -31,8 +40,7 @@ public class UserLoginFeature {
 
         assertDoesNotThrow(() -> new UserLogin(users)
                 .withSession(session)
-                .logAs(new EmailAddress("john.doe@example.com"), new Password(
-                        "123456")));
+                .logAs(Login.of("john.doe@example.com", "123456")));
 
         assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
@@ -51,7 +59,7 @@ public class UserLoginFeature {
 
         assertDoesNotThrow(() -> new UserLogin(users)
                 .withSession(session)
-                .logAs(new EmailAddress("jane.doe@example.com"), new Password("789123")));
+                .logAs(Login.of("jane.doe@example.com", "789123")));
 
         assertEquals(ConcreteUsers.JaneDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
@@ -71,12 +79,11 @@ public class UserLoginFeature {
         assertThrowsExactly(PermissionDenied.class,
                 () -> new UserLogin(users)
                         .withSession(session)
-                        .logAs(new EmailAddress("johane.doe@example.com"),
-                                new Password("789123")));
+                        .logAs(Login.of("johane.doe@example.com", "789123")));
 
         assertThrowsExactly(PermissionDenied.class, () -> new UserLogin(users)
                 .withSession(session)
-                .logAs(new EmailAddress("jane.doe@example.com"), new Password("123456")));
+                .logAs(Login.of("jane.doe@example.com", "123456")));
 
         assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
