@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import main.domain.models.users.values.EmailAddress;
 import main.infra.json.JsonFile;
 import main.infra.json.UsersJson;
 import test.resources.entities.ConcreteUsers;
@@ -39,17 +40,21 @@ public class UsersJsonTest {
         @Test
         void shouldContains() {
             assertTrue(1 == this.allUsersJson.list().size());
-            assertTrue(this.allUsersJson.has("john.doe@example.com"));
             assertTrue(this.allUsersJson
-                    .ownerOf("john.doe@example.com", "123456").isPresent());
+                    .has(new EmailAddress("john.doe@example.com")));
+            assertTrue(this.allUsersJson
+                    .ownerOf(new EmailAddress("john.doe@example.com"), "123456")
+                    .isPresent());
         }
 
         @Test
         void shouldRegister() {
             registerJane();
             assertTrue(this.allUsersJson
-                    .ownerOf("jane.doe@example.com", "789123").isPresent());
-            assertTrue(this.allUsersJson.has("jane.doe@example.com"));
+                    .ownerOf(new EmailAddress("jane.doe@example.com"), "789123")
+                    .isPresent());
+            assertTrue(this.allUsersJson
+                    .has(new EmailAddress("jane.doe@example.com")));
         }
 
         @Test
@@ -58,9 +63,11 @@ public class UsersJsonTest {
             registerJane();
 
             var otherReference = new UsersJson(file);
-            assertTrue(otherReference.ownerOf("jane.doe@example.com", "789123")
+            assertTrue(otherReference
+                    .ownerOf(new EmailAddress("jane.doe@example.com"), "789123")
                     .isPresent());
-            assertTrue(otherReference.has("jane.doe@example.com"));
+            assertTrue(otherReference
+                    .has(new EmailAddress("jane.doe@example.com")));
         }
 
         @Test
@@ -70,11 +77,14 @@ public class UsersJsonTest {
 
             // Do
             this.allUsersJson.update(user,
-                    user.with(user.login().withEmail("john.new@example.com")));
+                    user.with(user.login().withEmail(
+                            new EmailAddress("john.new@example.com"))));
 
             // Assert
-            assertFalse(this.allUsersJson.has("john.doe@example.com"));
-            assertTrue(this.allUsersJson.has("john.new@example.com"));
+            assertFalse(this.allUsersJson
+                    .has(new EmailAddress("john.doe@example.com")));
+            assertTrue(this.allUsersJson
+                    .has(new EmailAddress("john.new@example.com")));
         }
 
         void registerJane() {

@@ -14,6 +14,7 @@ import main.domain.contexts.user.forms.LoginInformation;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
+import main.domain.models.users.values.EmailAddress;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 import test.resources.bdd.*;
@@ -48,7 +49,7 @@ public class UserRegisteringFeature {
     void shouldRegister() {
         // Precondition
         assumeFalse("Email must not be registered",
-                repository.has("john.doe@example.com"));
+                repository.has(new EmailAddress("john.doe@example.com")));
         // Do
         assertDoesNotThrow(() -> {
             var login = validLogin();
@@ -60,9 +61,10 @@ public class UserRegisteringFeature {
                     .register();
         });
         // Assertions
-        var owner = repository.ownerOf("john.doe@example.com", "123456");
+        var owner = repository.ownerOf(new EmailAddress("john.doe@example.com"),
+                "123456");
         assertTrue("Email is now registered",
-                repository.has("john.doe@example.com"));
+                repository.has(new EmailAddress("john.doe@example.com")));
         assertTrue("Owner is present", owner.isPresent());
     }
 
@@ -84,8 +86,11 @@ public class UserRegisteringFeature {
                     .register();
         });
         // Assertions
-        var owner = repository.ownerOf("john.doe@example.com", "123456").get();
-        assertEquals("john.doe@example.com", owner.login().email());
+        var owner = repository
+                .ownerOf(new EmailAddress("john.doe@example.com"), "123456")
+                .get();
+        assertEquals(new EmailAddress("john.doe@example.com"),
+                owner.login().email());
         assertEquals("John Doe", owner.person().name());
         assertEquals("000.000.000-00", owner.person().cpf());
         assertFalse(owner.isAdmin());
@@ -109,7 +114,9 @@ public class UserRegisteringFeature {
             context.register();
             context.register();
         });
+
         // Assertions
-        assertTrue(repository.has("john.doe@example.com"));
+        assertTrue(repository.has(
+                new EmailAddress("john.doe@example.com")));
     }
 }

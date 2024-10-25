@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import main.domain.contexts.user.UserLogin;
 import main.domain.exceptions.PermissionDenied;
+import main.domain.models.users.values.EmailAddress;
 import main.infra.Session;
 import main.roles.repositories.Users;
 
@@ -29,7 +30,7 @@ public class UserLoginFeature {
 
         assertDoesNotThrow(() -> new UserLogin(users)
                 .withSession(session)
-                .logAs("john.doe@example.com", "123456"));
+                .logAs(new EmailAddress("john.doe@example.com"), "123456"));
 
         assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
@@ -48,7 +49,7 @@ public class UserLoginFeature {
 
         assertDoesNotThrow(() -> new UserLogin(users)
                 .withSession(session)
-                .logAs("jane.doe@example.com", "789123"));
+                .logAs(new EmailAddress("jane.doe@example.com"), "789123"));
 
         assertEquals(ConcreteUsers.JaneDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
@@ -68,11 +69,12 @@ public class UserLoginFeature {
         assertThrowsExactly(PermissionDenied.class,
                 () -> new UserLogin(users)
                         .withSession(session)
-                        .logAs("johane.doe@example.com", "789123"));
+                        .logAs(new EmailAddress("johane.doe@example.com"),
+                                "789123"));
 
         assertThrowsExactly(PermissionDenied.class, () -> new UserLogin(users)
                 .withSession(session)
-                .logAs("jane.doe@example.com", "123456"));
+                .logAs(new EmailAddress("jane.doe@example.com"), "123456"));
 
         assertEquals(ConcreteUsers.JohnDoe(), session.loggedUser().get());
         assertTrue(session.isActive());
