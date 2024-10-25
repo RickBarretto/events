@@ -34,13 +34,17 @@ public class Login {
      */
     public EmailAddress email() { return email; }
 
+    public Login with(EmailAddress email) { return new Login(email, password); }
+
+    public Login with(Password password) { return new Login(email, password); }
+
     /**
      * Creates a new Login with the specified email, keeping the current
      * password.
      *
      * @param email the new email address
      * @return a new Login object with the updated email
-     */    
+     */
     public Login withEmail(EmailAddress email) {
         return new Login(email, this.password);
     }
