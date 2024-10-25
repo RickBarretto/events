@@ -34,8 +34,7 @@ public class UserLogin implements Context {
     /**
      * Logs in the user with the specified email and password.
      *
-     * @param email    the email of the user
-     * @param password the password of the user
+     * @param login the login of the user
      * @throws PermissionDenied if the login credentials are incorrect
      */
     public void logAs(Login login) throws PermissionDenied {
