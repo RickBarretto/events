@@ -77,9 +77,9 @@ public class LoginTest {
             var expected = new Login(new EmailAddress("jane.doe@example.com"),
                     new Password("123456"));
             assertNotEquals(login,
-                    login.withEmail(new EmailAddress("jane.doe@example.com")));
+                    login.with(new EmailAddress("jane.doe@example.com")));
             assertEquals(expected,
-                    login.withEmail(new EmailAddress("jane.doe@example.com")));
+                    login.with(new EmailAddress("jane.doe@example.com")));
         }
 
         @Test

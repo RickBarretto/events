@@ -78,7 +78,7 @@ public class UsersJsonTest {
 
             // Do
             this.allUsersJson.update(user,
-                    user.with(user.login().withEmail(
+                    user.with(user.login().with(
                             new EmailAddress("john.new@example.com"))));
 
             // Assert
