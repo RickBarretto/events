@@ -5,6 +5,7 @@ import java.util.Optional;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 
 /**
  * Interface for managing User entities.
@@ -41,7 +42,7 @@ public interface Users {
      * @param password the password of the user
      * @return an Optional containing the user if found, or empty if not found
      */
-    Optional<User> ownerOf(EmailAddress email, String password);
+    Optional<User> ownerOf(EmailAddress email, Password password);
 
     /**
      * Checks if an user exists by their email.
