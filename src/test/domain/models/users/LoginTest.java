@@ -86,8 +86,8 @@ public class LoginTest {
         void testWithPassword() {
             var expected = new Login(new EmailAddress("john.doe@example.com"),
                     new Password("789123"));
-            assertNotEquals(login, login.withPassword(new Password("789123")));
-            assertEquals(expected, login.withPassword(new Password("789123")));
+            assertNotEquals(login, login.with(new Password("789123")));
+            assertEquals(expected, login.with(new Password("789123")));
         }
     }
 

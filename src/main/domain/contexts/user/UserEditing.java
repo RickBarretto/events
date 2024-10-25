@@ -112,7 +112,7 @@ public class UserEditing implements Context {
          * @return the current EditingWithTarget instance
          */
         public EditingWithTarget password(String password) {
-            this.updated = updated.with(updated.login().withPassword(new Password(
+            this.updated = updated.with(updated.login().with(new Password(
                     password)));
             return this;
         }
