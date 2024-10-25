@@ -26,7 +26,7 @@ public class Participant {
         this.taxId = taxId;
     }
     
-    private Participant(String email, String name, String taxId) {
+    public Participant(String email, String name, String taxId) {
         this(new EmailAddress(email), name, taxId);
     }
 
