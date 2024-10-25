@@ -5,6 +5,7 @@ import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.exceptions.InexistentUser;
 import main.domain.models.users.User;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.roles.Context;
 import main.roles.repositories.Users;
 
@@ -111,7 +112,8 @@ public class UserEditing implements Context {
          * @return the current EditingWithTarget instance
          */
         public EditingWithTarget password(String password) {
-            this.updated = updated.with(updated.login().withPassword(password));
+            this.updated = updated.with(updated.login().withPassword(new Password(
+                    password)));
             return this;
         }
 
