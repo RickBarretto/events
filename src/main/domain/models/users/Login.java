@@ -38,28 +38,6 @@ public class Login {
 
     public Login with(Password password) { return new Login(email, password); }
 
-    /**
-     * Creates a new Login with the specified email, keeping the current
-     * password.
-     *
-     * @param email the new email address
-     * @return a new Login object with the updated email
-     */
-    public Login withEmail(EmailAddress email) {
-        return new Login(email, this.password);
-    }
-
-    /**
-     * Creates a new Login with the specified password, keeping the current
-     * email.
-     *
-     * @param password the new password
-     * @return a new Login object with the updated password
-     */
-    public Login withPassword(Password password) {
-        return new Login(this.email, password);
-    }
-
     public boolean equals(Login other) {
         return Objects.equals(email, other.email)
                 && Objects.equals(password, other.password);
