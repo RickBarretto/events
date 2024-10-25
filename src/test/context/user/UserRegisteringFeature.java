@@ -6,19 +6,25 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import main.domain.contexts.user.UserRegistering;
-import main.domain.contexts.user.forms.PersonalInformation;
 import main.domain.contexts.user.forms.LoginInformation;
+import main.domain.contexts.user.forms.PersonalInformation;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.values.EmailAddress;
-import main.domain.models.users.values.Password;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
-import test.resources.bdd.*;
+import test.resources.bdd.And;
+import test.resources.bdd.Feature;
+import test.resources.bdd.Given;
+import test.resources.bdd.Scenario;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 
 @Feature("Registering a new user")
 public class UserRegisteringFeature {

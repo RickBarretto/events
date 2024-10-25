@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,7 +14,6 @@ import main.domain.models.users.Login;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
-import main.domain.models.users.values.Password;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 

@@ -29,8 +29,6 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
-import main.domain.models.users.values.EmailAddress;
-import main.domain.models.users.values.Password;
 import main.infra.json.EventsJson;
 import main.infra.json.JsonFile;
 import main.infra.json.UsersJson;

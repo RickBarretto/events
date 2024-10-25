@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import main.domain.models.users.Login;
 import main.domain.models.users.values.EmailAddress;
-import main.domain.models.users.values.Password;
 import main.infra.json.JsonFile;
 import main.infra.json.UsersJson;
 import test.resources.entities.ConcreteUsers;

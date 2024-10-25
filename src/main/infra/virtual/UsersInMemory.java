@@ -3,11 +3,11 @@ package main.infra.virtual;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+
 import main.domain.models.users.Login;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
-import main.domain.models.users.values.Password;
 import main.roles.repositories.Users;
 
 /**
