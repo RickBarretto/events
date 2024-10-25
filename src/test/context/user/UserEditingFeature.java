@@ -17,6 +17,7 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.roles.repositories.Users;
 import test.resources.bdd.*;
 import test.resources.entities.ConcreteUsers;
@@ -37,7 +38,7 @@ public class UserEditingFeature {
     @BeforeEach
     void submitForms() {
         expectedLogin = new Login(new EmailAddress("jane.doe@example.com"),
-                "789123");
+                new Password("789123"));
         expectedPerson = new Person("Jane Doe", "111.111.111-11");
     }
 
@@ -69,7 +70,7 @@ public class UserEditingFeature {
                 () -> assertFalse(repository.has(oldEmail)),
                 () -> assertTrue(repository.has(newEmail)));
 
-        var updatedUser = repository.ownerOf(newEmail, "789123").get();
+        var updatedUser = repository.ownerOf(newEmail, new Password("789123")).get();
         assertEquals(expectedLogin, updatedUser.login());
         assertEquals(expectedPerson, updatedUser.person());
     }
@@ -94,7 +95,7 @@ public class UserEditingFeature {
 
         // Then
         var updatedUser = repository
-                .ownerOf(new EmailAddress("jane.doe@example.com"), "789123")
+                .ownerOf(new EmailAddress("jane.doe@example.com"), new Password("789123"))
                 .get();
         assertEquals(ConcreteUsers.JohnDoe().id(), updatedUser.id());
     }
@@ -111,7 +112,8 @@ public class UserEditingFeature {
                                 new Login(
                                         new EmailAddress(
                                                 "jane.doe@example.com"),
-                                        "789123"),
+                                        new Password(
+                                                "789123")),
                                 new Person("Jane Doe", "111.111.111-11")));
         // Given
         assumeTrue(

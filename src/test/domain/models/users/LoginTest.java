@@ -11,13 +11,15 @@ import org.junit.jupiter.api.Test;
 
 import main.domain.models.users.Login;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 
 public class LoginTest {
     Login login;
 
     @BeforeEach
     void init() {
-        login = new Login(new EmailAddress("john.doe@example.com"), "123456");
+        login = new Login(new EmailAddress("john.doe@example.com"), 
+                new Password("123456"));
     }
 
     @Nested
@@ -41,27 +43,27 @@ public class LoginTest {
             assertTrue(
                     login.equals(
                             new Login(new EmailAddress("john.doe@example.com"),
-                                    "123456")));
+                                    new Password("123456"))));
 
             assertFalse(login.equals(new Object()));
             assertFalse(
                     login.equals(
                             new Login(new EmailAddress("jane.doe@example.com"),
-                                    "123456")));
+                                    new Password("123456"))));
             assertFalse(
                     login.equals(
                             new Login(new EmailAddress("john.doe@example.com"),
-                                    "789123")));
+                                    new Password("789123"))));
         }
 
         @Test
         void testHashCode() {
             assertEquals(
                     new Login(new EmailAddress("john.doe@example.com"),
-                            "123456").hashCode(),
+                            new Password("123456")).hashCode(),
                     login.hashCode());
             assertNotEquals(
-                    new Login(new EmailAddress("john.do@example.com"), "123456")
+                    new Login(new EmailAddress("john.do@example.com"), new Password("123456"))
                             .hashCode(),
                     login.hashCode());
         }
@@ -73,7 +75,7 @@ public class LoginTest {
         @Test
         void testWithEmail() {
             var expected = new Login(new EmailAddress("jane.doe@example.com"),
-                    "123456");
+                    new Password("123456"));
             assertNotEquals(login,
                     login.withEmail(new EmailAddress("jane.doe@example.com")));
             assertEquals(expected,
@@ -83,9 +85,9 @@ public class LoginTest {
         @Test
         void testWithPassword() {
             var expected = new Login(new EmailAddress("john.doe@example.com"),
-                    "789123");
-            assertNotEquals(login, login.withPassword("789123"));
-            assertEquals(expected, login.withPassword("789123"));
+                    new Password("789123"));
+            assertNotEquals(login, login.withPassword(new Password("789123")));
+            assertEquals(expected, login.withPassword(new Password("789123")));
         }
     }
 

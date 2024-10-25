@@ -22,6 +22,7 @@ import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.infra.virtual.EventsInMemory;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Events;
@@ -50,7 +51,8 @@ public class TicketRefundFeature {
         users = new UsersInMemory(
                 List.of(new User(
                         new Login(new EmailAddress("john.doe@example.com"),
-                                "123456"),
+                                new Password(
+                                        "123456")),
                         new Person("John Doe", "000.000.000-00"))));
     }
 

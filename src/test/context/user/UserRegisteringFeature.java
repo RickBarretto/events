@@ -15,6 +15,7 @@ import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 import test.resources.bdd.*;
@@ -62,7 +63,7 @@ public class UserRegisteringFeature {
         });
         // Assertions
         var owner = repository.ownerOf(new EmailAddress("john.doe@example.com"),
-                "123456");
+                new Password("123456"));
         assertTrue("Email is now registered",
                 repository.has(new EmailAddress("john.doe@example.com")));
         assertTrue("Owner is present", owner.isPresent());
@@ -87,7 +88,8 @@ public class UserRegisteringFeature {
         });
         // Assertions
         var owner = repository
-                .ownerOf(new EmailAddress("john.doe@example.com"), "123456")
+                .ownerOf(new EmailAddress("john.doe@example.com"), new Password(
+                        "123456"))
                 .get();
         assertEquals(new EmailAddress("john.doe@example.com"),
                 owner.login().email());

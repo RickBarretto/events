@@ -16,6 +16,7 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 
 public class TransactionTest {
     private final TransactionId randomId = new TransactionId(UUID.randomUUID());
@@ -26,12 +27,12 @@ public class TransactionTest {
             new Participant(
                     new User(
                             new Login(new EmailAddress("john.doe@example.com"),
-                                    "123456"),
+                                    new Password("123456")),
                             new Person("John Doe", "000.000.000-00"))),
             new Participant(
                     new User(
                             new Login(new EmailAddress("jane.doe@example.com"),
-                                    "789123"),
+                                    new Password("789123")),
                             new Person("Jane Doe", "111.111.111-11"))),
             payment, "Lending money to a friend");
 

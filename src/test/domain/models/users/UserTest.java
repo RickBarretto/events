@@ -17,6 +17,7 @@ import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 
 public class UserTest {
     private User actual;
@@ -26,7 +27,7 @@ public class UserTest {
         var id = new UserId(
                 UUID.fromString("78266c37-e43b-48c5-9a4b-0c996d431d02"));
         var login = new Login(new EmailAddress("john.doe@example.com"),
-                "123456");
+                new Password("123456"));
         var person = new Person("John Doe", "000.000.000-00");
         actual = new User(id, login, person);
     }
@@ -42,11 +43,12 @@ public class UserTest {
         @Test
         void testLogin() {
             var expected = new Login(new EmailAddress("john.doe@example.com"),
-                    "123456");
+                    new Password("123456"));
             assertEquals(expected, actual.login());
 
             var expectedToBeFalse = new Login(
-                    new EmailAddress("jane.doe@example.com"), "123456");
+                    new EmailAddress("jane.doe@example.com"),
+                    new Password("123456"));
             assertNotEquals(expectedToBeFalse, actual.login());
         }
 
@@ -74,7 +76,7 @@ public class UserTest {
         @Test
         void testWithLogin() {
             var newLogin = new Login(new EmailAddress("jane.doe@example.com"),
-                    "123456");
+                    new Password("123456"));
             assertNotEquals(actual, actual.with(newLogin));
             assertInstanceOf(User.class, actual.with(newLogin));
             assertEquals(newLogin, actual.with(newLogin).login());
@@ -110,7 +112,7 @@ public class UserTest {
                     actual.hashCode());
             assertNotEquals(actual
                     .with(new Login(new EmailAddress("jane.doe@example.com"),
-                            "123456"))
+                            new Password("123456")))
                     .hashCode(), actual.hashCode());
             assertNotEquals(actual.asAdmin().hashCode(), actual.hashCode());
         }

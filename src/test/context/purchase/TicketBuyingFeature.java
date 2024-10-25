@@ -30,6 +30,7 @@ import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.infra.json.EventsJson;
 import main.infra.json.JsonFile;
 import main.infra.json.UsersJson;
@@ -59,7 +60,8 @@ public class TicketBuyingFeature {
         event.addCapacity(2);
         events = new EventsInMemory(List.of(event));
         users = new UsersInMemory(
-                List.of(new User(new Login(new EmailAddress("john.doe@example.com"), "123456"),
+                List.of(new User(new Login(new EmailAddress("john.doe@example.com"), new Password(
+                        "123456")),
                         new Person("John Doe", "000.000.000-00"))));
     }
 
