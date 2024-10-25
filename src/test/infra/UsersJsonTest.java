@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import main.domain.models.users.Login;
 import main.domain.models.users.values.EmailAddress;
 import main.domain.models.users.values.Password;
 import main.infra.json.JsonFile;
@@ -43,16 +44,20 @@ public class UsersJsonTest {
             assertTrue(1 == this.allUsersJson.list().size());
             assertTrue(this.allUsersJson
                     .has(new EmailAddress("john.doe@example.com")));
+
+            final var login = Login.of("john.doe@example.com", "123456");
             assertTrue(this.allUsersJson
-                    .ownerOf(new EmailAddress("john.doe@example.com"), new Password("123456"))
+                    .ownerOf(login)
                     .isPresent());
         }
 
         @Test
         void shouldRegister() {
             registerJane();
+
+            final var login = Login.of("jane.doe@example.com", "789123");
             assertTrue(this.allUsersJson
-                    .ownerOf(new EmailAddress("jane.doe@example.com"), new Password("789123"))
+                    .ownerOf(login)
                     .isPresent());
             assertTrue(this.allUsersJson
                     .has(new EmailAddress("jane.doe@example.com")));
@@ -64,8 +69,9 @@ public class UsersJsonTest {
             registerJane();
 
             var otherReference = new UsersJson(file);
+            final var login = Login.of("jane.doe@example.com", "789123");
             assertTrue(otherReference
-                    .ownerOf(new EmailAddress("jane.doe@example.com"), new Password("789123"))
+                    .ownerOf(login)
                     .isPresent());
             assertTrue(otherReference
                     .has(new EmailAddress("jane.doe@example.com")));

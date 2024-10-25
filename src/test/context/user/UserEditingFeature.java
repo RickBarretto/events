@@ -70,7 +70,8 @@ public class UserEditingFeature {
                 () -> assertFalse(repository.has(oldEmail)),
                 () -> assertTrue(repository.has(newEmail)));
 
-        var updatedUser = repository.ownerOf(newEmail, new Password("789123")).get();
+        final var login = Login.of(newEmail.value(), "789123");
+        var updatedUser = repository.ownerOf(login).get();
         assertEquals(expectedLogin, updatedUser.login());
         assertEquals(expectedPerson, updatedUser.person());
     }
@@ -94,9 +95,11 @@ public class UserEditingFeature {
         });
 
         // Then
+        final Login login = Login.of("jane.doe@example.com", "789123");
         var updatedUser = repository
-                .ownerOf(new EmailAddress("jane.doe@example.com"), new Password("789123"))
+                .ownerOf(login)
                 .get();
+
         assertEquals(ConcreteUsers.JohnDoe().id(), updatedUser.id());
     }
 

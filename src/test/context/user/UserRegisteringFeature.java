@@ -62,8 +62,8 @@ public class UserRegisteringFeature {
                     .register();
         });
         // Assertions
-        var owner = repository.ownerOf(new EmailAddress("john.doe@example.com"),
-                new Password("123456"));
+        final var login = Login.of("john.doe@example.com", "123456");
+        var owner = repository.ownerOf(login);
         assertTrue("Email is now registered",
                 repository.has(new EmailAddress("john.doe@example.com")));
         assertTrue("Owner is present", owner.isPresent());
@@ -87,9 +87,9 @@ public class UserRegisteringFeature {
                     .register();
         });
         // Assertions
+        final var login = Login.of("john.doe@example.com", "123456");
         var owner = repository
-                .ownerOf(new EmailAddress("john.doe@example.com"), new Password(
-                        "123456"))
+                .ownerOf(login)
                 .get();
         assertEquals(new EmailAddress("john.doe@example.com"),
                 owner.login().email());
