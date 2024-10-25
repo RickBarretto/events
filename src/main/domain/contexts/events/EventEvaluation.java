@@ -3,7 +3,6 @@ package main.domain.contexts.events;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import main.domain.exceptions.PermissionDenied;
 import main.domain.exceptions.TryingToEvaluateActiveEvent;
 import main.domain.models.evaluations.Evaluation;
 import main.domain.models.events.EventId;

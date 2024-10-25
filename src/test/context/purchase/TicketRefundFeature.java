@@ -21,6 +21,8 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
+import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.infra.virtual.EventsInMemory;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Events;
@@ -47,7 +49,10 @@ public class TicketRefundFeature {
         event.addCapacity(2);
         events = new EventsInMemory(List.of(event));
         users = new UsersInMemory(
-                List.of(new User(new Login("john.doe@example.com", "123456"),
+                List.of(new User(
+                        new Login(new EmailAddress("john.doe@example.com"),
+                                new Password(
+                                        "123456")),
                         new Person("John Doe", "000.000.000-00"))));
     }
 
@@ -55,13 +60,14 @@ public class TicketRefundFeature {
 
     UserId targetUser() { return users.list().get(0).id(); }
 
-    void sellTickets(Integer amount, LocalDate currentDay) throws SoldOut, PurchaseForInactiveEvent {
-        new TicketBuying(events, users, 
+    void sellTickets(Integer amount, LocalDate currentDay)
+            throws SoldOut, PurchaseForInactiveEvent {
+        new TicketBuying(events, users,
                 currentDay)
-                .of(targetEvent())
-                .by(targetUser())
-                .via(new PaymentMethod("...", "..."))
-                .buy(amount);
+                        .of(targetEvent())
+                        .by(targetUser())
+                        .via(new PaymentMethod("...", "..."))
+                        .buy(amount);
     }
 
     void refundFirstTicket(LocalDate currentDay)

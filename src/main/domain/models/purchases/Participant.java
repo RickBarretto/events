@@ -1,6 +1,7 @@
 package main.domain.models.purchases;
 
 import main.domain.models.users.User;
+import main.domain.models.users.values.EmailAddress;
 
 /**
  * Represents a participant in a transaction, including email, name, and tax ID.
@@ -8,7 +9,7 @@ import main.domain.models.users.User;
  * user CPF and business CNPJ.
  */
 public class Participant {
-    private String email;
+    private EmailAddress email;
     private String name;
     private String taxId;
 
@@ -19,10 +20,14 @@ public class Participant {
      * @param name  the participant's name
      * @param taxId the participant's tax ID
      */
-    private Participant(String email, String name, String taxId) {
+    private Participant(EmailAddress email, String name, String taxId) {
         this.email = email;
         this.name = name;
         this.taxId = taxId;
+    }
+    
+    public Participant(String email, String name, String taxId) {
+        this(new EmailAddress(email), name, taxId);
     }
 
     /**
@@ -52,7 +57,7 @@ public class Participant {
      *
      * @return the participant's email
      */
-    public String email() { return email; }
+    public EmailAddress email() { return email; }
 
     @Override
     public String toString() {

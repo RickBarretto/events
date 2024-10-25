@@ -6,17 +6,25 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import main.domain.contexts.user.UserRegistering;
-import main.domain.contexts.user.forms.PersonalInformation;
 import main.domain.contexts.user.forms.LoginInformation;
+import main.domain.contexts.user.forms.PersonalInformation;
 import main.domain.exceptions.EmailAlreadyExists;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
+import main.domain.models.users.values.EmailAddress;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
-import test.resources.bdd.*;
+import test.resources.bdd.And;
+import test.resources.bdd.Feature;
+import test.resources.bdd.Given;
+import test.resources.bdd.Scenario;
+import test.resources.bdd.Then;
+import test.resources.bdd.When;
 
 @Feature("Registering a new user")
 public class UserRegisteringFeature {
@@ -48,7 +56,7 @@ public class UserRegisteringFeature {
     void shouldRegister() {
         // Precondition
         assumeFalse("Email must not be registered",
-                repository.has("john.doe@example.com"));
+                repository.has(new EmailAddress("john.doe@example.com")));
         // Do
         assertDoesNotThrow(() -> {
             var login = validLogin();
@@ -60,9 +68,10 @@ public class UserRegisteringFeature {
                     .register();
         });
         // Assertions
-        var owner = repository.ownerOf("john.doe@example.com", "123456");
+        final var login = Login.of("john.doe@example.com", "123456");
+        var owner = repository.ownerOf(login);
         assertTrue("Email is now registered",
-                repository.has("john.doe@example.com"));
+                repository.has(new EmailAddress("john.doe@example.com")));
         assertTrue("Owner is present", owner.isPresent());
     }
 
@@ -84,8 +93,12 @@ public class UserRegisteringFeature {
                     .register();
         });
         // Assertions
-        var owner = repository.ownerOf("john.doe@example.com", "123456").get();
-        assertEquals("john.doe@example.com", owner.login().email());
+        final var login = Login.of("john.doe@example.com", "123456");
+        var owner = repository
+                .ownerOf(login)
+                .get();
+        assertEquals(new EmailAddress("john.doe@example.com"),
+                owner.login().email());
         assertEquals("John Doe", owner.person().name());
         assertEquals("000.000.000-00", owner.person().cpf());
         assertFalse(owner.isAdmin());
@@ -109,7 +122,9 @@ public class UserRegisteringFeature {
             context.register();
             context.register();
         });
+
         // Assertions
-        assertTrue(repository.has("john.doe@example.com"));
+        assertTrue(repository.has(
+                new EmailAddress("john.doe@example.com")));
     }
 }

@@ -16,6 +16,8 @@ import main.domain.exceptions.InexistentUser;
 import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
+import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.roles.repositories.Users;
 import test.resources.bdd.*;
 import test.resources.entities.ConcreteUsers;
@@ -35,7 +37,8 @@ public class UserEditingFeature {
 
     @BeforeEach
     void submitForms() {
-        expectedLogin = new Login("jane.doe@example.com", "789123");
+        expectedLogin = new Login(new EmailAddress("jane.doe@example.com"),
+                new Password("789123"));
         expectedPerson = new Person("Jane Doe", "111.111.111-11");
     }
 
@@ -45,8 +48,8 @@ public class UserEditingFeature {
     @Then("Should update the Login if the user exists")
     @Test
     void shouldUpdateLogin() {
-        var oldEmail = "john.doe@example.com";
-        var newEmail = "jane.doe@example.com";
+        var oldEmail = new EmailAddress("john.doe@example.com");
+        var newEmail = new EmailAddress("jane.doe@example.com");
         // Given
         assumeTrue(repository.has(oldEmail), "Old email is registered");
 
@@ -67,7 +70,8 @@ public class UserEditingFeature {
                 () -> assertFalse(repository.has(oldEmail)),
                 () -> assertTrue(repository.has(newEmail)));
 
-        var updatedUser = repository.ownerOf(newEmail, "789123").get();
+        final var login = Login.of(newEmail.value(), "789123");
+        var updatedUser = repository.ownerOf(login).get();
         assertEquals(expectedLogin, updatedUser.login());
         assertEquals(expectedPerson, updatedUser.person());
     }
@@ -91,8 +95,11 @@ public class UserEditingFeature {
         });
 
         // Then
-        var updatedUser = repository.ownerOf("jane.doe@example.com", "789123")
+        final Login login = Login.of("jane.doe@example.com", "789123");
+        var updatedUser = repository
+                .ownerOf(login)
                 .get();
+
         assertEquals(ConcreteUsers.JohnDoe().id(), updatedUser.id());
     }
 
@@ -103,11 +110,18 @@ public class UserEditingFeature {
     @Test
     void shouldNotUpdateToExistingEmail() {
         repository
-                .register(new User(new Login("jane.doe@example.com", "789123"),
-                        new Person("Jane Doe", "111.111.111-11")));
+                .register(
+                        new User(
+                                new Login(
+                                        new EmailAddress(
+                                                "jane.doe@example.com"),
+                                        new Password(
+                                                "789123")),
+                                new Person("Jane Doe", "111.111.111-11")));
         // Given
         assumeTrue(
-                repository.has("john.doe@example.com"), "User is registered");
+                repository.has(new EmailAddress("john.doe@example.com")),
+                "User is registered");
 
         // When
         assertThrows(EmailAlreadyExists.class, () -> {
@@ -120,8 +134,10 @@ public class UserEditingFeature {
 
         // Then
         assertAll("User was not updated",
-                () -> assertTrue(repository.has("john.doe@example.com")),
-                () -> assertTrue(repository.has("jane.doe@example.com")));
+                () -> assertTrue(repository
+                        .has(new EmailAddress("john.doe@example.com"))),
+                () -> assertTrue(repository
+                        .has(new EmailAddress("jane.doe@example.com"))));
     }
 
     @Scenario("Trying to edit a nonexistent user")
@@ -132,7 +148,7 @@ public class UserEditingFeature {
     void shouldThrowInexistentUser() {
         // Given
         repository = ConcreteUsers.empty();
-        assumeFalse(repository.has("john.doe@example.com"));
+        assumeFalse(repository.has(new EmailAddress("john.doe@example.com")));
 
         // When
         assertThrows(InexistentUser.class, () -> {
@@ -143,7 +159,7 @@ public class UserEditingFeature {
         });
 
         // Then
-        assertFalse(repository.has("john.doe@example.com"));
+        assertFalse(repository.has(new EmailAddress("john.doe@example.com")));
     }
 
 }

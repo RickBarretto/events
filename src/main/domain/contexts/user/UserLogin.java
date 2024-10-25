@@ -1,6 +1,7 @@
 package main.domain.contexts.user;
 
 import main.domain.exceptions.PermissionDenied;
+import main.domain.models.users.Login;
 import main.infra.Session;
 import main.roles.Context;
 import main.roles.repositories.Users;
@@ -37,8 +38,8 @@ public class UserLogin implements Context {
      * @param password the password of the user
      * @throws PermissionDenied if the login credentials are incorrect
      */
-    public void logAs(String email, String password) throws PermissionDenied {
-        session.logInAs(users.ownerOf(email, password).orElseThrow(
+    public void logAs(Login login) throws PermissionDenied {
+        session.logInAs(users.ownerOf(login).orElseThrow(
                 () -> new PermissionDenied("Wrong login credentials")));
     }
 

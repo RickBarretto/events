@@ -16,6 +16,8 @@ import main.domain.models.users.Login;
 import main.domain.models.users.Person;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
+import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 
 public class UserTest {
     private User actual;
@@ -24,7 +26,8 @@ public class UserTest {
     void init() {
         var id = new UserId(
                 UUID.fromString("78266c37-e43b-48c5-9a4b-0c996d431d02"));
-        var login = new Login("john.doe@example.com", "123456");
+        var login = new Login(new EmailAddress("john.doe@example.com"),
+                new Password("123456"));
         var person = new Person("John Doe", "000.000.000-00");
         actual = new User(id, login, person);
     }
@@ -39,10 +42,13 @@ public class UserTest {
 
         @Test
         void testLogin() {
-            var expected = new Login("john.doe@example.com", "123456");
+            var expected = new Login(new EmailAddress("john.doe@example.com"),
+                    new Password("123456"));
             assertEquals(expected, actual.login());
 
-            var expectedToBeFalse = new Login("jane.doe@example.com", "123456");
+            var expectedToBeFalse = new Login(
+                    new EmailAddress("jane.doe@example.com"),
+                    new Password("123456"));
             assertNotEquals(expectedToBeFalse, actual.login());
         }
 
@@ -69,7 +75,8 @@ public class UserTest {
 
         @Test
         void testWithLogin() {
-            var newLogin = new Login("jane.doe@example.com", "123456");
+            var newLogin = new Login(new EmailAddress("jane.doe@example.com"),
+                    new Password("123456"));
             assertNotEquals(actual, actual.with(newLogin));
             assertInstanceOf(User.class, actual.with(newLogin));
             assertEquals(newLogin, actual.with(newLogin).login());
@@ -77,7 +84,8 @@ public class UserTest {
 
         @Test
         void testWithPerson() {
-            var newPerson = new Person("jane.doe@example.com", "123456");
+            var newPerson = new Person("Jane Doe",
+                    "123456");
             assertNotEquals(actual, actual.with(newPerson));
             assertInstanceOf(User.class, actual.with(newPerson));
             assertEquals(newPerson, actual.with(newPerson).person());
@@ -99,8 +107,13 @@ public class UserTest {
         @Test
         void testHashCode() {
             assertEquals(actual.hashCode(), actual.hashCode());
-            assertNotEquals(actual.with(new Person("Jane Doe", "000.000.000-00")).hashCode(), actual.hashCode());
-            assertNotEquals(actual.with(new Login("jane.doe@example.com", "123456")).hashCode(), actual.hashCode());
+            assertNotEquals(actual
+                    .with(new Person("Jane Doe", "000.000.000-00")).hashCode(),
+                    actual.hashCode());
+            assertNotEquals(actual
+                    .with(new Login(new EmailAddress("jane.doe@example.com"),
+                            new Password("123456")))
+                    .hashCode(), actual.hashCode());
             assertNotEquals(actual.asAdmin().hashCode(), actual.hashCode());
         }
     }

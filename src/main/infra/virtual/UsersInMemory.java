@@ -3,9 +3,11 @@ package main.infra.virtual;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+
 import main.domain.models.users.Login;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
+import main.domain.models.users.values.EmailAddress;
 import main.roles.repositories.Users;
 
 /**
@@ -13,7 +15,7 @@ import main.roles.repositories.Users;
  */
 public class UsersInMemory implements Users {
     private HashMap<UserId, User> users = new HashMap<>();
-    private HashMap<String, UserId> emailIndex = new HashMap<>();
+    private HashMap<EmailAddress, UserId> emailIndex = new HashMap<>();
 
     /**
      * Constructs a new UsersInMemory with an empty list of users.
@@ -58,21 +60,27 @@ public class UsersInMemory implements Users {
     }
 
     @Override
-    public Optional<User> ownerOf(String email, String password) {
-        var id = emailIndex.get(email);
+    public Optional<User> ownerOf(Login login) {
+        var id = emailIndex.get(login.email());
         var user = this.byId(id);
+
         if (!user.isPresent())
             return user;
-        if (user.get().isOwnerOf(new Login(email, password))) {
+        if (user.get().isOwnerOf(login)) {
             return user;
         }
         else {
             return Optional.empty();
         }
+
+        // if (user.isPresent() && user.get().isOwnerOf(login))
+        //     return user;
+
+        // return Optional.empty();
     }
 
     @Override
-    public boolean has(String email) { return emailIndex.containsKey(email); }
+    public boolean has(EmailAddress email) { return emailIndex.containsKey(email); }
 
     /**
      * Replaces an existing email with a new email.
@@ -80,7 +88,7 @@ public class UsersInMemory implements Users {
      * @param oldEmail the old email address
      * @param newEmail the new email address
      */
-    private void replaceEmail(String oldEmail, String newEmail) {
+    private void replaceEmail(EmailAddress oldEmail, EmailAddress newEmail) {
         assert emailIndex.containsKey(oldEmail);
         if (!oldEmail.equals(newEmail)) {
             assert !emailIndex.containsKey(newEmail);

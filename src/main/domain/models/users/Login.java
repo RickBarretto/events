@@ -2,12 +2,15 @@ package main.domain.models.users;
 
 import java.util.Objects;
 
+import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
+
 /**
  * Represents the login information for a user, including email and password.
  */
 public class Login {
-    private final String email;
-    private final String password;
+    private final EmailAddress email;
+    private final Password password;
 
     /**
      * Constructs a new Login with the specified email and password.
@@ -15,9 +18,17 @@ public class Login {
      * @param email    the email address of the user
      * @param password the password of the user
      */
-    public Login(String email, String password) {
+    public Login(EmailAddress email, Password password) {
         this.email = email;
         this.password = password;
+    }
+
+    public Login(String email, String password) {
+        this(new EmailAddress(email), new Password(password));
+    }
+
+    public static Login of(String email, String password) {
+        return new Login(email, password);
     }
 
     /**
@@ -25,29 +36,11 @@ public class Login {
      *
      * @return the email address
      */
-    public String email() { return email; }
+    public EmailAddress email() { return email; }
 
-    /**
-     * Creates a new Login with the specified email, keeping the current
-     * password.
-     *
-     * @param email the new email address
-     * @return a new Login object with the updated email
-     */
-    public Login withEmail(String email) {
-        return new Login(email, this.password);
-    }
+    public Login with(EmailAddress email) { return new Login(email, password); }
 
-    /**
-     * Creates a new Login with the specified password, keeping the current
-     * email.
-     *
-     * @param password the new password
-     * @return a new Login object with the updated password
-     */
-    public Login withPassword(String password) {
-        return new Login(this.email, password);
-    }
+    public Login with(Password password) { return new Login(email, password); }
 
     public boolean equals(Login other) {
         return Objects.equals(email, other.email)
