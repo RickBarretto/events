@@ -3,13 +3,14 @@ package main.domain.models.users;
 import java.util.Objects;
 
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 
 /**
  * Represents the login information for a user, including email and password.
  */
 public class Login {
     private final EmailAddress email;
-    private final String password;
+    private final Password password;
 
     /**
      * Constructs a new Login with the specified email and password.
@@ -17,13 +18,13 @@ public class Login {
      * @param email    the email address of the user
      * @param password the password of the user
      */
-    public Login(EmailAddress email, String password) {
+    public Login(EmailAddress email, Password password) {
         this.email = email;
         this.password = password;
     }
 
     public Login(String email, String password) {
-        this(new EmailAddress(email), password);
+        this(new EmailAddress(email), new Password(password));
     }
 
     /**
@@ -51,7 +52,7 @@ public class Login {
      * @param password the new password
      * @return a new Login object with the updated password
      */
-    public Login withPassword(String password) {
+    public Login withPassword(Password password) {
         return new Login(this.email, password);
     }
 
