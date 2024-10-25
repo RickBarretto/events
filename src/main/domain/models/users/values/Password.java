@@ -5,20 +5,39 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Objects;
 
+/**
+ * Utility class for hashing values using SHA-256.
+ */
 class Sha256 {
-    private String value;
+    private final String value;
 
+    /**
+     * Constructs a Sha256 object and hashes the provided value.
+     *
+     * @param value the value to be hashed
+     */
     public Sha256(String value) { this.value = hash(value); }
 
+    /**
+     * Returns the hashed value.
+     *
+     * @return the hashed value
+     */
     public String value() { return value; }
 
+    /**
+     * Hashes the given value using SHA-256.
+     *
+     * @param value the value to hash
+     * @return the hashed value as a base64 string
+     * @throws RuntimeException if SHA-256 algorithm is not available
+     */
     public String hash(String value) {
         try {
             final var valueBytes = value.getBytes();
             final var digest = MessageDigest.getInstance("SHA-256");
 
-            return Base64
-                    .getEncoder()
+            return Base64.getEncoder()
                     .encodeToString(digest.digest(valueBytes));
         }
         catch (NoSuchAlgorithmException e) {
@@ -42,9 +61,17 @@ class Sha256 {
     }
 }
 
+/**
+ * Represents a password, storing its hash using SHA-256.
+ */
 public class Password {
-    private Sha256 value;
+    private final Sha256 value;
 
+    /**
+     * Constructs a Password object with the specified plain text password.
+     *
+     * @param value the plain text password
+     */
     public Password(String value) { this.value = new Sha256(value); }
 
     @Override
@@ -64,5 +91,4 @@ public class Password {
     private boolean equals(Password other) {
         return Objects.equals(value, other.value);
     }
-
 }
