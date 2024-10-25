@@ -1,11 +1,14 @@
 package main.domain.models.purchases;
 
+import main.domain.models.users.values.EmailAddress;
+
 /**
  * Represents constant information for the Event Management Business, including
  * email, CNPJ, and company name.
  */
 public class EventManagementBusiness {
-    private final static String email = "noreply@event.management";
+    private final static EmailAddress email = new EmailAddress(
+            "noreply@event.management");
     private final static String cnpj = "XX.XXX.XXX/0001-XX";
     private final static String company = "Event Management Startup";
 
@@ -14,7 +17,7 @@ public class EventManagementBusiness {
      *
      * @return the email address
      */
-    public String email() { return email; }
+    public EmailAddress email() { return email; }
 
     /**
      * Returns the CNPJ of the Event Management Business.
