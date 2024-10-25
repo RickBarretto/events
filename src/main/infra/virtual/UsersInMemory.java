@@ -7,6 +7,7 @@ import main.domain.models.users.Login;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.roles.repositories.Users;
 
 /**
@@ -59,7 +60,7 @@ public class UsersInMemory implements Users {
     }
 
     @Override
-    public Optional<User> ownerOf(EmailAddress email, String password) {
+    public Optional<User> ownerOf(EmailAddress email, Password password) {
         var id = emailIndex.get(email);
         var user = this.byId(id);
         if (!user.isPresent())

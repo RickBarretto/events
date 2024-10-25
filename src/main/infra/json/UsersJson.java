@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
+import main.domain.models.users.values.Password;
 import main.infra.virtual.UsersInMemory;
 import main.roles.repositories.Users;
 
@@ -91,7 +92,7 @@ public class UsersJson implements Users {
     public Optional<User> byId(UserId id) { return users.byId(id); }
 
     @Override
-    public Optional<User> ownerOf(EmailAddress email, String password) {
+    public Optional<User> ownerOf(EmailAddress email, Password password) {
         return users.ownerOf(email, password);
     }
 
