@@ -60,17 +60,23 @@ public class UsersInMemory implements Users {
     }
 
     @Override
-    public Optional<User> ownerOf(EmailAddress email, Password password) {
-        var id = emailIndex.get(email);
+    public Optional<User> ownerOf(Login login) {
+        var id = emailIndex.get(login.email());
         var user = this.byId(id);
+
         if (!user.isPresent())
             return user;
-        if (user.get().isOwnerOf(new Login(email, password))) {
+        if (user.get().isOwnerOf(login)) {
             return user;
         }
         else {
             return Optional.empty();
         }
+
+        // if (user.isPresent() && user.get().isOwnerOf(login))
+        //     return user;
+
+        // return Optional.empty();
     }
 
     @Override

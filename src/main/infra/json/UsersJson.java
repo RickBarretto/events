@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import main.domain.models.users.Login;
 import main.domain.models.users.User;
 import main.domain.models.users.UserId;
 import main.domain.models.users.values.EmailAddress;
@@ -92,8 +94,8 @@ public class UsersJson implements Users {
     public Optional<User> byId(UserId id) { return users.byId(id); }
 
     @Override
-    public Optional<User> ownerOf(EmailAddress email, Password password) {
-        return users.ownerOf(email, password);
+    public Optional<User> ownerOf(Login login) {
+        return users.ownerOf(login);
     }
 
     @Override

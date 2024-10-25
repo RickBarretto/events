@@ -27,6 +27,10 @@ public class Login {
         this(new EmailAddress(email), new Password(password));
     }
 
+    public static Login of(String email, String password) {
+        return new Login(email, password);
+    }
+
     /**
      * Returns the email address of the user.
      *

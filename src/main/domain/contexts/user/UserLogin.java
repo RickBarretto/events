@@ -1,6 +1,7 @@
 package main.domain.contexts.user;
 
 import main.domain.exceptions.PermissionDenied;
+import main.domain.models.users.Login;
 import main.domain.models.users.values.EmailAddress;
 import main.domain.models.users.values.Password;
 import main.infra.Session;
@@ -41,7 +42,8 @@ public class UserLogin implements Context {
      */
     public void logAs(EmailAddress email, 
             Password password) throws PermissionDenied {
-        session.logInAs(users.ownerOf(email, password).orElseThrow(
+        final var login = new Login(email, password);
+        session.logInAs(users.ownerOf(login).orElseThrow(
                 () -> new PermissionDenied("Wrong login credentials")));
     }
 
