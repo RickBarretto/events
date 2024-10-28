@@ -37,6 +37,36 @@ Here's a look at the src/main structure:
 ## Workspace's Structure
 
 The workspace contains three main folders:
+- `docs`: the documentation generated from Javadocs 
+- `lib`: the necessary `.jar` dependencies
 - `src/main`: the source code
 - `src/test`: the test files
-- `lib`: the necessary `.jar` dependencies
+
+## Documentation
+
+All the documentation is placed into [docs/index.html](./docs/index.html).
+[Read it online](https://rickbarretto.github.io/events/).
+
+## Java Version
+
+```
+java 22.0.2 2024-07-16
+Java(TM) SE Runtime Environment (build 22.0.2+9-70)
+Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
+```
+
+## Used VsCode Extensions
+
+### Extension Pack for Java
+* Id: vscjava.vscode-java-pack
+* Description: Popular extensions for Java development that provides Java IntelliSense, debugging, testing, Maven/Gradle support, project management and more
+* Version: 0.29.2024091906
+* Publisher: Microsoft
+* VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack
+
+### GitHub Theme
+* Id: GitHub.github-vscode-theme
+* Description: GitHub theme for VS Code
+* Version: 6.3.5
+* Publisher: GitHub
+* VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=GitHub.github-vscode-theme
