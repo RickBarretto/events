@@ -44,8 +44,9 @@ The workspace contains three main folders:
 
 ## Documentation
 
-All the documentation is placed into [docs/index.html](./docs/index.html).
-[Read it online](https://rickbarretto.github.io/events/).
+* [Online Page](https://rickbarretto.github.io/events)
+* [Online Documentation](https://rickbarretto.github.io/events/docs)
+* [Local Documentation](./docs/index.html)
 
 ## Java Version
 
