@@ -39,8 +39,7 @@ public interface Users {
     /**
      * Retrieves an user by their email and password.
      *
-     * @param email    the email of the user
-     * @param password the password of the user
+     * @param login the login of the user
      * @return an Optional containing the user if found, or empty if not found
      */
     Optional<User> ownerOf(Login login);

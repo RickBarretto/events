@@ -94,7 +94,7 @@ public class UserEditing implements Context {
         /**
          * Updates the user's email.
          *
-         * @param email the new email
+         * @param rawEmail the new email as a stirng
          * @return the current EditingWithTarget instance
          * @throws EmailAlreadyExists if the email already exists in the
          *                                repository
