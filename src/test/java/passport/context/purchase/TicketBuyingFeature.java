@@ -210,7 +210,7 @@ public class TicketBuyingFeature {
     @Scenario("Selling tickets for JSON Repositories")
     class UsingJson {
 
-        static final String directory = "src/test/context/resources";
+        static final String directory = "src/test/java/passport/context/resources";
         static final JsonFile eventsFile = new JsonFile(directory,
                 "all-events");
         static final JsonFile usersFile = new JsonFile(directory, "all-users");

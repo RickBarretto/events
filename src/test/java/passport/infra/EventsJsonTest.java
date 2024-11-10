@@ -18,7 +18,7 @@ import passport.resources.bdd.Then;
 import passport.resources.entities.ConcreteEvents;
 
 public class EventsJsonTest {
-    private static final String directory = "src/test/infra/resources";
+    private static final String directory = "src/test/java/passport/infra/resources";
 
     @AfterAll
     static void removeFiles() {

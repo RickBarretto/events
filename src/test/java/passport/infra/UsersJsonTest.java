@@ -16,7 +16,7 @@ import passport.infra.json.UsersJson;
 import passport.resources.entities.ConcreteUsers;
 
 public class UsersJsonTest {
-    private static final String directory = "src/test/infra/resources";
+    private static final String directory = "src/test/java/passport/infra/resources";
 
     @AfterAll
     static void removeFiles() {
